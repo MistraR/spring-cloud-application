@@ -3,7 +3,9 @@
     <words>
       <w>configserver</w>
       <w>eurekaserver</w>
+      <w>hystrix</w>
       <w>mistra</w>
+      <w>monitorserver</w>
       <w>zipkin</w>
       <w>zipkinserver</w>
     </words>

@@ -1,0 +1,14 @@
+server:
+  port: 8002
+security.basic.enabled: false
+turbine:
+  aggregator:
+    #聚合监控的集群配置为默认
+    clusterConfig: default
+  #要聚合的服务名
+  appConfig: user-service , blog-service
+  clusterNameExpression: new String("default")
+
+management:
+  security:
+    enabled: false
