@@ -9,6 +9,7 @@
         <module name="configserver" />
         <module name="eurekaserver" />
         <module name="monitorserver" />
+        <module name="userservice" />
         <module name="zipkinserver" />
       </profile>
     </annotationProcessing>
