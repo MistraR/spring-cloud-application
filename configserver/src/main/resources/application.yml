@@ -1,0 +1,37 @@
+# remote git  从GitHub读取配置文件
+#spring:
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/MistraR/springCloudConfigServer
+#          searchPaths: /configFile
+#          username: MistraR
+#          password: ******
+#      label: master
+
+# ---native
+spring:
+  cloud:
+    config:
+      server:
+        #指定从本地读取配置文件，resources/configFile
+        native:
+          search-locations: classpath:/configFile
+        #其他服务配置文件的命名格式{applicationName}-{activeProfile}.yml如:user-service-pro.yml
+        #所有服务可以共享一个配置文件,在configFile下新建一个application.yml
+  profiles:
+     active: native
+  application:
+    name: config-server
+
+# port
+server:
+  port: 9998
+
+management:
+  security:
+    enabled: false
+
+
+
