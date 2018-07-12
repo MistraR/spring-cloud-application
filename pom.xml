@@ -40,6 +40,15 @@
         <jolokia-core.version>1.6.0</jolokia-core.version>
     </properties>
 
+    <dependencies>
+        <!--主工程添加的依赖，子模块会自动继承这些依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <!--
     dependencyManagement的作用其实相当于一个对所依赖jar包进行版本管理的管理器。
     如果dependencies里的dependency自己没有声明version元素，那么maven就
