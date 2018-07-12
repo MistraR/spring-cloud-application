@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="configserver" />
         <module name="eurekaserver" />
+        <module name="zipkinserver" />
       </profile>
     </annotationProcessing>
   </component>

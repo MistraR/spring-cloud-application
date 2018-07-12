@@ -11,6 +11,8 @@
 
     <modules>
         <module>eurekaserver</module>
+        <module>configserver</module>
+        <module>zipkinserver</module>
     </modules>
 
     <parent>
