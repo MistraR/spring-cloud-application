@@ -6,6 +6,7 @@
       <w>hystrix</w>
       <w>mistra</w>
       <w>monitorserver</w>
+      <w>shiro</w>
       <w>userservice</w>
       <w>zipkin</w>
       <w>zipkinserver</w>

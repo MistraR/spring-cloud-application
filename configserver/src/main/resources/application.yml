@@ -25,6 +25,11 @@ spring:
   application:
     name: config-server
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/
+
 # port
 server:
   port: 9998
