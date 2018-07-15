@@ -12,20 +12,20 @@ ribbon:
 
 zuul:
   host:
+    #Zuul链接超时时间20秒
     connect-timeout-millis: 20000
+    #socket链接超时时间20秒
     socket-timeout-millis: 20000
 
   routes:
     user-service:
+      #以/userapi/**开头的连接都转发到user-service
       path: /userapi/**
       serviceId: user-service
+      #sensitiveHeaders的默认设置会在转发请求时去掉头信息
+      #覆盖sensitiveHeaders的默认设置，转发时保留请求中的敏感头信息，如Cookie，Set-Cookie，Authorization
       sensitiveHeaders:
-
-    blog-service:
-      path: /blogapi/**
-      serviceId: blog-service
-      sensitiveHeaders:
-
+#程序端口
 server:
-  port: 5000
+  port: 1001
 

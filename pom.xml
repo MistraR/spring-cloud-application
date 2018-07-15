@@ -17,7 +17,7 @@
         <module>userservice</module>
         <module>uaaservice</module>
         <module>routeservice</module>
-
+        <module>adminserver</module>
     </modules>
 
     <parent>

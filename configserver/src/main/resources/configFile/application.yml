@@ -26,7 +26,7 @@ eureka:
 #    sensitive: false
 #    enabled: true
 
-
+#关闭服务监控信息Actuator的安全验证
 management:
   security:
     enabled: false

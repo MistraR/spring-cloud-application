@@ -15,6 +15,7 @@
         <option value="$PROJECT_DIR$/userservice/pom.xml" />
         <option value="$PROJECT_DIR$/uaaservice/pom.xml" />
         <option value="$PROJECT_DIR$/routeservice/pom.xml" />
+        <option value="$PROJECT_DIR$/adminserver/pom.xml" />
       </list>
     </option>
   </component>
