@@ -15,6 +15,9 @@
         <module>zipkinserver</module>
         <module>monitorserver</module>
         <module>userservice</module>
+        <module>uaaservice</module>
+        <module>routeservice</module>
+
     </modules>
 
     <parent>
