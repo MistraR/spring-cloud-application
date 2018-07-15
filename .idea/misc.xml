@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/zipkinserver/pom.xml" />
         <option value="$PROJECT_DIR$/monitorserver/pom.xml" />
         <option value="$PROJECT_DIR$/userservice/pom.xml" />
+        <option value="$PROJECT_DIR$/uaaservice/pom.xml" />
       </list>
     </option>
   </component>
