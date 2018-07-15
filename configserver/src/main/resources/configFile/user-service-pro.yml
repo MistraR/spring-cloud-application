@@ -3,6 +3,7 @@ server:
 
 
 spring:
+  #指定zipkin服务地址
   zipkin:
     base-url: http://localhost:8001
 

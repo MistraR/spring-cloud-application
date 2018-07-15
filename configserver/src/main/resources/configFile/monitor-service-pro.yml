@@ -6,7 +6,7 @@ turbine:
     #聚合监控的集群配置为默认
     clusterConfig: default
   #要聚合的服务名
-  appConfig: user-service , blog-service
+  appConfig: user-service
   clusterNameExpression: new String("default")
 
 management:

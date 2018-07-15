@@ -9,7 +9,7 @@
 #        isolation:
 #          thread:
 #            timeoutInMilliseconds: 10000
-
+#公共配置文件所有配置文件默认继承
 eureka:
   client:
     serviceUrl:
@@ -30,7 +30,7 @@ eureka:
 management:
   security:
     enabled: false
-
+#feign调用开启Hystrix
 feign:
   hystrix:
     enabled: true

@@ -21,6 +21,7 @@ spring:
         #其他服务配置文件的命名格式{applicationName}-{activeProfile}.yml如:user-service-pro.yml
         #所有服务可以共享一个配置文件,在configFile下新建一个application.yml
   profiles:
+    #指定从本地读取配置文件
      active: native
   application:
     name: config-server

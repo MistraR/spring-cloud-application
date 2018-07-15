@@ -59,7 +59,7 @@
             <artifactId>spring-cloud-starter-hystrix</artifactId>
         </dependency>
 
-        <!-- zipkin-->
+        <!-- zipkin  作为Zipkin Client-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-zipkin</artifactId>
