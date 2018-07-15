@@ -1,5 +1,10 @@
-server:
-  port: 7777
+spring:
+  application:
+    name: admin-server
+  profiles:
+    active:
+      - secure
+
 
 # tag::configuration-eureka[]
 eureka:   #<1>
@@ -8,8 +13,10 @@ eureka:   #<1>
     health-check-url-path: /actuator/health #2.0后actuator的地址发生了变化
   client:
     registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVICE_URL:http://localhost:9999}/eureka/
 
-# 2.0开始，actuator默认不开放，所以要设置为开放
+# 2.0开始，actuator默认不开放，所以要设置为开发
 management:
   endpoints:
     web:
@@ -18,6 +25,8 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+server:
+  port: 8081
 # end::configuration-eureka[]
 
 ---
@@ -39,6 +48,3 @@ eureka:
     metadata-map:
       "user.name": ${spring.security.user.name}         #These two are needed so that the server
       "user.password": ${spring.security.user.password} #can access the protected client endpoints
-
-logging:
-  file: "logs/admin-service-pro.log"
