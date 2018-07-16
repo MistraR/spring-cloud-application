@@ -4,6 +4,7 @@ import de.codecentric.boot.admin.server.config.AdminServerProperties;
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Configuration;
@@ -23,42 +24,9 @@ public class AdminserverApplication {
         SpringApplication.run(AdminserverApplication.class, args);
     }
 
-    // tag::configuration-spring-security[]
-    //@Configuration
-    //public static class SecurityConfig extends WebSecurityConfigurerAdapter {
-       // @Override
-       // protected void configure(HttpSecurity http) throws Exception {
-            // Page with login form is served as /login.html and does a POST on /login
-           // http.formLogin().loginPage("/login.html").loginProcessingUrl("/login").permitAll();
-            // The UI does a POST on /logout on logout
-           // http.logout().logoutUrl("/logout");
-            // The ui currently doesn't support csrf
-           // http.csrf().disable();
-
-            // Requests for the login page and the static assets are allowed
-           // http.authorizeRequests()
-                    //.antMatchers("/login.html", "/**/*.css", "/img/**", "/third-party/**")
-                    //.permitAll();
-            // ... and any other request needs to be authorized
-           // http.authorizeRequests().antMatchers("/**").authenticated();
-
-            // Enable so that the clients can authenticate via HTTP basic for registering
-          //  http.httpBasic();
-      //  }
-    //}
-
-   /* @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin").password("123456").roles("USER");
-    }*/
-    // end::configuration-spring-security[]
-
     @Profile("insecure")
     @Configuration
     public static class SecurityPermitAllConfig extends WebSecurityConfigurerAdapter {
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests().anyRequest().permitAll()//
@@ -69,7 +37,6 @@ public class AdminserverApplication {
     @Profile("secure")
     @Configuration
     public static class SecuritySecureConfig extends WebSecurityConfigurerAdapter {
-
         private final String adminContextPath;
 
         public SecuritySecureConfig(AdminServerProperties adminServerProperties) {
@@ -87,12 +54,12 @@ public class AdminserverApplication {
                     .antMatchers(adminContextPath + "/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                    .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler)
-                    .and()
+                    .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
                     .logout().logoutUrl(adminContextPath + "/logout").and()
                     .httpBasic().and()
                     .csrf().disable();
             // @formatter:on
         }
     }
+
 }

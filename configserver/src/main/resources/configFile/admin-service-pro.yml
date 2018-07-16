@@ -1,5 +1,8 @@
 server:
-  port: 7777
+  port: 9997
+spring:
+  application:
+    name: admin-server
 
 # tag::configuration-eureka[]
 eureka:   #<1>
@@ -9,7 +12,7 @@ eureka:   #<1>
   client:
     registryFetchIntervalSeconds: 5
 
-# 2.0开始，actuator默认不开放，所以要设置为开放
+# 2.0开始，actuator默认不开放，所以要设置为开发
 management:
   endpoints:
     web:
@@ -18,27 +21,20 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+
 # end::configuration-eureka[]
 
----
-spring:
-  profiles: insecure
-
----
 # admin登录的用户名和密码
 spring:
   profiles: secure
   security:
     user:
-      name: "user"
-      password: "password"
+      name: "admin"
+      password: "123456"
 
 # 注册给eureka的时候告诉eureka自己的密码
 eureka:
   instance:
     metadata-map:
-      "user.name": ${spring.security.user.name}         #These two are needed so that the server
-      "user.password": ${spring.security.user.password} #can access the protected client endpoints
-
-logging:
-  file: "logs/admin-service-pro.log"
+      "user.name": "admin"         #These two are needed so that the server
+      "user.password": "123456" #can access the protected client endpoints
