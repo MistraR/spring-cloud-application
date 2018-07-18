@@ -1,7 +1,6 @@
 server:
   port: 7001
 
-
 spring:
   #指定zipkin服务地址
   zipkin:

@@ -1,4 +1,4 @@
-#bootstrap名称的配置文件逼application名称的配置文件有更高的优先级执行
+#bootstrap名称的配置文件比application名称的配置文件有更高的优先级执行
 spring:
   application:
     name: user-service
