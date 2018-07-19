@@ -12,7 +12,6 @@
     <modules>
         <module>eurekaserver</module>
         <module>configserver</module>
-        <module>zipkinserver</module>
         <module>monitorserver</module>
         <module>userservice</module>
         <module>uaaservice</module>

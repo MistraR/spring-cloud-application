@@ -1,27 +1,45 @@
+spring:
+  application:
+    name: admin-server
+  profiles:
+    active:
+      - secure
 server:
   port: 9997
-security:
-  user:
-    name: admin
-    password: 123456
+
+# tag::configuration-eureka[]
+eureka:   #<1>
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/
+
 management:
-  security:
-    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"  #<2>
+  endpoint:
+    health:
+      show-details: ALWAYS
+# end::configuration-eureka[]
 
+---
 spring:
-  boot:
-    admin:
-      routes:
-        endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream,activiti
-      turbine:
-        clusters: default
-        location: monitor-service
+  profiles: insecure
 
+---
+spring:
+  profiles: secure
+  security:
+    user:
+      name: "user"
+      password: "password"
 eureka:
   instance:
     metadata-map:
-      user.name: admin
-      user.password: 123456
-
-logging:
-  file: "logs/admin-service-pro.log"
+      user.name: "user"         #These two are needed so that the server
+      user.password: "password" #can access the protected client endpoints
