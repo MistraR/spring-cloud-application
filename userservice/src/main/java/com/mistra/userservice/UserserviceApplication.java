@@ -2,6 +2,7 @@ package com.mistra.userservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
@@ -16,6 +17,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableHystrix
 //开启熔断器监控组件，实时查看荣孤单器的状况，如是否开启和关闭等等
 @EnableHystrixDashboard
+@EnableCircuitBreaker
 public class UserserviceApplication {
 
     public static void main(String[] args) {
