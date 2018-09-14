@@ -16,6 +16,8 @@ public class PaginationResult<T> extends GenericResult<List<T>>{
 
     private int pageSize;
 
+    private List<T> data;
+
     public PaginationResult(){
 
     }
@@ -42,5 +44,15 @@ public class PaginationResult<T> extends GenericResult<List<T>>{
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    @Override
+    public List<T> getData() {
+        return data;
+    }
+
+    @Override
+    public void setData(List<T> data) {
+        this.data = data;
     }
 }

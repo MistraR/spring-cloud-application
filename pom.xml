@@ -43,6 +43,8 @@
         <poi.version>3.17</poi.version>
         <shiro.version>1.4.0</shiro.version>
         <java-jwt>3.4.0</java-jwt>
+        <lombok>1.18.2</lombok>
+        <modelmapper>2.2.0</modelmapper>
         <okhttp.version>3.10.0</okhttp.version>
         <poi-ooxml.version>3.17</poi-ooxml.version>
         <jolokia-core.version>1.6.0</jolokia-core.version>
@@ -216,6 +218,25 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!--  modelmapper  -->
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper}</version>
+            </dependency>
+            <!--  lombok  -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok}</version>
+                <scope>provided</scope>
+            </dependency>
+            <!-- 丰富的Java工具 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-core</artifactId>
+                <version>4.1.12</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

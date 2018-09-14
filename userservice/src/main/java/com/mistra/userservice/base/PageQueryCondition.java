@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Time: 下午5:22
  * Description:
  */
-public class PageCondition {
+public class PageQueryCondition {
 
     @ApiModelProperty(value = "页数")
     private int pageNumber = 0;
