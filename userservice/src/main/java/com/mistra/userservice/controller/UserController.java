@@ -1,8 +1,10 @@
 package com.mistra.userservice.controller;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.mistra.base.result.GenericResult;
 import com.mistra.base.result.PaginationResult;
 import com.mistra.base.result.Result;
+import com.mistra.userservice.base.PageCondition;
 import com.mistra.userservice.vo.LoginDTO;
 import com.mistra.userservice.vo.RegisterDTO;
 import com.mistra.userservice.vo.TokenDTO;
@@ -50,9 +52,18 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNumber", dataType = "int", value = "当前页码", required = true),
             @ApiImplicitParam(name = "pageSize", dataType = "int", value = "分页大小", required = true)})
-    public GenericResult<PaginationResult<UserDTO>> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber,
-                                                                @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
-        return userService.getUserList(pageNumber, pageSize);
+    public GenericResult<Page<UserDTO>> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber,
+                                                    @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
+        return null;
     }
 
+    @GetMapping("/selectList")
+    @ApiOperation("带查询条件的分页列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
+            @ApiImplicitParam(name = "pageCondition", dataType = "PageCondition", value = "分页参数", required = true)
+    })
+    public GenericResult<Page<UserDTO>> getSelectList(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageCondition pageCondition) {
+        return userService.getSelectList(userDTO, pageCondition);
+    }
 }

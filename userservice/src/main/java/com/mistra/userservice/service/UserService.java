@@ -1,8 +1,9 @@
 package com.mistra.userservice.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.mistra.base.result.GenericResult;
-import com.mistra.base.result.PaginationResult;
 import com.mistra.base.result.Result;
+import com.mistra.userservice.base.PageCondition;
 import com.mistra.userservice.vo.LoginDTO;
 import com.mistra.userservice.vo.RegisterDTO;
 import com.mistra.userservice.vo.TokenDTO;
@@ -36,5 +37,13 @@ public interface UserService {
      * @param pageSize
      * @return
      */
-    GenericResult<PaginationResult<UserDTO>> getUserList(int pageNumber,int pageSize);
+    GenericResult<Page<UserDTO>> getUserList(int pageNumber, int pageSize);
+
+    /**
+     * 获取用户列表，带筛选条件
+     * @param userDTO
+     * @param pageCondition
+     * @return
+     */
+    GenericResult<Page<UserDTO>> getSelectList(UserDTO userDTO, PageCondition pageCondition);
 }
