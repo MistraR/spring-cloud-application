@@ -1,4 +1,4 @@
-package com.mistra.userservice.dto;
+package com.mistra.userservice.vo;
 
 import io.swagger.annotations.ApiModel;
 
