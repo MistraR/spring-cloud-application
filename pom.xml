@@ -41,11 +41,17 @@
         <nekohtml.version>1.9.22</nekohtml.version>
         <poi.version>3.17</poi.version>
         <shiro.version>1.4.0</shiro.version>
-        <jjwt.version>0.9.0</jjwt.version>
+        <java-jwt>3.4.0</java-jwt>
         <okhttp.version>3.10.0</okhttp.version>
         <poi-ooxml.version>3.17</poi-ooxml.version>
         <jolokia-core.version>1.6.0</jolokia-core.version>
         <zipkin.version>2.0.0.RELEASE</zipkin.version>
+        <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
+        <spring-boot-starter-actuator>2.0.3.RELEASE</spring-boot-starter-actuator>
+        <spring-cloud-starter-hystrix>1.4.5.RELEASE</spring-cloud-starter-hystrix>
+        <spring-boot-admin-starter-client>2.0.1</spring-boot-admin-starter-client>
+        <spring-boot-admin-starter-server>2.0.2</spring-boot-admin-starter-server>
+        <spring-cloud-starter-hystrix-dashboard>1.4.5.RELEASE</spring-cloud-starter-hystrix-dashboard>
     </properties>
 
     <dependencies>
@@ -142,10 +148,11 @@
                 <version>${shiro.version}</version>
             </dependency>
             <!--jwt-->
+            <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
             <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>${jjwt.version}</version>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt}</version>
             </dependency>
             <!--poi-->
             <dependency>
@@ -169,32 +176,32 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-feign</artifactId>
-                <version>1.4.4.RELEASE</version>
+                <version>${spring-cloud-starter-feign}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-actuator</artifactId>
-                <version>2.0.3.RELEASE</version>
+                <version>${spring-boot-starter-actuator}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
-                <version>1.4.5.RELEASE</version>
+                <version>${spring-cloud-starter-hystrix-dashboard}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-hystrix</artifactId>
-                <version>1.4.5.RELEASE</version>
+                <version>${spring-cloud-starter-hystrix}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>2.0.1</version>
+                <version>${spring-boot-admin-starter-client}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-server</artifactId>
-                <version>2.0.2</version>
+                <version>${spring-boot-admin-starter-server}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
