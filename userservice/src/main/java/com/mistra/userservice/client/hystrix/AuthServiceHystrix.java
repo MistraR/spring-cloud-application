@@ -2,7 +2,7 @@ package com.mistra.userservice.client.hystrix;
 
 
 import com.mistra.userservice.client.AuthServiceClient;
-import com.mistra.userservice.entity.JWT;
+import com.mistra.userservice.base.JWT;
 import org.springframework.stereotype.Component;
 
 /**

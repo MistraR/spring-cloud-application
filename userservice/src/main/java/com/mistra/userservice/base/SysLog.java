@@ -1,4 +1,4 @@
-package com.mistra.userservice.entity;
+package com.mistra.userservice.base;
 
 import java.util.Date;
 

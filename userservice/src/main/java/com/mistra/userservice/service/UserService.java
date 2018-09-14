@@ -3,10 +3,10 @@ package com.mistra.userservice.service;
 import com.mistra.base.result.GenericResult;
 import com.mistra.base.result.PaginationResult;
 import com.mistra.base.result.Result;
-import com.mistra.userservice.dto.LoginDTO;
-import com.mistra.userservice.dto.RegisterDTO;
-import com.mistra.userservice.dto.TokenDTO;
-import com.mistra.userservice.dto.UserDTO;
+import com.mistra.userservice.vo.LoginDTO;
+import com.mistra.userservice.vo.RegisterDTO;
+import com.mistra.userservice.vo.TokenDTO;
+import com.mistra.userservice.vo.UserDTO;
 
 /**
  * @Author: WangRui

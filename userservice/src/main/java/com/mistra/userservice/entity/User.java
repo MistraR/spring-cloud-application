@@ -17,7 +17,7 @@ public class User extends BaseEntity {
 
     private String email;
 
-    private String username;
+    private String userName;
 
     private String password;
 
@@ -32,12 +32,12 @@ public class User extends BaseEntity {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -61,7 +61,7 @@ public class User extends BaseEntity {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
+                ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
