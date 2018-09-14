@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mistra.userservice.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.mistra.userservice.entity.User">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, email, password, name,create_time,update_time,create_by,update_by,status
+    </sql>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER} and status = 1;
+    </select>
+
+    <insert id="insert" parameterType="com.mistra.userservice.entity.User" useGeneratedKeys="true" keyProperty="id">
+        insert into user (id, email, password,name, create_time,create_by, update_time, update_by,status)
+        values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+            #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{createBy,jdbcType=VARCHAR},
+             #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+    </insert>
+
+    <select id="findByEmailAndPassword" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user where email = #{email} and password = #{password} and status = 1;
+    </select>
+
+    <select id="findByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE email = #{email};
+    </select>
+
+    <select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE name = #{name};
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE status = 1
+    </select>
+
+    <update id="update" parameterType="com.mistra.userservice.entity.User">
+        UPDATE user SET
+        email=#{email},
+        password=#{password},
+        name=#{name},
+        update_at=#{updateTime},
+        update_by=#{updateBy},
+        status=#{status}
+        WHERE id=#{id}
+    </update>
+</mapper>
