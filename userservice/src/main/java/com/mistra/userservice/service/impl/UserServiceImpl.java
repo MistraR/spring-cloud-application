@@ -1,8 +1,12 @@
 package com.mistra.userservice.service.impl;
 
 import com.mistra.base.result.GenericResult;
+import com.mistra.base.result.PaginationResult;
+import com.mistra.base.result.Result;
 import com.mistra.userservice.dto.LoginDTO;
+import com.mistra.userservice.dto.RegisterDTO;
 import com.mistra.userservice.dto.TokenDTO;
+import com.mistra.userservice.dto.UserDTO;
 import com.mistra.userservice.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public GenericResult<TokenDTO> login(LoginDTO loginDTO) {
+        return null;
+    }
+
+    @Override
+    public Result register(RegisterDTO registerDTO) {
+        return null;
+    }
+
+    @Override
+    public GenericResult<PaginationResult<UserDTO>> getUserList(int pageNumber, int pageSize) {
         return null;
     }
 }

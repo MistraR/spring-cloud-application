@@ -1,5 +1,8 @@
 package com.mistra.userservice.entity;
 
+import com.mistra.base.entity.BaseEntity;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -8,41 +11,58 @@ import java.io.Serializable;
  * Time: 2018/7/15/015
  * Describe:
  */
-@Entity
-public class User implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+public class User extends BaseEntity {
 
-	@Column(nullable = false,  unique = true)
-	private String username;
+    private Long id;
 
-	@Column
-	private String password;
-	public User() {
-	}
+    private String email;
 
-	public Long getId() {
-		return id;
-	}
+    private String username;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private String password;
 
-	public String getUsername() {
-		return username;
-	}
+    public User() {
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
