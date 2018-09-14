@@ -2,7 +2,7 @@ server:
   port: 9999
 eureka:
   client:
-    #禁止注册自己
+    #禁止注册
     register-with-eureka: false
     fetch-registry: false
     serviceUrl:

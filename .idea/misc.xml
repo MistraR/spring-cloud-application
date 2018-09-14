@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="JavaScriptSettings">
-    <option name="languageLevel" value="ES6" />
-  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/eurekaserver/pom.xml" />
-        <option value="$PROJECT_DIR$/configserver/pom.xml" />
-        <option value="$PROJECT_DIR$/monitorserver/pom.xml" />
-        <option value="$PROJECT_DIR$/userservice/pom.xml" />
-        <option value="$PROJECT_DIR$/uaaservice/pom.xml" />
-        <option value="$PROJECT_DIR$/routeservice/pom.xml" />
-        <option value="$PROJECT_DIR$/adminserver/pom.xml" />
       </list>
     </option>
   </component>
