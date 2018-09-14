@@ -10,7 +10,7 @@
 
     <groupId>com.mistra</groupId>
     <artifactId>configserver</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
 
     <name>configserver</name>
     <description>Config Server project for Spring Boot</description>

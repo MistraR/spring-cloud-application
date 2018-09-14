@@ -16,5 +16,8 @@
         <module name="userservice" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="data" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
