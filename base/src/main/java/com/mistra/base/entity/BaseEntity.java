@@ -19,6 +19,8 @@ public class BaseEntity implements Serializable {
 
     private String updateBy;
 
+    private Integer status;
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -51,6 +53,14 @@ public class BaseEntity implements Serializable {
         this.updateBy = updateBy;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "BaseEntity{" +
@@ -58,6 +68,7 @@ public class BaseEntity implements Serializable {
                 ", updateTime=" + updateTime +
                 ", createBy='" + createBy + '\'' +
                 ", updateBy='" + updateBy + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
