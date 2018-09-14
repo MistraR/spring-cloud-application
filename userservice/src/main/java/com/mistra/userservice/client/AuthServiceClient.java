@@ -1,7 +1,7 @@
 package com.mistra.userservice.client;
 
 import com.mistra.userservice.client.hystrix.AuthServiceHystrix;
-import com.mistra.userservice.base.JWT;
+import com.mistra.base.JWT.JWT;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

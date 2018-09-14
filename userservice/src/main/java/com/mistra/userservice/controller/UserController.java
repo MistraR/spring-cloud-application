@@ -26,6 +26,7 @@ import javax.validation.constraints.Min;
  */
 @Api("用户模块controller")
 @RequestMapping("/user")
+@RestController
 public class UserController {
 
     @Autowired

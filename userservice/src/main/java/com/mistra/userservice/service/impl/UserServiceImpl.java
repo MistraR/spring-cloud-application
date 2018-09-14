@@ -1,13 +1,15 @@
 package com.mistra.userservice.service.impl;
 
-import com.mistra.base.result.GenericResult;
-import com.mistra.base.result.PaginationResult;
-import com.mistra.base.result.Result;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.mistra.base.result.*;
+import com.mistra.userservice.dao.UserMapper;
+import com.mistra.userservice.entity.User;
 import com.mistra.userservice.vo.LoginDTO;
 import com.mistra.userservice.vo.RegisterDTO;
 import com.mistra.userservice.vo.TokenDTO;
 import com.mistra.userservice.vo.UserDTO;
 import com.mistra.userservice.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,11 +19,18 @@ import org.springframework.stereotype.Service;
  * Description:
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public GenericResult<TokenDTO> login(LoginDTO loginDTO) {
-        return null;
+        User user = userMapper.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
+        if (user != null) {
+
+        }
+        return Results.failedGeneric(ResultCode.ERROR, ResultMessage.PASSWORD_ERROR);
     }
 
     @Override

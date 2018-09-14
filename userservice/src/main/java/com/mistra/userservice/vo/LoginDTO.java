@@ -16,19 +16,19 @@ import javax.validation.constraints.NotBlank;
 public class LoginDTO {
 
     @Email
-    @ApiModelProperty(name = "userName", value = "用户邮箱", required = true)
-    private String userName;
+    @ApiModelProperty(name = "email", value = "用户邮箱", required = true)
+    private String email;
 
     @NotBlank
     @ApiModelProperty(name = "password", value = "用户密码", required = true)
     private String password;
 
-    public String getUserName() {
-        return userName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -42,7 +42,7 @@ public class LoginDTO {
     @Override
     public String toString() {
         return "LoginDTO{" +
-                "userName='" + userName + '\'' +
+                "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

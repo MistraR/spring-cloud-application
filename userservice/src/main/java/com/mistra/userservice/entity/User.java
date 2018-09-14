@@ -1,10 +1,6 @@
 package com.mistra.userservice.entity;
 
 import com.mistra.base.entity.BaseEntity;
-import io.swagger.annotations.ApiModelProperty;
-
-import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * Author: RoronoaZoro丶WangRui

@@ -1,6 +1,5 @@
 package com.mistra.userservice;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
@@ -19,7 +18,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 //开启熔断器监控组件，实时查看荣孤单器的状况，如是否开启和关闭等等
 @EnableHystrixDashboard
 @EnableCircuitBreaker
-@MapperScan("com.mistra.userservice.dao")
 public class UserserviceApplication {
 
     public static void main(String[] args) {
