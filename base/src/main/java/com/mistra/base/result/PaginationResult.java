@@ -1,5 +1,7 @@
 package com.mistra.base.result;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,10 @@ import java.util.List;
  * Time: 上午10:19
  * Description:
  */
+@Data
 public class PaginationResult<T> extends GenericResult<List<T>>{
+
+    private long totalData;
 
     private long totalPageNumber;
 
@@ -20,39 +25,5 @@ public class PaginationResult<T> extends GenericResult<List<T>>{
 
     public PaginationResult(){
 
-    }
-
-    public long getTotalPageNumber() {
-        return totalPageNumber;
-    }
-
-    public void setTotalPageNumber(long totalPageNumber) {
-        this.totalPageNumber = totalPageNumber;
-    }
-
-    public int getCurrentPageNumber() {
-        return currentPageNumber;
-    }
-
-    public void setCurrentPageNumber(int currentPageNumber) {
-        this.currentPageNumber = currentPageNumber;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    @Override
-    public List<T> getData() {
-        return data;
-    }
-
-    @Override
-    public void setData(List<T> data) {
-        this.data = data;
     }
 }
