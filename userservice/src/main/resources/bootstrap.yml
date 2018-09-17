@@ -90,3 +90,7 @@ mybatis-plus:
     cache-enabled: false
     #配置JdbcTypeForNull
     jdbc-type-for-null: 'null'
+pagehelper:
+  offsetAsPageNum: true
+  rowBoundsWithCount: true
+  reasonable: true
