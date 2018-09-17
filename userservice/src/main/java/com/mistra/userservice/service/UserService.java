@@ -47,4 +47,13 @@ public interface UserService {
      * @return
      */
     GenericResult<PaginationResult<UserDTO>> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition);
+
+    /**
+     * 获取用户列表，带筛选条件
+     * 使用github page-helper分页插件查询，返回结果转换为自定义带DTO的PaginationResult
+     * @param userDTO
+     * @param pageQueryCondition
+     * @return
+     */
+    GenericResult<PaginationResult<UserDTO>> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition);
 }

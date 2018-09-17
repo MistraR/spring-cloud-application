@@ -32,9 +32,14 @@ import java.util.Properties;
 @Configuration
 public class BaseConfig {
 
-    @Value("${pagehelper.offsetAsPageNum}") String offsetAsPageNum;
-    @Value("${pagehelper.rowBoundsWithCount}") String rowBoundsWithCount;
-    @Value("${pagehelper.reasonable}") String reasonable;
+    @Value("${pagehelper.offsetAsPageNum}")
+    private String offsetAsPageNum;
+    @Value("${pagehelper.rowBoundsWithCount}")
+    private String rowBoundsWithCount;
+    @Value("${pagehelper.reasonable}")
+    private String reasonable;
+    @Value("${pagehelper.supportMethodsArguments}")
+    private String supportMethodsArguments;
 
     /**
      * 注册MyBatis分页插件PageHelper
@@ -46,6 +51,7 @@ public class BaseConfig {
         p.setProperty("offsetAsPageNum", offsetAsPageNum);
         p.setProperty("rowBoundsWithCount", rowBoundsWithCount);
         p.setProperty("reasonable", reasonable);
+        p.setProperty("supportMethodsArguments",supportMethodsArguments);
         pageHelper.setProperties(p);
         return pageHelper;
     }

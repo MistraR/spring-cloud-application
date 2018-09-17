@@ -58,6 +58,48 @@
         WHERE status = 1
     </select>
 
+    <select id="getSelectList2" resultMap="BaseResultMap" parameterType="com.mistra.userservice.vo.UserDTO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE 1=1
+        <if test="email!=null and email==0">
+            and email like CONCAT('%',#{email} ,'%')
+        </if>
+        <if test="userName!=null and userName==0">
+            and user_name like CONCAT('%',#{userName} ,'%')
+        </if>
+        and status = 1
+    </select>
+
+    <select id="methodParameter" resultMap="BaseResultMap" parameterType="com.mistra.userservice.vo.UserDTO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE 1=1
+        <if test="email!=null and email==0">
+            and email like CONCAT('%',#{email} ,'%')
+        </if>
+        <if test="userName!=null and userName==0">
+            and user_name like CONCAT('%',#{userName} ,'%')
+        </if>
+        and status = 1
+    </select>
+
+    <select id="getSelectList3" resultMap="BaseResultMap" parameterType="com.mistra.userservice.vo.UserDTO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        WHERE 1=1
+        <if test="email!=null and email==0">
+            and email like CONCAT('%',#{email} ,'%')
+        </if>
+        <if test="userName!=null and userName==0">
+            and user_name like CONCAT('%',#{userName} ,'%')
+        </if>
+        and status = 1
+    </select>
+
     <update id="update" parameterType="com.mistra.userservice.entity.User">
         UPDATE user SET
         email=#{email},

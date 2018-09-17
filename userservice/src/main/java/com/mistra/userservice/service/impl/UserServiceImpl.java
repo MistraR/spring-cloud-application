@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
 import com.mistra.base.result.*;
 import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.dao.UserMapper;
@@ -82,19 +83,51 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public GenericResult<PaginationResult<UserDTO>> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
-        Page<User> userPage = new Page<>(pageQueryCondition.getPageNumber(),pageQueryCondition.getPageSize());
-        Wrapper<User> userWrapper = new EntityWrapper<User>().like(StringUtils.isNotBlank(userDTO.getUserName()),"name",userDTO.getUserName());
-        userPage = selectPage(userPage,userWrapper);
+        Page<User> userPage = new Page<>(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
+        Wrapper<User> userWrapper = new EntityWrapper<User>().like(StringUtils.isNotBlank(userDTO.getUserName()), "name", userDTO.getUserName());
+        userPage = selectPage(userPage, userWrapper);
         return Results.successGeneric(pageDataConvert(userPage));
     }
 
     /**
+     * mybatis-plus的Page类和github-pagehelper的Page类重复了，这里就用全限定名
+     *
+     * @param userDTO
+     * @param pageQueryCondition
+     * @return
+     */
+    @Override
+    public GenericResult<PaginationResult<UserDTO>> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
+        PaginationResult<UserDTO> userDTOPaginationResult = new PaginationResult();
+        //1、配置supportMethodsArguments=true,则支持方法参数上传递分页参数，xml中不需要处理后面两个参数
+        List<User> userList1 = userMapper.methodParameter(userDTO, pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
+        logger.info("userList1.size---------------------------------------" + userList1.size());
+        //2、当UserDTO含有pageNum和pageSize参数并且都不为空时，直接传入UserDTO也可以实现分页
+        List<User> userList2 = userMapper.getSelectList3(userDTO);
+        logger.info("userList2.size---------------------------------------" + userList2.size());
+        //3、startPage()方法之后紧跟mapper接口查询方法
+        com.github.pagehelper.Page<User> pageInfo1 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
+        //lambda写法
+        com.github.pagehelper.PageInfo<User> pageInfo2 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize())
+                .doSelectPageInfo(() -> userMapper.getSelectList2(userDTO));
+        List<User> userList3 = userMapper.getSelectList2(userDTO);
+        logger.info("userList3.size---------------------------------------" + userList3.size());
+        userDTOPaginationResult.setTotalData(pageInfo1.getTotal());
+        userDTOPaginationResult.setPageSize(pageQueryCondition.getPageSize());
+        userDTOPaginationResult.setTotalPageNumber(pageInfo1.getPages());
+        userDTOPaginationResult.setCurrentPageNumber(pageQueryCondition.getPageNumber());
+        userDTOPaginationResult.setData(pageInfo1.getResult().stream().map(this::convertDTO).collect(Collectors.toList()));
+        return Results.successGeneric(userDTOPaginationResult);
+    }
+
+    /**
      * 分页数据DTO转换方法
+     *
      * @param userPage
      * @return
      */
-    public PaginationResult<UserDTO> pageDataConvert(Page<User> userPage){
-        if (userPage.getRecords().size()==0){
+    public PaginationResult<UserDTO> pageDataConvert(Page<User> userPage) {
+        if (userPage.getRecords().size() == 0) {
             return null;
         }
         PaginationResult<UserDTO> userDTOPaginationResult = new PaginationResult<>();

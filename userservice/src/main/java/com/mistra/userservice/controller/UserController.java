@@ -64,7 +64,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/selectList")
-    @ApiOperation("带查询条件的分页列表")
+    @ApiOperation("带查询条件的分页列表---mybatis-plus分页插件")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
             @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
@@ -73,5 +73,20 @@ public class UserController {
         return userService.getSelectList(userDTO, pageQueryCondition);
     }
 
+    /**
+     * * 使用github page-helper分页插件查询，返回结果转换为自定义带DTO的PaginationResult
+     * @param userDTO
+     * @param pageQueryCondition
+     * @return
+     */
+    @GetMapping("/selectList2")
+    @ApiOperation("带查询条件的分页列表---github分页插件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
+            @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
+    })
+    public GenericResult<PaginationResult<UserDTO>> getSelectList2(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition){
+        return userService.getSelectList2(userDTO,pageQueryCondition);
+    }
 
 }

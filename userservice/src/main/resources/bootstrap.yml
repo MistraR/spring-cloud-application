@@ -93,4 +93,7 @@ mybatis-plus:
 pagehelper:
   offsetAsPageNum: true
   rowBoundsWithCount: true
+  #分页合理化参数
   reasonable: true
+  #支持通过 Mapper 接口参数来传递分页参数
+  supportMethodsArguments: true
