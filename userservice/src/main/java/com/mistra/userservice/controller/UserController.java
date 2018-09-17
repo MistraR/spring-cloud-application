@@ -57,6 +57,12 @@ public class UserController {
         return null;
     }
 
+    /**
+     * * 使用mybatis-plus自带的分页插件查询，返回结果转换为自定义带DTO的PaginationResult
+     * @param userDTO
+     * @param pageQueryCondition
+     * @return
+     */
     @GetMapping("/selectList")
     @ApiOperation("带查询条件的分页列表")
     @ApiImplicitParams({
@@ -66,4 +72,6 @@ public class UserController {
     public GenericResult<PaginationResult<UserDTO>> getSelectList(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition) {
         return userService.getSelectList(userDTO, pageQueryCondition);
     }
+
+
 }

@@ -15,15 +15,16 @@ import com.mistra.userservice.vo.TokenDTO;
 import com.mistra.userservice.vo.UserDTO;
 import com.mistra.userservice.service.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -39,6 +40,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
     private AuthorizationService authorizationService;
@@ -81,11 +85,30 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Page<User> userPage = new Page<>(pageQueryCondition.getPageNumber(),pageQueryCondition.getPageSize());
         Wrapper<User> userWrapper = new EntityWrapper<User>().like(StringUtils.isNotBlank(userDTO.getUserName()),"name",userDTO.getUserName());
         userPage = selectPage(userPage,userWrapper);
-        PaginationResult<UserDTO> userDTOPaginationResult = new PaginationResult<>();
-        List<UserDTO> userDTOList = new ArrayList<>();
-        List<User> userList = userPage.getRecords();
-        userList.stream().forEach(user ->  userDTOList.add(userDTO));
+        return Results.successGeneric(pageDataConvert(userPage));
+    }
 
-        return null;
+    /**
+     * 分页数据DTO转换方法
+     * @param userPage
+     * @return
+     */
+    public PaginationResult<UserDTO> pageDataConvert(Page<User> userPage){
+        if (userPage.getRecords().size()==0){
+            return null;
+        }
+        PaginationResult<UserDTO> userDTOPaginationResult = new PaginationResult<>();
+        List<User> userList = userPage.getRecords();
+        List<UserDTO> userDTOList = userList.stream().map(this::convertDTO).collect(Collectors.toList());
+        userDTOPaginationResult.setData(userDTOList);
+        userDTOPaginationResult.setCurrentPageNumber(userPage.getCurrent());
+        userDTOPaginationResult.setTotalPageNumber(userPage.getPages());
+        userDTOPaginationResult.setPageSize(userPage.getSize());
+        userDTOPaginationResult.setTotalData(userPage.getTotal());
+        return userDTOPaginationResult;
+    }
+
+    private UserDTO convertDTO(User entity) {
+        return modelMapper.map(entity, UserDTO.class);
     }
 }

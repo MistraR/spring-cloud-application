@@ -41,6 +41,7 @@ public interface UserService {
 
     /**
      * 获取用户列表，带筛选条件
+     * 使用mybatis-plus自带的分页插件查询，返回结果转换为自定义带DTO的PaginationResult
      * @param userDTO
      * @param pageQueryCondition
      * @return

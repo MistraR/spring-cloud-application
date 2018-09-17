@@ -1,6 +1,7 @@
 package com.mistra.userservice.base;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * @Author: WangRui
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Time: 下午5:22
  * Description:
  */
+@Data
 public class PageQueryCondition {
 
     @ApiModelProperty(value = "页数")
@@ -22,35 +24,4 @@ public class PageQueryCondition {
     @ApiModelProperty(value = "排序规则 默认降序，升序=ASC")
     private String orderBy = "DESC";
 
-    public int getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public String getOrder() {
-        return order;
-    }
-
-    public void setOrder(String order) {
-        this.order = order;
-    }
-
-    public String getOrderBy() {
-        return orderBy;
-    }
-
-    public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
-    }
 }

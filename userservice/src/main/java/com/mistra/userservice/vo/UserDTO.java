@@ -2,6 +2,7 @@ package com.mistra.userservice.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * @Author: WangRui
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Time: 下午1:34
  * Description:
  */
+@Data
 @ApiModel(value = "UserDTO",description = "用户信息")
 public class UserDTO {
 
@@ -18,19 +20,4 @@ public class UserDTO {
     @ApiModelProperty(name = "userName",value = "用户姓名")
     private String userName;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 }
