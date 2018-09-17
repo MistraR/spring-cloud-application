@@ -51,6 +51,7 @@
         <poi-ooxml.version>3.17</poi-ooxml.version>
         <zipkin.version>2.0.0.RELEASE</zipkin.version>
         <jolokia-core.version>1.6.0</jolokia-core.version>
+        <github.pagehelper.version>5.1.4</github.pagehelper.version>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
         <spring-boot-starter-actuator>2.0.3.RELEASE</spring-boot-starter-actuator>
         <spring-boot-admin-starter-client>2.0.1</spring-boot-admin-starter-client>
@@ -238,6 +239,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-core</artifactId>
                 <version>${hutool-core}</version>
+            </dependency>
+            <!-- github.pagehelper -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${github.pagehelper.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

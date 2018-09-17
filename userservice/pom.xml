@@ -21,6 +21,7 @@
             <groupId>com.mistra</groupId>
             <artifactId>base</artifactId>
         </dependency>
+        <!--database-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -54,7 +55,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
         </dependency>
-        <!-- dashboard -->
         <!-- actuator-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,8 +79,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
-        <!--database-->
-
         <!--security-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -113,6 +111,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
         </dependency>
     </dependencies>
 
