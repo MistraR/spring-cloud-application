@@ -2,6 +2,7 @@ package com.mistra.userservice.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotBlank;
  * Time: 下午1:25
  * Description:
  */
+@Data
 @ApiModel(value = "RegisterDTO",description = "用户注册信息")
 public class RegisterDTO {
 
@@ -30,30 +32,6 @@ public class RegisterDTO {
     @NotBlank
     @Length(max = 32,min = 6)
     private String password;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public String toString() {
