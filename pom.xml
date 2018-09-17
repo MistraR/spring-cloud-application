@@ -27,31 +27,32 @@
     </parent>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
-        <druid.version>1.1.10</druid.version>
         <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-cloud-starter-hystrix>1.4.5.RELEASE</spring-cloud-starter-hystrix>
+        <hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
         <mybatis.srping.version>1.3.2</mybatis.srping.version>
         <mysql-connector-java>5.1.46</mysql-connector-java>
         <commons.lang3.version>3.7</commons.lang3.version>
-        <hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
-        <swagger2.version>2.8.0</swagger2.version>
         <mybatisplus.version>2.3</mybatisplus.version>
-        <nekohtml.version>1.9.22</nekohtml.version>
-        <poi.version>3.17</poi.version>
+        <swagger2.version>2.8.0</swagger2.version>
         <shiro.version>1.4.0</shiro.version>
+        <java.version>1.8</java.version>
+        <poi.version>3.17</poi.version>
         <java-jwt>3.4.0</java-jwt>
         <lombok>1.18.2</lombok>
         <modelmapper>2.2.0</modelmapper>
+        <hutool-core>4.1.12</hutool-core>
+        <druid.version>1.1.10</druid.version>
         <okhttp.version>3.10.0</okhttp.version>
+        <nekohtml.version>1.9.22</nekohtml.version>
         <poi-ooxml.version>3.17</poi-ooxml.version>
-        <jolokia-core.version>1.6.0</jolokia-core.version>
         <zipkin.version>2.0.0.RELEASE</zipkin.version>
+        <jolokia-core.version>1.6.0</jolokia-core.version>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
         <spring-boot-starter-actuator>2.0.3.RELEASE</spring-boot-starter-actuator>
-        <spring-cloud-starter-hystrix>1.4.5.RELEASE</spring-cloud-starter-hystrix>
         <spring-boot-admin-starter-client>2.0.1</spring-boot-admin-starter-client>
         <spring-boot-admin-starter-server>2.0.2</spring-boot-admin-starter-server>
         <spring-cloud-starter-hystrix-dashboard>1.4.5.RELEASE</spring-cloud-starter-hystrix-dashboard>
@@ -232,11 +233,11 @@
                 <version>${lombok}</version>
                 <scope>provided</scope>
             </dependency>
-            <!-- 丰富的Java工具 -->
+            <!-- 丰富的Java工具包 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-core</artifactId>
-                <version>4.1.12</version>
+                <version>${hutool-core}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
