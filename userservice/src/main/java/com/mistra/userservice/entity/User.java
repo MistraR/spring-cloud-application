@@ -7,7 +7,7 @@ import com.mistra.base.entity.BaseEntity;
  * Time: 2018/7/15/015
  * Describe:
  */
-public class User extends BaseEntity {
+public class User extends BaseEntity implements Cloneable {
 
     private Long id;
 
@@ -60,5 +60,16 @@ public class User extends BaseEntity {
                 ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        User user = null;
+        try {
+            user = (User) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }
