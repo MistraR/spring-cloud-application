@@ -1,6 +1,7 @@
 package com.mistra.userservice.base;
 
 import cn.hutool.core.util.ReflectUtil;
+import com.github.pagehelper.PageHelper;
 import jdk.nashorn.internal.objects.annotations.Getter;
 import jdk.nashorn.internal.objects.annotations.Setter;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.ConditionalConverter;
 import org.modelmapper.spi.MappingContext;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +21,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 
 /**
  * @Author: WangRui
@@ -29,6 +32,23 @@ import java.util.Objects;
 @Configuration
 public class BaseConfig {
 
+    @Value("${pagehelper.offsetAsPageNum}") String offsetAsPageNum;
+    @Value("${pagehelper.rowBoundsWithCount}") String rowBoundsWithCount;
+    @Value("${pagehelper.reasonable}") String reasonable;
+
+    /**
+     * 注册MyBatis分页插件PageHelper
+     */
+    @Bean
+    public PageHelper pageHelper() {
+        PageHelper pageHelper = new PageHelper();
+        Properties p = new Properties();
+        p.setProperty("offsetAsPageNum", offsetAsPageNum);
+        p.setProperty("rowBoundsWithCount", rowBoundsWithCount);
+        p.setProperty("reasonable", reasonable);
+        pageHelper.setProperties(p);
+        return pageHelper;
+    }
 
     @Bean
     public ModelMapper modelMapper() {
