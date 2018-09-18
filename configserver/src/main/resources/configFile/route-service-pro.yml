@@ -1,3 +1,5 @@
+server:
+  port: 9997
 hystrix:
   command:
     default:
@@ -25,7 +27,5 @@ zuul:
       #sensitiveHeaders的默认设置会在转发请求时去掉头信息
       #覆盖sensitiveHeaders的默认设置，转发时保留请求中的敏感头信息，如Cookie，Set-Cookie，Authorization
       sensitiveHeaders:
-#程序端口
-server:
-  port: 1001
+
 

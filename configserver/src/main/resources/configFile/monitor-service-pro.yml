@@ -1,5 +1,5 @@
 server:
-  port: 8002
+  port: 9995
 security.basic.enabled: false
 turbine:
   aggregator:

@@ -4,9 +4,10 @@ package com.mistra.base.constant;
  * @Author: WangRui
  * @Date: 2018-09-18
  * Time: 下午3:48
- * Description:
+ * Description: JWT Token 常量
  */
 public class JWTConstant {
+
     /**
      * header里面用户key值
      */

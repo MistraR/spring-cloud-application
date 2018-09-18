@@ -1,11 +1,11 @@
+server:
+  port: 9996
 spring:
   application:
     name: admin-server
   profiles:
     active:
       - secure
-server:
-  port: 9997
 
 # tag::configuration-eureka[]
 eureka:   #<1>

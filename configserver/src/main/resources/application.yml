@@ -11,6 +11,8 @@
 #      label: master
 
 # ---native
+server:
+  port: 9998
 spring:
   cloud:
     config:
@@ -30,10 +32,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:9999/eureka/
-
-# port
-server:
-  port: 9998
 
 management:
   security:
