@@ -65,13 +65,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result register(RegisterDTO registerDTO) {
         Assert.notNull(registerDTO.getEmail(), "Email is null");
-        Assert.notNull(registerDTO.getName(), "Name is null");
+        Assert.notNull(registerDTO.getUserName(), "Name is null");
         Assert.notNull(registerDTO.getPassword(), "Password is null");
         logger.info("开始注册-->email:{}, password:{}", registerDTO.getEmail(), registerDTO.getPassword());
         User user = new User();
         user.setEmail(registerDTO.getEmail());
         user.setPassword(registerDTO.getPassword());
-        user.setUserName(registerDTO.getName());
+        user.setUserName(registerDTO.getUserName());
         user.setCreateTime(new Date(System.currentTimeMillis()));
         user.setUpdateTime(new Date(System.currentTimeMillis()));
         userMapper.insert(user);
