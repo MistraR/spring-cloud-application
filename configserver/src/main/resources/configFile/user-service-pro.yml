@@ -10,9 +10,6 @@ spring:
     admin:
       client:
         url: "http://localhost:9997"
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -47,13 +44,6 @@ spring:
 #      ddl-auto: update
 #    show-sql: true
 
-  #rabbitmq:
-   # host: localhost
-   # port: 5672
-    #username: guest
-    #password: guest
-    #publisher-confirms: true
-    #virtual-host: /
 management:
   endpoints:
     web:

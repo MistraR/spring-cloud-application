@@ -23,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -99,6 +101,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public GenericResult<PaginationResult<UserDTO>> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
+        //测试JWT认证
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String userId = authorizationService.parseToken(authorizationService.getToken(servletRequestAttributes.getRequest()));
+        if (StringUtils.isEmpty(userId)){
+            return null;
+        }
         PaginationResult<UserDTO> userDTOPaginationResult = new PaginationResult();
         //1、配置supportMethodsArguments=true,则支持方法参数上传递分页参数，xml中不需要处理后面两个参数
         List<User> userList1 = userMapper.methodParameter(userDTO, pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
