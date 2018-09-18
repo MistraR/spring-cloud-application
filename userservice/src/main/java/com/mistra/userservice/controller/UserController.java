@@ -1,6 +1,5 @@
 package com.mistra.userservice.controller;
 
-import com.baomidou.mybatisplus.plugins.Page;
 import com.mistra.base.result.GenericResult;
 import com.mistra.base.result.PaginationResult;
 import com.mistra.base.result.Result;

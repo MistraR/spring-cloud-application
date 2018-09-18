@@ -1,13 +1,18 @@
 package com.mistra.userservice.entity;
 
 import com.mistra.base.entity.BaseEntity;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * Author: RoronoaZoro丶WangRui
  * Time: 2018/7/15/015
  * Describe:
  */
-public class User extends BaseEntity implements Cloneable {
+
+@Data
+public class User extends BaseEntity implements Cloneable, Serializable {
 
     private Long id;
 
@@ -16,51 +21,6 @@ public class User extends BaseEntity implements Cloneable {
     private String userName;
 
     private String password;
-
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 
     @Override
     protected Object clone() throws CloneNotSupportedException {

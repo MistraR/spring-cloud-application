@@ -97,3 +97,10 @@ pagehelper:
   reasonable: true
   #支持通过 Mapper 接口参数来传递分页参数
   supportMethodsArguments: true
+jwt:
+  #过期时间
+  #securitycode: roronorazoro
+  secret: mistra.wang
+  #该JWT的签发者
+  issuer: MistraR
+  source: springCloud

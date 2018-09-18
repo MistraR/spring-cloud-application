@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.Date;
@@ -121,11 +122,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     /**
-     * 分页数据DTO转换方法
+     * 分页数据DTO转换
      *
      * @param userPage
      * @return
      */
+    @Transactional
     public PaginationResult<UserDTO> pageDataConvert(Page<User> userPage) {
         if (userPage.getRecords().size() == 0) {
             return null;
