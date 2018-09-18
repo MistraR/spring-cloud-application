@@ -19,5 +19,4 @@ public class UserDTO {
 
     @ApiModelProperty(name = "userName",value = "用户姓名")
     private String userName;
-
 }

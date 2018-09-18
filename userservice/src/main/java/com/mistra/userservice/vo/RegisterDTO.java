@@ -23,22 +23,13 @@ public class RegisterDTO {
     @NotBlank
     private String email;
 
-    @ApiModelProperty(name = "name",value = "密码",required = true)
+    @ApiModelProperty(name = "userName",value = "密码",required = true)
     @NotBlank
     @Length(max = 20,message = "用户名不能超过20个字符")
-    private String name;
+    private String userName;
 
     @ApiModelProperty(name = "password",value = "密码",required = true)
     @NotBlank
     @Length(max = 32,min = 6)
     private String password;
-
-    @Override
-    public String toString() {
-        return "RegisterDTO{" +
-                "email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

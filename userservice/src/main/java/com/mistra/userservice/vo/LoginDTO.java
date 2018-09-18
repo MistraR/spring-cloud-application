@@ -24,12 +24,4 @@ public class LoginDTO {
     @NotBlank
     @ApiModelProperty(name = "password", value = "用户密码", required = true)
     private String password;
-
-    @Override
-    public String toString() {
-        return "LoginDTO{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

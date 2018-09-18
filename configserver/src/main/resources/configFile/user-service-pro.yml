@@ -3,13 +3,13 @@ server:
 
 spring:
   #指定zipkin服务地址
-  zipkin:
-    base-url: http://localhost:8001
-  #admin 监控地址
-  boot:
-    admin:
-      client:
-        url: "http://localhost:9997"
+#  zipkin:
+#    base-url: http://localhost:8001
+#  #admin 监控地址
+#  boot:
+#    admin:
+#      client:
+#        url: "http://localhost:9997"
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
