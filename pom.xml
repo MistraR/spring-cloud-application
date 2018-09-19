@@ -50,6 +50,7 @@
         <okhttp.version>3.10.0</okhttp.version>
         <nekohtml.version>1.9.22</nekohtml.version>
         <poi-ooxml.version>3.17</poi-ooxml.version>
+        <eureka-client>2.0.1.RELEASE</eureka-client>
         <zipkin.version>2.0.0.RELEASE</zipkin.version>
         <jolokia-core.version>1.6.0</jolokia-core.version>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
@@ -183,6 +184,11 @@
                 <groupId>org.jolokia</groupId>
                 <artifactId>jolokia-core</artifactId>
                 <version>${jolokia-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+                <version>${eureka-client}</version>
             </dependency>
             <!--feign-->
             <dependency>

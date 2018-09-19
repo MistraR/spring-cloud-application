@@ -3,7 +3,15 @@ spring:
     name: uaa-service
   cloud:
     config:
-      uri: http://localhost:8003
       fail-fast: true
+      discovery:
+        service-id: config-server
+        enabled: true
   profiles:
       active: pro
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/

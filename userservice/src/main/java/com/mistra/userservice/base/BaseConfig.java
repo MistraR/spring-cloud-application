@@ -11,8 +11,10 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.spi.ConditionalConverter;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Executable;
@@ -38,8 +40,6 @@ public class BaseConfig {
     private String rowBoundsWithCount;
     @Value("${pagehelper.reasonable}")
     private String reasonable;
-    @Value("${pagehelper.supportMethodsArguments}")
-    private String supportMethodsArguments;
 
     /**
      * 注册MyBatis分页插件PageHelper
@@ -51,9 +51,14 @@ public class BaseConfig {
         p.setProperty("offsetAsPageNum", offsetAsPageNum);
         p.setProperty("rowBoundsWithCount", rowBoundsWithCount);
         p.setProperty("reasonable", reasonable);
-        p.setProperty("supportMethodsArguments",supportMethodsArguments);
         pageHelper.setProperties(p);
         return pageHelper;
+    }
+
+    @LoadBalanced
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 
     @Bean

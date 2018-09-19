@@ -25,3 +25,11 @@ zuul:
     userApi:
       path: /userApi/**
       serviceId: user-service
+    uaaApi:
+      path: /uaaApi/**
+      serviceId: uaa-service
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 60000
+ribbon:
+  Re
