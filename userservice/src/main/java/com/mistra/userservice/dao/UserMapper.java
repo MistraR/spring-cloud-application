@@ -21,11 +21,9 @@ import java.util.List;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
-    User findByEmailAndPassword(String email, String password);
+    User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
     List<User> getSelectList2(UserDTO userDTO);
-
-    List<User> methodParameter(@Param("userDTO") UserDTO userDTO, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 
     List<User> getSelectList3(UserDTO userDTO);
 

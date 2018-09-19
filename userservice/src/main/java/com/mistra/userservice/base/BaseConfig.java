@@ -59,14 +59,11 @@ public class BaseConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-
         modelMapper.getConfiguration().getConverters().add(new EnhanceEnumConverter());
-
         return modelMapper;
     }
 
     public static class EnhanceEnumConverter implements ConditionalConverter<Object, Enum<?>> {
-
         private static Map<Pair<Class<?>, Class<?>>, Executable> CACHES = new HashMap<>();
 
         @Override
@@ -90,7 +87,6 @@ public class BaseConfig {
                     e1.printStackTrace();
                 }
             }
-
             return null;
         }
 
@@ -110,11 +106,8 @@ public class BaseConfig {
         }
 
         private Executable getExecutableOrCreate(Class<?> sourceType, Class<?> destinationType) {
-
             Executable e = null;
-
             Pair<Class<?>, Class<?>> pair = new Pair<>(sourceType, destinationType);
-
             synchronized (CACHES) {
                 e = CACHES.get(pair);
                 if (Objects.isNull(e)) {
@@ -129,7 +122,6 @@ public class BaseConfig {
                     }
                 }
             }
-
             return e;
         }
 

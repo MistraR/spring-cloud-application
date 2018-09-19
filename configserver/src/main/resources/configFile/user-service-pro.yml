@@ -1,5 +1,5 @@
 server:
-  port: 8002
+  port: 8001
 
 spring:
   #指定zipkin服务地址
@@ -39,24 +39,11 @@ spring:
       connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       # 合并多个DruidDataSource的监控数据
       use-global-data-source-stat: true
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    show-sql: true
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-      health:
-        show-details: ALWAYS
-foo: foo version 1
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/mistra/axela/*/mapper/*Mapper.xml
   # 如果是放在resource目录 classpath:/mapper/*Mapper.xml
-  mapper-locations: classpath*:mapper/*Mapper.xml
+  mapper-locations: classpath:mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.mistra.userservice.entity
   global-config:
@@ -86,8 +73,6 @@ pagehelper:
   rowBoundsWithCount: true
   #分页合理化参数
   reasonable: true
-  #支持通过 Mapper 接口参数来传递分页参数
-  supportMethodsArguments: true
 jwt:
   #securitycode: roronorazoro
   secret: mistra.wang

@@ -76,6 +76,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
      */
     @Override
     public String parseToken(String token) {
+        if (StringUtils.isEmpty(token)){
+            return null;
+        }
         DecodedJWT jwt = jwtVerifier.verify(token);
         if (jwt.getExpiresAt().before(TimeUtil.getNowTime())) {
             return null;

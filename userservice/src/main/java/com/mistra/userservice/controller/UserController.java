@@ -3,6 +3,7 @@ package com.mistra.userservice.controller;
 import com.mistra.base.result.GenericResult;
 import com.mistra.base.result.PaginationResult;
 import com.mistra.base.result.Result;
+import com.mistra.base.result.Results;
 import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.vo.LoginDTO;
 import com.mistra.userservice.vo.RegisterDTO;
@@ -32,6 +33,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/test")
+    @ApiOperation("访问成功测试")
+    public Result test(){
+        return Results.success();
+    }
 
     @PostMapping("/register")
     @ApiOperation("用户注册")
@@ -84,7 +91,7 @@ public class UserController {
             @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
             @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
     })
-    public GenericResult<PaginationResult<UserDTO>> getSelectList2(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition){
+    public GenericResult<PaginationResult<UserDTO>> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition){
         return userService.getSelectList2(userDTO,pageQueryCondition);
     }
 

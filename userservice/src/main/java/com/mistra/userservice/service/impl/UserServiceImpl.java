@@ -72,6 +72,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setEmail(registerDTO.getEmail());
         user.setPassword(registerDTO.getPassword());
         user.setUserName(registerDTO.getUserName());
+        user.setStatus(1);
         user.setCreateTime(new Date(System.currentTimeMillis()));
         user.setUpdateTime(new Date(System.currentTimeMillis()));
         userMapper.insert(user);
@@ -108,19 +109,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return null;
         }
         PaginationResult<UserDTO> userDTOPaginationResult = new PaginationResult();
-        //1、配置supportMethodsArguments=true,则支持方法参数上传递分页参数，xml中不需要处理后面两个参数
-        List<User> userList1 = userMapper.methodParameter(userDTO, pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
+        //1、当UserDTO含有pageNum和pageSize参数并且都不为空时，直接传入UserDTO也可以实现分页
+        List<User> userList1 = userMapper.getSelectList3(userDTO);
         logger.info("userList1.size---------------------------------------" + userList1.size());
-        //2、当UserDTO含有pageNum和pageSize参数并且都不为空时，直接传入UserDTO也可以实现分页
-        List<User> userList2 = userMapper.getSelectList3(userDTO);
-        logger.info("userList2.size---------------------------------------" + userList2.size());
-        //3、startPage()方法之后紧跟mapper接口查询方法
+        //2、startPage()方法之后紧跟mapper接口查询方法
         com.github.pagehelper.Page<User> pageInfo1 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
+        List<User> userList2 = userMapper.getSelectList2(userDTO);
+        logger.info("userList2.size---------------------------------------" + userList2.size());
         //lambda写法
         com.github.pagehelper.PageInfo<User> pageInfo2 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize())
                 .doSelectPageInfo(() -> userMapper.getSelectList2(userDTO));
-        List<User> userList3 = userMapper.getSelectList2(userDTO);
-        logger.info("userList3.size---------------------------------------" + userList3.size());
+        logger.info("userList3.size---------------------------------------" + pageInfo2.getList().size());
         userDTOPaginationResult.setTotalData(pageInfo1.getTotal());
         userDTOPaginationResult.setPageSize(pageQueryCondition.getPageSize());
         userDTOPaginationResult.setTotalPageNumber(pageInfo1.getPages());

@@ -1,9 +1,15 @@
 server:
   port: 9999
+
 eureka:
+  instance:
+    hostname: localhost
   client:
-    #禁止注册
+    #禁止注册自己
     register-with-eureka: false
     fetch-registry: false
     serviceUrl:
-      defaultZone: http://localhost:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    #自我保护模式关闭
+    enable-self-preservation: false

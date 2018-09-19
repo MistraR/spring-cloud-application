@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mistra.data.dao.UserMapper">
+<mapper namespace="com.mistra.userservice.dao.UserMapper">
     <resultMap id="BaseResultMap" type="com.mistra.userservice.entity.User">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="email" property="email" jdbcType="VARCHAR"/>
@@ -14,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, email, password, name,create_time,update_time,create_by,update_by,status
+        id, email, password, user_name,create_time,update_time,create_by,update_by,status
     </sql>
 
     <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -25,9 +25,9 @@
     </select>
 
     <insert id="insert" parameterType="com.mistra.userservice.entity.User" useGeneratedKeys="true" keyProperty="id">
-        insert into user (id, email, password,name, create_time,create_by, update_time, update_by,status)
+        insert into user (id, email, password,user_name, create_time,create_by, update_time, update_by,status)
         values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-            #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{createBy,jdbcType=VARCHAR},
+            #{userName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},#{createBy,jdbcType=VARCHAR},
              #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
     </insert>
 
@@ -48,7 +48,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM user
-        WHERE name = #{name};
+        WHERE user_name = #{userName};
     </select>
 
     <select id="findAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -63,38 +63,25 @@
         <include refid="Base_Column_List"/>
         FROM user
         WHERE 1=1
-        <if test="email!=null and email==0">
+        <if test="email!=null">
             and email like CONCAT('%',#{email} ,'%')
         </if>
-        <if test="userName!=null and userName==0">
+        <if test="userName!=null">
             and user_name like CONCAT('%',#{userName} ,'%')
         </if>
         and status = 1
     </select>
 
-    <select id="methodParameter" resultMap="BaseResultMap" parameterType="com.mistra.userservice.vo.UserDTO">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM user
-        WHERE 1=1
-        <if test="email!=null and email==0">
-            and email like CONCAT('%',#{email} ,'%')
-        </if>
-        <if test="userName!=null and userName==0">
-            and user_name like CONCAT('%',#{userName} ,'%')
-        </if>
-        and status = 1
-    </select>
 
     <select id="getSelectList3" resultMap="BaseResultMap" parameterType="com.mistra.userservice.vo.UserDTO">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user
         WHERE 1=1
-        <if test="email!=null and email==0">
+        <if test="email!=null">
             and email like CONCAT('%',#{email} ,'%')
         </if>
-        <if test="userName!=null and userName==0">
+        <if test="userName!=null">
             and user_name like CONCAT('%',#{userName} ,'%')
         </if>
         and status = 1
@@ -104,7 +91,7 @@
         UPDATE user SET
         email=#{email},
         password=#{password},
-        name=#{name},
+        user_name=#{userName},
         update_at=#{updateTime},
         update_by=#{updateBy},
         status=#{status}

@@ -1,12 +1,27 @@
+server:
+  port: 9997
+
 spring:
   application:
     name: route-service
-  cloud:
-    config:
-      uri: http://localhost:9998
-      fail-fast: true
-  profiles:
-    active: pro
+#  cloud:
+#    config:
+#      fail-fast: true
+#      discovery:
+#        service-id: config-server
+#        enabled: true
+#  profiles:
+#    active: pro
 
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/
 
-
+zuul:
+  routes:
+    userApi:
+      path: /userApi/**
+      serviceId: user-service
