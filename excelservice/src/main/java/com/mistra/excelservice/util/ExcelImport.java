@@ -1,5 +1,6 @@
 package com.mistra.excelservice.util;
 
+import com.mistra.base.exception.ServiceErrorException;
 import com.mistra.excelservice.annotation.ExcelCell;
 import com.mistra.excelservice.annotation.ExcelCellType;
 import org.apache.poi.hssf.usermodel.HSSFCell;
