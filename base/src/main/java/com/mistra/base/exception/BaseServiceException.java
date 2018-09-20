@@ -1,6 +1,5 @@
 package com.mistra.base.exception;
 
-import net.cdsunrise.wm.base.web.ResultCode;
 
 /**
  * @author lijun

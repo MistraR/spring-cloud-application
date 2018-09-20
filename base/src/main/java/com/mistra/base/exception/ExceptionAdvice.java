@@ -1,9 +1,6 @@
 package com.mistra.base.exception;
 
 import feign.FeignException;
-import io.jsonwebtoken.ExpiredJwtException;
-import net.cdsunrise.wm.base.web.AjaxResult;
-import net.cdsunrise.wm.base.web.ResultCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -144,13 +141,6 @@ public class ExceptionAdvice {
     public AjaxResult handlerF(FeignException ex) {
         logger.error("Feign调用异常：", ex);
         return AjaxResult.error(ResultCode.UNKNOWN_ERROR);
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(ExpiredJwtException.class)
-    public AjaxResult handleExpiredJwtException(ExpiredJwtException e) {
-        logger.error("用户登录过期", e);
-        return AjaxResult.error(ResultCode.LOGIN_EXPIRED_ERROR);
     }
 
     /**
