@@ -1,2 +1,15 @@
 server:
   port: 8002
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+spring:
+  boot:
+    admin:
+      client:
+        #注册的Spring Boot Admin Server的URL
+        url: http://localhost:9996

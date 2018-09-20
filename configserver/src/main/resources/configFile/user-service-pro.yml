@@ -2,15 +2,18 @@ server:
   port: 8001
   servletPath: /userStatus
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 spring:
-  #指定zipkin服务地址
-#  zipkin:
-#    base-url: http://localhost:8001
-#  #admin 监控地址
-#  boot:
-#    admin:
-#      client:
-#        url: "http://localhost:9997"
+  boot:
+    admin:
+      client:
+        #注册的Spring Boot Admin Server的URL
+        url: http://localhost:9996
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -69,11 +72,13 @@ mybatis-plus:
     cache-enabled: false
     #配置JdbcTypeForNull
     jdbc-type-for-null: 'null'
+
 pagehelper:
   offsetAsPageNum: true
   rowBoundsWithCount: true
   #分页合理化参数
   reasonable: true
+
 jwt:
   #securitycode: roronorazoro
   secret: mistra.wang
