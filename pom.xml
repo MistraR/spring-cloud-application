@@ -52,6 +52,7 @@
         <poi-ooxml.version>3.17</poi-ooxml.version>
         <eureka-client>2.0.1.RELEASE</eureka-client>
         <zipkin.version>2.0.0.RELEASE</zipkin.version>
+        <netflix-ribbon>2.0.1.RELEASE</netflix-ribbon>
         <jolokia-core.version>1.6.0</jolokia-core.version>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
         <pagehelper-spring-boot-starter>1.2.5</pagehelper-spring-boot-starter>
@@ -220,6 +221,11 @@
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-server</artifactId>
                 <version>${spring-boot-admin-starter-server}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+                <version>${netflix-ribbon}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

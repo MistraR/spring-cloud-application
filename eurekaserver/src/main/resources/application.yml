@@ -1,9 +1,14 @@
 server:
   port: 9999
+#  servlet:
+#    path: /eureka
 
 eureka:
   instance:
     hostname: localhost
+    #Eureka实例的状态页面和运行状况指示
+#    status-page-url: ${server.servlet.path}/info
+#    health-check-url-path: ${server.servlet.path}/health
   client:
     #禁止注册自己
     register-with-eureka: false

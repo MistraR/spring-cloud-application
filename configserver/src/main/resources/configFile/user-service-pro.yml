@@ -1,5 +1,6 @@
 server:
   port: 8001
+  servletPath: /userStatus
 
 spring:
   #指定zipkin服务地址
