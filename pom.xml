@@ -54,11 +54,13 @@
         <zipkin.version>2.0.0.RELEASE</zipkin.version>
         <netflix-ribbon>2.0.1.RELEASE</netflix-ribbon>
         <jolokia-core.version>1.6.0</jolokia-core.version>
+        <spring-boot-starter-web>2.0.5.RELEASE</spring-boot-starter-web>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
         <pagehelper-spring-boot-starter>1.2.5</pagehelper-spring-boot-starter>
         <spring-boot-starter-actuator>2.0.3.RELEASE</spring-boot-starter-actuator>
         <spring-boot-admin-starter-client>2.0.1</spring-boot-admin-starter-client>
         <spring-boot-admin-starter-server>2.0.2</spring-boot-admin-starter-server>
+        <spring-boot-starter-security>2.0.5.RELEASE</spring-boot-starter-security>
         <spring-cloud-starter-hystrix-dashboard>1.4.5.RELEASE</spring-cloud-starter-hystrix-dashboard>
     </properties>
 
@@ -68,6 +70,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot-starter-web}</version>
         </dependency>
     </dependencies>
 
@@ -196,6 +203,11 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-feign</artifactId>
                 <version>${spring-cloud-starter-feign}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring-boot-starter-security}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
