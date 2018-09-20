@@ -31,3 +31,5 @@ zuul:
   host:
     socket-timeout-millis: 60000
     connect-timeout-millis: 60000
+  #所有请求加上此前缀
+  #prefix: /V1
