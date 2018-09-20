@@ -10,6 +10,7 @@
         <module name="base" />
         <module name="configserver" />
         <module name="eurekaserver" />
+        <module name="excelservice" />
         <module name="monitorserver" />
         <module name="routeservice" />
         <module name="uaaservice" />
