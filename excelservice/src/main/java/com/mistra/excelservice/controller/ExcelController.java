@@ -1,12 +1,18 @@
 package com.mistra.excelservice.controller;
 
+import com.mistra.base.result.PaginationResult;
+import com.mistra.base.result.Result;
+import com.mistra.base.result.ResultCode;
+import com.mistra.base.result.Results;
 import com.mistra.excelservice.entity.ExcelEntity;
 import com.mistra.excelservice.service.ExcelService;
 import com.mistra.excelservice.util.ExcelImport;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,21 +28,25 @@ import java.util.List;
  */
 @RestController
 @Api("Excel导入Controller")
+@RequestMapping("/excel")
 public class ExcelController {
 
     @Autowired
     private ExcelService excelService;
 
     @ApiOperation("Excel导入")
-    @PostMapping(value = "/ledgerImport")
-    public String ledgerImport(MultipartFile file) throws ParseException {
+    @ApiImplicitParam(name = "file",dataType = "MultipartFile",value = "Excel文件",required = true)
+    @PostMapping(value = "/import")
+    public Result<PaginationResult<ExcelEntity>> ledgerImport(MultipartFile file) throws ParseException {
         try {
             List<ExcelEntity> list = ExcelImport.excelTransformationEntityList(ExcelEntity.class, file.getInputStream(), file.getOriginalFilename(), 1, 1);
             excelService.saveBatch(list);
-            return "导入成功。";
+            PaginationResult<ExcelEntity> paginationResult = new PaginationResult<>();
+            Result result = new Result(true, ResultCode.SUCCESS.value(),"",paginationResult);
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
-            return "导入失败,请联系系统管理员。";
+            return new Result<PaginationResult<ExcelEntity>>(true, ResultCode.SUCCESS.value(),"",null);
         }
     }
 

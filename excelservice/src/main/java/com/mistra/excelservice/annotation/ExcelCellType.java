@@ -46,5 +46,5 @@ public enum ExcelCellType {
     /**
      * 错误格式
      */
-    CELL_TYPE_ERROR
+    CELL_TYPE_ERROR;
 }

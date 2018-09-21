@@ -59,7 +59,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             tokenDTO.setToken(authorizationService.generateToken(user.getId().toString()));
             return Results.successGeneric(tokenDTO);
         }
-        return Results.failedGeneric(ResultCode.ERROR, ResultMessage.PASSWORD_ERROR);
+        return Results.failedGeneric(ResultCode.SERVICE_ERROR.toString(), ResultMessage.PASSWORD_ERROR);
     }
 
     @Override

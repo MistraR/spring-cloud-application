@@ -43,7 +43,6 @@
         <druid.version>1.1.10</druid.version>
         <shiro.version>1.4.0</shiro.version>
         <java.version>1.8</java.version>
-        <poi.version>3.17</poi.version>
         <java-jwt>3.4.0</java-jwt>
         <lombok>1.18.2</lombok>
         <modelmapper>2.2.0</modelmapper>
@@ -227,7 +226,7 @@
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>p
                 <version>${spring-boot-admin-starter-client}</version>
             </dependency>
             <dependency>

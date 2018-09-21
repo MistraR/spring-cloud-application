@@ -1,21 +1,69 @@
 package com.mistra.base.result;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * @Author: WangRui
  * @Date: 2018-09-14
  * Time: 下午4:41
  * Description:
  */
-public class ResultCode {
+public enum ResultCode {
 
-    public ResultCode(){
+    /**
+     * 请求成功
+     */
+    SUCCESS(200),
 
+    /**
+     * 请求报文存在语法错误或参数错误
+     */
+    BAD_REQUEST(400),
+
+    /**
+     * 权限认证失败
+     */
+    UNAUTHORIZED(401),
+
+    /**
+     * 禁止访问
+     */
+    FORBIDDEN(403),
+
+    /**
+     * 服务器找不到请求的资源
+     */
+    NOT_FOUND(404),
+
+    /**
+     * 服务器超负载或正停机维护，无法处理请求
+     */
+    INTERNAL_SERVER_ERROR(500),
+
+    /**
+     * 业务逻辑错误
+     */
+    SERVICE_ERROR(999);
+
+    int code;
+
+    ResultCode(int type) {
+        this.code = type;
     }
 
-    public static final String BAD_REQUEST = "400";
-    public static final String UNAUTHORIZED = "401";
-    public static final String FORBIDDEN = "403";
-    public static final String INTERNAL_SERVER_ERROR = "500";
+    @JsonValue
+    public int value() {
+        return code;
+    }
 
-    public static final String ERROR = "777";
+    @JsonCreator
+    public static ResultCode valueOf(int code) {
+        for (ResultCode resultCode : values()) {
+            if (resultCode.code == code) {
+                return resultCode;
+            }
+        }
+        throw new IllegalArgumentException("invalid code");
+    }
 }

@@ -1,9 +1,6 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.base.result.GenericResult;
-import com.mistra.base.result.PaginationResult;
-import com.mistra.base.result.Result;
-import com.mistra.base.result.Results;
+import com.mistra.base.result.*;
 import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.vo.LoginDTO;
 import com.mistra.userservice.vo.RegisterDTO;
@@ -19,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: WangRui
@@ -93,6 +92,25 @@ public class UserController {
     })
     public GenericResult<PaginationResult<UserDTO>> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition){
         return userService.getSelectList2(userDTO,pageQueryCondition);
+    }
+
+    @GetMapping("/resultTest")
+    public MistraResult resultTest(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail("wrmistra@gmail.com");
+        userDTO.setUserName("Mistra");
+        return Results.mistraSingleEntityResult(userDTO);
+    }
+
+    @GetMapping("/resultPageTest")
+    public MistraResult resultPageTest(){
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail("wrmistra@gmail.com");
+        userDTO.setUserName("Mistra");
+        List<UserDTO> list = new ArrayList<>();
+        list.add(userDTO);
+        return Results.mistraPageResult(list,2,3,4,4);
     }
 
 }

@@ -34,19 +34,32 @@ public class ExcelImport {
 
     public static <T> List<T> excelTransformationEntityList(Class<T> clazz, InputStream in, String fileName, int headerLine, int stopReadCondition)
             throws IOException, ParseException {
-        Workbook book = getWorkBook(in, fileName);   //1.获取工作簿
-        List<Sheet> sheets = getSheets(book);   //2.获取所有工作表
-        List<T> list = sheetIterator(clazz, sheets, headerLine, stopReadCondition); //3.对所有工作表进行操作
+        //1.获取工作簿
+        Workbook book = getWorkBook(in, fileName);
+        //2.获取所有工作表
+        List<Sheet> sheets = getSheets(book);
+        //3.对所有工作表进行操作
+        List<T> list = sheetIterator(clazz, sheets, headerLine, stopReadCondition);
         return list;
     }
 
-    //1.获取工作簿
+    /**
+     * 获取工作簿
+     * @param in
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
     public static Workbook getWorkBook(InputStream in, String fileName) throws IOException {
         return fileName.toLowerCase().endsWith(".xls") ? (new HSSFWorkbook(in))
                 : (fileName.toLowerCase().endsWith(".xlsx") ? (new XSSFWorkbook(in)) : (null));
     }
 
-    //2.获取所有工作表
+    /**
+     * 获取所有工作表
+     * @param book
+     * @return
+     */
     private static List<Sheet> getSheets(Workbook book) {
         int numberOfSheets = book.getNumberOfSheets();
         List<Sheet> sheets = new ArrayList<>();
@@ -57,12 +70,12 @@ public class ExcelImport {
     }
 
     /**
+     * 对所有工作表进行操作
      * @param sheets
      * @param headerLine        表头行数
      * @param stopReadCondition 停止读取的条件（判断某个cell为空时就停止读取）
      * @return
      */
-    //3.对所有工作表进行操作
     private static <T> List<T>  sheetIterator(Class<T> clazz, List<Sheet> sheets, int headerLine, int stopReadCondition) throws ParseException {
         List<T> list = new ArrayList<>();
         Field[] fields = clazz.getDeclaredFields();
@@ -70,12 +83,14 @@ public class ExcelImport {
         Iterator<Row> iterator = sheet.iterator();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //循环遍历所有单元格
-        while (iterator.hasNext()) {//遍历每一行
+        while (iterator.hasNext()) {
             Row nextRow = iterator.next();
-            if (nextRow.getRowNum() < headerLine) {//nextRow.getRowNum()获取行数，过滤掉表头
+            //nextRow.getRowNum()获取行数，过滤掉表头
+            if (nextRow.getRowNum() < headerLine) {
                 continue;
             }
-            if (nextRow.getCell(stopReadCondition).getCellType() == HSSFCell.CELL_TYPE_BLANK) {//判断是否还有数据，没有就停止读取，返回List
+            //判断是否还有数据，没有就停止读取，返回List
+            if (nextRow.getCell(stopReadCondition).getCellType() == HSSFCell.CELL_TYPE_BLANK) {
                 return list;
             }
             try {
@@ -90,7 +105,8 @@ public class ExcelImport {
                         int columnIndex = fieldAnnotation.index();
                         ExcelCellType cellType = fieldAnnotation.value();
                         Cell cell = nextRow.getCell(columnIndex);
-                        if (cell.getCellType() == 3){//CELL_TYPE_BLANK = 3;
+                        //CELL_TYPE_BLANK = 3
+                        if (cell.getCellType() == 3){
                             continue;
                         }
                         switch (cellType) {

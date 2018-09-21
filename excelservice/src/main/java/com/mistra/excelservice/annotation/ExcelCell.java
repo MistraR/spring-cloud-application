@@ -13,6 +13,14 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface ExcelCell {
-    int index() default 0;//列标记
-    ExcelCellType value();//Cell类型
+
+    /**
+     * 列标记
+     */
+    int index() default 0;
+
+    /**
+     * Cell数据类型
+     */
+    ExcelCellType value();
 }

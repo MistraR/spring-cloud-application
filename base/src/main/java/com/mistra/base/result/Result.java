@@ -1,6 +1,8 @@
 package com.mistra.base.result;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author: WangRui
@@ -9,27 +11,19 @@ import lombok.Data;
  * Description:
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Result {
 
+    /**
+     * 处理结果
+     */
     private boolean success;
-    private String code;
+
+    /**
+     * 信息
+     */
     private String message;
 
-    public Result(){
 
-    }
-    public Result(boolean success, String code, String message) {
-        this.success = success;
-        this.code = code;
-        this.message = message;
-    }
-
-    @Override
-    public String toString() {
-        return "Result{" +
-                "success=" + success +
-                ", code='" + code + '\'' +
-                ", message='" + message + '\'' +
-                '}';
-    }
 }

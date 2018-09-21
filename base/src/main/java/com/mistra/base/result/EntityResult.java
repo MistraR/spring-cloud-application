@@ -4,16 +4,16 @@ import lombok.Data;
 
 /**
  * @Author: WangRui
- * @Date: 2018-09-14
- * Time: 上午10:16
+ * @Date: 2018-09-21
+ * Time: 下午2:52
  * Description:
  */
 @Data
-public class GenericResult<T> extends Result{
+public class EntityResult<T> extends Result{
 
+    /**
+     * 数据
+     */
     private T data;
 
-    public GenericResult(){
-
-    }
 }
