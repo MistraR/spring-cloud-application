@@ -1,12 +1,10 @@
 package com.mistra.userservice.service;
 
-import com.mistra.base.result.EntityResult;
 import com.mistra.base.result.PageResult;
 import com.mistra.base.result.Result;
 import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.vo.LoginDTO;
 import com.mistra.userservice.vo.RegisterDTO;
-import com.mistra.userservice.vo.TokenDTO;
 import com.mistra.userservice.vo.UserDTO;
 
 /**
@@ -22,7 +20,7 @@ public interface UserService {
      * @param loginDTO
      * @return
      */
-    EntityResult<TokenDTO> login(LoginDTO loginDTO);
+    Result login(LoginDTO loginDTO);
 
     /**
      * 用户注册

@@ -23,6 +23,7 @@ public class SwaggerConfig {
     @Bean
     public Docket docket() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.mistra.userservice.controller"))

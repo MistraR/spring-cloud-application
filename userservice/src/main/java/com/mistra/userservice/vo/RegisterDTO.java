@@ -15,21 +15,21 @@ import javax.validation.constraints.NotBlank;
  * Description:
  */
 @Data
-@ApiModel(value = "RegisterDTO",description = "用户注册信息")
+@ApiModel(value = "RegisterDTO", description = "用户注册信息")
 public class RegisterDTO {
 
-    @ApiModelProperty(name = "email",value = "邮箱",required = true)
+    @ApiModelProperty(name = "email", value = "邮箱", required = true)
     @Email(message = "邮箱格式输入不正确")
     @NotBlank
     private String email;
 
-    @ApiModelProperty(name = "userName",value = "密码",required = true)
+    @ApiModelProperty(name = "userName", value = "密码", required = true)
     @NotBlank
-    @Length(max = 20,message = "用户名不能超过20个字符")
+    @Length(max = 20, message = "用户名不能超过20个字符")
     private String userName;
 
-    @ApiModelProperty(name = "password",value = "密码",required = true)
+    @ApiModelProperty(name = "password", value = "密码", required = true)
     @NotBlank
-    @Length(max = 32,min = 6)
+    @Length(max = 32, min = 6, message = "密码长度为6-32个字符")
     private String password;
 }

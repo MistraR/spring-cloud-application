@@ -71,7 +71,7 @@ public class RequestResultBuilder {
         return result;
     }
 
-    public static <T> PageResult<T> pageResult(List<T> data, String message, long totalData, long totalPageNumber, int currentPageNumber, int pageSize) {
+    public static <T> PageResult<T> pageResult(List<T> data, long totalData, long totalPageNumber, int currentPageNumber, int pageSize, String message) {
         PageResult<T> result = new PageResult<>();
         result.setData(data);
         result.setSuccess(true);

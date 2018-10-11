@@ -1,6 +1,5 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.base.result.EntityResult;
 import com.mistra.base.result.PageResult;
 import com.mistra.base.result.RequestResultBuilder;
 import com.mistra.base.result.Result;
@@ -8,13 +7,13 @@ import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.service.UserService;
 import com.mistra.userservice.vo.LoginDTO;
 import com.mistra.userservice.vo.RegisterDTO;
-import com.mistra.userservice.vo.TokenDTO;
 import com.mistra.userservice.vo.UserDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +28,7 @@ import javax.validation.constraints.Min;
 @Api("用户模块controller")
 @RequestMapping("/user")
 @RestController
+@Validated
 public class UserController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class UserController {
 
     @GetMapping("/test")
     @ApiOperation("访问成功测试")
-    public Result test(){
+    public Result test() {
         return RequestResultBuilder.success();
     }
 
@@ -49,7 +49,7 @@ public class UserController {
 
     @GetMapping("/login")
     @ApiOperation("登录")
-    public EntityResult<TokenDTO> login(@Valid LoginDTO loginDTO) {
+    public Result login(@Valid LoginDTO loginDTO) {
         return userService.login(loginDTO);
     }
 
@@ -58,13 +58,13 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNumber", dataType = "int", value = "当前页码", required = true),
             @ApiImplicitParam(name = "pageSize", dataType = "int", value = "分页大小", required = true)})
-    public PageResult<UserDTO> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber,
-                                            @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
+    public PageResult<UserDTO> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber, @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
         return null;
     }
 
     /**
      * * 使用mybatis-plus自带的分页插件查询，返回结果转换为自定义带DTO的PaginationResult
+     *
      * @param userDTO
      * @param pageQueryCondition
      * @return
@@ -81,6 +81,7 @@ public class UserController {
 
     /**
      * * 使用github page-helper分页插件查询，返回结果转换为自定义带DTO的PaginationResult
+     *
      * @param userDTO
      * @param pageQueryCondition
      * @return
@@ -91,8 +92,8 @@ public class UserController {
             @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
             @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
     })
-    public PageResult<UserDTO> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition){
-        return userService.getSelectList2(userDTO,pageQueryCondition);
+    public PageResult<UserDTO> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition) {
+        return userService.getSelectList2(userDTO, pageQueryCondition);
     }
 
 }

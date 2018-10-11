@@ -11,8 +11,6 @@ public class ResultMessage {
 
     public static final String PASSWORD_ERROR = "用户名或密码错误!";
 
-    public static final String SUCCESS = "请求完成!";
-
-    public static final String NO_AUTHORITY = "没有权限!";
+    public static final String REPEAT_EMAIL = "邮箱已注册!";
 
 }
