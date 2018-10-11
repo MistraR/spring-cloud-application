@@ -22,9 +22,10 @@ import javax.validation.ValidationException;
 import java.util.Set;
 
 /**
- * @author: laoli
- * @date: 2017-12-29 22:13
- * @Description: 全局异常处理
+ * @Author: WangRui
+ * @Date: 2018-09-14
+ * Time: 上午11:05
+ * Description:
  */
 @RestControllerAdvice
 public class ExceptionAdvice {

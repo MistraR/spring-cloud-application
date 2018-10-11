@@ -1,16 +1,17 @@
 package com.mistra.base.exception;
 
-
 /**
- * @author lijun
- * @date 2018-04-02.
- * @descritpion 业务基础异常，所有业务异常继承这个异常
+ * @Author: WangRui
+ * @Date: 2018-09-14
+ * Time: 上午11:05
+ * Description:
  */
 public class BaseServiceException extends RuntimeException {
+
     private ResultCode resultCode;
 
     public BaseServiceException(ResultCode resultCode) {
-        super(resultCode.getMsg());
+        super(resultCode.getMessage());
         this.resultCode = resultCode;
     }
 

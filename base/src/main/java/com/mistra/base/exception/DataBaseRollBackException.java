@@ -1,11 +1,10 @@
 package com.mistra.base.exception;
 
-
-
 /**
- * @author lijun
- * @date 2018-04-20.
- * @descritpion
+ * @Author: WangRui
+ * @Date: 2018-09-14
+ * Time: 上午11:05
+ * Description:
  */
 public class DataBaseRollBackException extends BaseServiceException {
     public DataBaseRollBackException() {

@@ -1,14 +1,17 @@
 package com.mistra.base.exception;
 
 /**
- * 结果码
- *
- * @author lj
+ * @Author: WangRui
+ * @Date: 2018-09-14
+ * Time: 上午11:05
+ * Description:
  */
-
 public enum ResultCode {
+    /**
+     *
+     */
     SUCCESS(1, "SUCCESS"),
-    PARAMETER_ERROR(400, "参数异常"),
+    PARAMETER_ERROR(400, "参数验证错误"),
     UNAUTHORIZED(401, "无访问权限"),
     FORBIDDEN_ERROR(403, "拒绝访问"),
     METHOD_NOT_ALLOWED(405, "方法不允许访问"),
@@ -19,19 +22,59 @@ public enum ResultCode {
     LOGIN_EXPIRED_ERROR(5003, "用户登录过期"),
     TOKEN_REFRESH_ERROR(5004, "TOKEN刷新失败");
 
-    private Integer code;
-    private String msg;
+    private int code;
+    private String message;
 
-    ResultCode(Integer code, String msg) {
+    ResultCode(int code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
 
-    public Integer getCode() {
+    @Override
+    public String toString() {
+        return this.message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getCode() {
         return code;
     }
 
-    public String getMsg() {
-        return msg;
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public static String getMessage(int i) {
+        for (ResultCode e : values()) {
+            if (e.getCode() == i) {
+                return e.getMessage();
+            }
+        }
+        return null;
+    }
+
+    public static Integer getCode(String message) {
+        for (ResultCode e : values()) {
+            if (e.getMessage().equals(message)) {
+                return e.getCode();
+            }
+        }
+        return null;
+    }
+
+    public static ResultCode valueOf(int code) {
+        for (ResultCode value : values()) {
+            if (value.code == code) {
+                return value;
+            }
+        }
+        return null;
     }
 }

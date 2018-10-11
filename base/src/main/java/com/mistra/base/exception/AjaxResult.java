@@ -1,9 +1,10 @@
 package com.mistra.base.exception;
 
 /**
- * @author: laoli
- * @date: 2017-12-29 21:52
- * @Description: 结果对象
+ * @Author: WangRui
+ * @Date: 2018-09-14
+ * Time: 上午11:05
+ * Description:
  */
 public class AjaxResult<T> {
     private String msg;
@@ -11,13 +12,13 @@ public class AjaxResult<T> {
     private Integer code;
 
     public AjaxResult() {
-        this.msg = ResultCode.SUCCESS.getMsg();
+        this.msg = ResultCode.SUCCESS.getMessage();
         this.code = ResultCode.SUCCESS.getCode();
         this.data = null;
     }
 
     public AjaxResult(T data) {
-        this.msg = ResultCode.SUCCESS.getMsg();
+        this.msg = ResultCode.SUCCESS.getMessage();
         this.code = ResultCode.SUCCESS.getCode();
         this.data = data;
     }
@@ -58,7 +59,7 @@ public class AjaxResult<T> {
         AjaxResult<T> result = new AjaxResult<>();
         result.setCode(ResultCode.PARAMETER_ERROR.getCode());
         if (msg == null) {
-            result.setMsg(ResultCode.PARAMETER_ERROR.getMsg());
+            result.setMsg(ResultCode.PARAMETER_ERROR.getMessage());
         } else {
             result.setMsg(msg);
         }
@@ -76,7 +77,7 @@ public class AjaxResult<T> {
     public static <T> AjaxResult<T> error(ResultCode code) {
         AjaxResult<T> result = new AjaxResult<>();
         result.setCode(code.getCode());
-        result.setMsg(code.getMsg());
+        result.setMsg(code.getMessage());
         result.setData(null);
         return result;
     }

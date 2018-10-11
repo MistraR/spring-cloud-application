@@ -14,9 +14,12 @@ import java.util.Date;
 @Data
 public class BaseEntity implements Serializable {
 
-    private Date createTime;
+    /**
+     * 时间统一用Long，前端做转换
+     */
+    private Long createTime;
 
-    private Date updateTime;
+    private Long updateTime;
 
     private String createBy;
 
