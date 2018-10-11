@@ -1,7 +1,7 @@
 package com.mistra.userservice.service;
 
-import com.mistra.base.result.GenericResult;
-import com.mistra.base.result.PaginationResult;
+import com.mistra.base.result.EntityResult;
+import com.mistra.base.result.PageResult;
 import com.mistra.base.result.Result;
 import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.vo.LoginDTO;
@@ -22,7 +22,7 @@ public interface UserService {
      * @param loginDTO
      * @return
      */
-    GenericResult<TokenDTO> login(LoginDTO loginDTO);
+    EntityResult<TokenDTO> login(LoginDTO loginDTO);
 
     /**
      * 用户注册
@@ -37,7 +37,7 @@ public interface UserService {
      * @param pageSize
      * @return
      */
-    GenericResult<PaginationResult<UserDTO>> getUserList(int pageNumber, int pageSize);
+    PageResult<UserDTO> getUserList(int pageNumber, int pageSize);
 
     /**
      * 获取用户列表，带筛选条件
@@ -46,7 +46,7 @@ public interface UserService {
      * @param pageQueryCondition
      * @return
      */
-    GenericResult<PaginationResult<UserDTO>> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition);
+    PageResult<UserDTO> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition);
 
     /**
      * 获取用户列表，带筛选条件
@@ -55,5 +55,5 @@ public interface UserService {
      * @param pageQueryCondition
      * @return
      */
-    GenericResult<PaginationResult<UserDTO>> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition);
+    PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition);
 }

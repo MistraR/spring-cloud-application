@@ -1,25 +1,24 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.base.result.*;
+import com.mistra.base.result.EntityResult;
+import com.mistra.base.result.PageResult;
+import com.mistra.base.result.RequestResultBuilder;
+import com.mistra.base.result.Result;
 import com.mistra.userservice.base.PageQueryCondition;
+import com.mistra.userservice.service.UserService;
 import com.mistra.userservice.vo.LoginDTO;
 import com.mistra.userservice.vo.RegisterDTO;
 import com.mistra.userservice.vo.TokenDTO;
 import com.mistra.userservice.vo.UserDTO;
-import com.mistra.userservice.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.ibatis.annotations.Results;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Author: WangRui
@@ -27,7 +26,7 @@ import java.util.List;
  * Time: 上午9:39
  * Description:
  */
-@Api("用户模块controlle)
+@Api("用户模块controller")
 @RequestMapping("/user")
 @RestController
 public class UserController {
@@ -38,7 +37,7 @@ public class UserController {
     @GetMapping("/test")
     @ApiOperation("访问成功测试")
     public Result test(){
-        return Results.success();
+        return RequestResultBuilder.success();
     }
 
     @PostMapping("/register")
@@ -50,7 +49,7 @@ public class UserController {
 
     @GetMapping("/login")
     @ApiOperation("登录")
-    public GenericResult<TokenDTO> login(@Valid LoginDTO loginDTO) {
+    public EntityResult<TokenDTO> login(@Valid LoginDTO loginDTO) {
         return userService.login(loginDTO);
     }
 
@@ -59,8 +58,8 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNumber", dataType = "int", value = "当前页码", required = true),
             @ApiImplicitParam(name = "pageSize", dataType = "int", value = "分页大小", required = true)})
-    public GenericResult<PaginationResult<UserDTO>> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber,
-                                                    @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
+    public PageResult<UserDTO> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber,
+                                            @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
         return null;
     }
 
@@ -76,7 +75,7 @@ public class UserController {
             @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
             @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
     })
-    public GenericResult<PaginationResult<UserDTO>> getSelectList(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition) {
+    public PageResult<UserDTO> getSelectList(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition) {
         return userService.getSelectList(userDTO, pageQueryCondition);
     }
 
@@ -92,27 +91,8 @@ public class UserController {
             @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
             @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
     })
-    public GenericResult<PaginationResult<UserDTO>> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition){
+    public PageResult<UserDTO> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition){
         return userService.getSelectList2(userDTO,pageQueryCondition);
-    }
-
-    @GetMapping("/resultTest")
-    public MistraResult resultTest(){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail("wrmistra@gmail.com");
-        userDTO.setUserName("Mistra");
-        return Results.mistraSingleEntityResult(userDTO);
-    }
-
-    @GetMapping("/resultPageTest")
-    public MistraResult resultPageTest(){
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail("wrmistra@gmail.com");
-        userDTO.setUserName("Mistra");
-        List<UserDTO> list = new ArrayList<>();
-        list.add(userDTO);
-        return Results.mistraPageResult(list,2,3,4,4);
     }
 
 }

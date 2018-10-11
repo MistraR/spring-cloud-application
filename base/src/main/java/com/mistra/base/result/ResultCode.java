@@ -14,7 +14,7 @@ public enum ResultCode {
     /**
      * 请求成功
      */
-    SUCCESS(200, "请求成功"),
+    SUCCESS(200, "请求处理成功！"),
 
     /**
      * 请求报文存在语法错误或参数错误
