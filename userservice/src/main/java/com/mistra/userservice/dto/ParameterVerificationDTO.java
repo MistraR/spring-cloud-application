@@ -58,6 +58,10 @@ public class ParameterVerificationDTO {
     @Future(message = "future必须是一个将来的日期")
     private Date future;
 
+    @ApiModelProperty("必须是一个过去的日期")
+    @Past(message = "past必须是一个将来的日期")
+    private Date past;
+
     /**
      * 嵌套实体类验证必须加@Valid注解
      */
