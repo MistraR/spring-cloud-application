@@ -3,9 +3,9 @@ package com.mistra.userservice.service;
 import com.mistra.base.result.PageResult;
 import com.mistra.base.result.Result;
 import com.mistra.userservice.base.PageQueryCondition;
-import com.mistra.userservice.vo.LoginDTO;
-import com.mistra.userservice.vo.RegisterDTO;
-import com.mistra.userservice.vo.UserDTO;
+import com.mistra.userservice.dto.LoginDTO;
+import com.mistra.userservice.dto.RegisterDTO;
+import com.mistra.userservice.dto.UserDTO;
 
 /**
  * @Author: WangRui

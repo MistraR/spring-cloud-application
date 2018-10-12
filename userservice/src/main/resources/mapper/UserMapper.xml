@@ -58,7 +58,7 @@
         WHERE status = 1
     </select>
 
-    <select id="getSelectList2" resultMap="BaseResultMap" parameterType="com.mistra.userservice.vo.UserDTO">
+    <select id="getSelectList2" resultMap="BaseResultMap" parameterType="com.mistra.userservice.dto.UserDTO">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user
@@ -73,7 +73,7 @@
     </select>
 
 
-    <select id="getSelectList3" resultMap="BaseResultMap" parameterType="com.mistra.userservice.vo.UserDTO">
+    <select id="getSelectList3" resultMap="BaseResultMap" parameterType="com.mistra.userservice.dto.UserDTO">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user

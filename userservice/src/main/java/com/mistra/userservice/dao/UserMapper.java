@@ -2,13 +2,10 @@ package com.mistra.userservice.dao;
 
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.github.pagehelper.Page;
 import com.mistra.userservice.entity.User;
-import com.mistra.userservice.vo.UserDTO;
-import org.apache.ibatis.annotations.Mapper;
+import com.mistra.userservice.dto.UserDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import sun.jvm.hotspot.memory.LinearAllocBlock;
 
 import java.util.List;
 
