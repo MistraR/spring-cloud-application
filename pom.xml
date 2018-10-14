@@ -19,6 +19,7 @@
         <module>routeservice</module>
         <module>adminserver</module>
         <module>excelservice</module>
+        <module>utilservice</module>
     </modules>
 
     <parent>
@@ -56,6 +57,7 @@
         <jolokia-core.version>1.6.0</jolokia-core.version>
         <mysql-connector-java>5.1.46</mysql-connector-java>
         <spring-boot-starter-web>2.0.5.RELEASE</spring-boot-starter-web>
+        <spring-boot-starter-mail>2.0.5.RELEASE</spring-boot-starter-mail>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
         <pagehelper-spring-boot-starter>1.2.5</pagehelper-spring-boot-starter>
         <spring-boot-admin-starter-client>2.0.2</spring-boot-admin-starter-client>
@@ -226,7 +228,7 @@
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-client</artifactId>p
+                <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring-boot-admin-starter-client}</version>
             </dependency>
             <dependency>
@@ -273,10 +275,15 @@
             </dependency>
             <!-- slf4j -->
             <!--<dependency>-->
-                <!--<groupId>org.slf4j</groupId>-->
-                <!--<artifactId>slf4j-api</artifactId>-->
-                <!--<version>${slf4j-api}</version>-->
+            <!--<groupId>org.slf4j</groupId>-->
+            <!--<artifactId>slf4j-api</artifactId>-->
+            <!--<version>${slf4j-api}</version>-->
             <!--</dependency>-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-mail</artifactId>
+                <version>${spring-boot-starter-mail}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

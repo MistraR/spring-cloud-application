@@ -32,4 +32,6 @@ public class RegisterDTO {
     @NotBlank
     @Length(max = 32, min = 6, message = "密码长度为6-32个字符")
     private String password;
+
+
 }

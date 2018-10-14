@@ -28,6 +28,9 @@ zuul:
     uaaApi:
       path: /uaaApi/**
       serviceId: uaa-service
+    utilApi:
+      path: /utilApi/**
+      serviceId: util-service
   host:
     socket-timeout-millis: 60000
     connect-timeout-millis: 60000
