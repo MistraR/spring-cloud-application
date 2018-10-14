@@ -27,11 +27,8 @@ import java.util.Map;
 @Service
 public class MailServiceImpl implements MailService {
 
-    @Autowired
-    private MailMapper mailMapper;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender = new JavaMailSenderImpl();
 
     @Autowired
     private TemplateEngine templateEngine;
@@ -56,7 +53,7 @@ public class MailServiceImpl implements MailService {
             //设置发件人
             helper.setFrom(from);
             //设置收件人
-            helper.setTo("842404548@qq.com");
+            helper.setTo("wrmistra@gmail.com");
             //设置邮件标题
             helper.setSubject("主题：邮件服务测试");
             //设置邮件内容 ，true 表示发送html 格式

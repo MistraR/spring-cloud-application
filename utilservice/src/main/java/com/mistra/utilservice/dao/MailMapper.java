@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
  * Time: 下午10:35
  * Description:
  */
-@Repository
 public interface MailMapper {
 
     Template findByKey(String key);
