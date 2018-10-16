@@ -34,7 +34,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("UtilService")
-                .description("用户模块接口文档")
+                .description("工具包模块接口文档")
                 .version("1.0")
                 .build();
     }

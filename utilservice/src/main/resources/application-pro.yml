@@ -1,0 +1,23 @@
+spring:
+  mail:
+    host: smtp.qq.com
+    port: 465 # SMTP server port
+    username: 842404548@qq.com
+    password: alittlestory30
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    content-type: text/html
+    mode: HTML5
+

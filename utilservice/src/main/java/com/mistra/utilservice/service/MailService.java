@@ -1,5 +1,8 @@
 package com.mistra.utilservice.service;
 
+import com.mistra.base.result.Result;
+import com.mistra.utilservice.dto.MailDTO;
+
 /**
  * @Author: WangRui
  * @Date: 2018/10/14
@@ -8,5 +11,9 @@ package com.mistra.utilservice.service;
  */
 public interface MailService {
 
-    void sendMail();
+    /**
+     * 邮件发送
+     * @param mailDTO
+     */
+    Result sendMail(MailDTO mailDTO);
 }

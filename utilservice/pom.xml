@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>util</artifactId>
+    <artifactId>utilservice</artifactId>
 
     <dependencies>
         <!--base model依赖-->
@@ -84,6 +84,10 @@
             <groupId>com.icegreen</groupId>
             <artifactId>greenmail</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sargue</groupId>
+            <artifactId>mailgun</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

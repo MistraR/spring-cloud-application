@@ -1,22 +1,24 @@
 package com.mistra.utilservice.service.impl;
 
-import com.mistra.utilservice.dao.MailMapper;
+import com.mistra.base.result.Result;
+import com.mistra.utilservice.dto.MailDTO;
 import com.mistra.utilservice.service.MailService;
+import net.sargue.mailgun.Configuration;
+import net.sargue.mailgun.Mail;
+import net.sargue.mailgun.MailBuilder;
+import net.sargue.mailgun.Response;
+import net.sargue.mailgun.content.Body;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * @Author: WangRui
@@ -27,58 +29,61 @@ import java.util.Map;
 @Service
 public class MailServiceImpl implements MailService {
 
-
-    private JavaMailSender javaMailSender = new JavaMailSenderImpl();
-
-    @Autowired
-    private TemplateEngine templateEngine;
-
-    @Value("spring.mail.username")
-    private String from;
-
-    @Override
-    public void sendMail() {
-        MimeMessage message = javaMailSender.createMimeMessage();
-        /**
-         *      dataMap 用于存储模板渲染所需要的数据
-         *      用法和model 一致
-         *      dataMap 的 key 对应模板中渲染数据的命名
-         */
-        Map<String,Object> dataMap = new HashMap<>();
-        dataMap.put("title","小猪佩奇 -- 邮件测试");
-        String emailText = createTemplates(dataMap,"mailTemplate.html",templateEngine);
-        try {
-            //消息处理助手对象
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            //设置发件人
-            helper.setFrom(from);
-            //设置收件人
-            helper.setTo("wrmistra@gmail.com");
-            //设置邮件标题
-            helper.setSubject("主题：邮件服务测试");
-            //设置邮件内容 ，true 表示发送html 格式
-            helper.setText(emailText, true);
-
-        } catch (MessagingException e) {
-            throw new RuntimeException("Messaging  Exception !", e);
-        }
-        javaMailSender.send(message);
-    }
+    private Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 
     /**
-     *
-     * @param dataMap 渲染数据原
-     * @param TemplatesName 模板名
-     * @param templateEngine   模板操作类
-     * @return
+     * 邮箱验证正则
      */
-    public static String createTemplates(Map<String,Object> dataMap, String TemplatesName, TemplateEngine templateEngine){
-        //context 对象用于注入要在模板上渲染的信息
+    public static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+
+    /**
+     * 字符串模板解析引擎
+     */
+    @Qualifier("stringTemplateEngine")
+    @Autowired
+    private SpringTemplateEngine springTemplateEngine;
+
+    @Autowired
+    private Configuration mailgunConfiguration;
+
+    @Autowired
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
+    @Override
+    public Result sendMail(MailDTO mailDTO) {
+        Result result = new Result();
+        if (mailDTO.getSendToAddress().size() == 0 || mailDTO.getParamsMap().size() == 0 || StringUtils.isEmpty(mailDTO.getSubject()) || StringUtils.isEmpty(mailDTO.getTemplate())) {
+            result.setSuccess(false);
+            result.setMessage("MailDTO参数不正确！");
+            return result;
+        }
+        for (String to : mailDTO.getSendToAddress()) {
+            if (!Pattern.matches(REGEX_EMAIL, to)) {
+                result.setSuccess(false);
+                result.setMessage("邮箱格式错误!");
+                return result;
+            }
+        }
+        //编译thymeleaf模板 渲染数据
         Context context = new Context();
-        context.setVariables(dataMap);
-        String emailText = templateEngine.process(TemplatesName,context);
-        System.out.println(emailText);
-        //返回模板源代码 String 类型
-        return emailText;
+        context.setVariables(mailDTO.getParamsMap());
+        String mailContent = springTemplateEngine.process(mailDTO.getTemplate(), context);
+
+        MailBuilder mailBuilder = Mail.using(mailgunConfiguration);
+        mailBuilder.subject(mailDTO.getSubject());
+        for (String sendTo : mailDTO.getSendToAddress()){
+            mailBuilder.to(sendTo);
+        }
+        Body mailBody = new Body(mailContent,"");
+        mailBuilder.content(mailBody);
+        threadPoolTaskExecutor.submit(() ->{
+            Response response = mailBuilder.build().send();
+            logger.info("Send mail complete. Code: {}, Response Type: {}. Message: {}", response.responseCode(), response.responseType(), response.responseMessage());
+        });
+        result.setSuccess(true);
+        result.setMessage("邮件发送成功！");
+        return result;
+
+
     }
 }

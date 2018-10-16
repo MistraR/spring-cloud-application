@@ -1,6 +1,7 @@
 package com.mistra.utilservice.dao;
 
 import com.mistra.utilservice.entity.Template;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Repository;
  * Time: 下午10:35
  * Description:
  */
+@Repository
+@Mapper
 public interface MailMapper {
 
     Template findByKey(String key);
