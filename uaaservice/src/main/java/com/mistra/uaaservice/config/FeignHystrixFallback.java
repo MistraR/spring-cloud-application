@@ -1,8 +1,7 @@
 package com.mistra.uaaservice.config;
 
+import com.mistra.base.result.RequestResultBuilder;
 import com.mistra.base.result.Result;
-import com.mistra.base.result.ResultCode;
-import com.mistra.base.result.Results;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,6 +15,6 @@ public class FeignHystrixFallback implements UserFeignClient{
 
     @Override
     public Result test() {
-        return Results.failed(ResultCode.ERROR,"Feign Error!");
+        return RequestResultBuilder.failed("服务远程调用出错！");
     }
 }

@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Component
 public interface UserFeignClient {
 
+    /**
+     * feign调用测试
+     * @return
+     */
     @GetMapping(value = "/user/test")
     Result test();
 }

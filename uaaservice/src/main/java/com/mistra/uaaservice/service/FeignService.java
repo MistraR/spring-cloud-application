@@ -11,13 +11,17 @@ import org.springframework.stereotype.Service;
  * Time: 下午5:21
  * Description:
  */
-@Service
-public class FeignService {
+public interface FeignService {
 
-    @Autowired
-    private UserFeignClient userFeignClient;
+    /**
+     * 测试
+     * @return
+     */
+    Result test();
 
-    public Result test(){
-        return userFeignClient.test();
-    }
+    /**
+     * 发送邮件
+     * @return
+     */
+    Result sendMail();
 }
