@@ -81,3 +81,9 @@ pagehelper:
   #分页合理化参数
   reasonable: true
 
+mailgun:
+  domain: sandbox28f0d0cf3ce04837952c2d8a8980fb87.mailgun.org
+  key: pubkey-78450717b46047c60a8ffad1e0e4bd3e
+  from: wrmistra
+  fromAddress: wrmistra@gmail.com
+

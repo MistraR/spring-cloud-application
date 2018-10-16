@@ -81,11 +81,6 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.icegreen</groupId>
-            <artifactId>greenmail</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>net.sargue</groupId>
             <artifactId>mailgun</artifactId>
         </dependency>

@@ -68,14 +68,15 @@ public class MailServiceImpl implements MailService {
         Context context = new Context();
         context.setVariables(mailDTO.getParamsMap());
         String mailContent = springTemplateEngine.process(mailDTO.getTemplate(), context);
+        Body mailBody = new Body(mailContent,"");
 
         MailBuilder mailBuilder = Mail.using(mailgunConfiguration);
         mailBuilder.subject(mailDTO.getSubject());
+        mailBuilder.content(mailBody);
         for (String sendTo : mailDTO.getSendToAddress()){
             mailBuilder.to(sendTo);
         }
-        Body mailBody = new Body(mailContent,"");
-        mailBuilder.content(mailBody);
+
         threadPoolTaskExecutor.submit(() ->{
             Response response = mailBuilder.build().send();
             logger.info("Send mail complete. Code: {}, Response Type: {}. Message: {}", response.responseCode(), response.responseType(), response.responseMessage());
@@ -83,7 +84,5 @@ public class MailServiceImpl implements MailService {
         result.setSuccess(true);
         result.setMessage("邮件发送成功！");
         return result;
-
-
     }
 }
