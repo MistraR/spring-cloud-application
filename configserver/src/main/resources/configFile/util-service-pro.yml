@@ -83,7 +83,7 @@ pagehelper:
 
 mailgun:
   domain: mistra.wang
-  apiKey: key-8f05453a0bc436b91370c22d0af8c869
+  apiKey: key-e9861fdc2c1a6f189528c9cf18c5dc1a
   from: 丶小王瑞
   fromAddress: rui@mistra.wang
   mailgunResource: https://api.mailgun.net/v3/mistra.wang/messages
