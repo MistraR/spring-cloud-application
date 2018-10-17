@@ -83,7 +83,7 @@ pagehelper:
 
 mailgun:
   domain: mistra.wang
-  key: 9ef4cf242df9f5fca6af5b9218523d54-a3d67641-247111d9
+  key: key-8f05453a0bc436b91370c22d0af8c869
   from: 丶小王瑞
-  fromAddress: wrmistra@gmail.com
+  fromAddress: rui@mistra.wang
 
