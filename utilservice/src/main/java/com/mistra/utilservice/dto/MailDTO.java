@@ -38,6 +38,6 @@ public class MailDTO {
     /**
      * 模板参数
      */
-    @NotBlank
+    @NotNull
     private Map<String,Object> paramsMap;
 }

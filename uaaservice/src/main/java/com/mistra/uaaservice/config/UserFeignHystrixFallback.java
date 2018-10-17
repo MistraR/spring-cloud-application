@@ -11,10 +11,10 @@ import org.springframework.stereotype.Component;
  * Description: 熔断器逻辑处理类
  */
 @Component
-public class FeignHystrixFallback implements UserFeignClient{
+public class UserFeignHystrixFallback implements UserFeignClient{
 
     @Override
     public Result test() {
-        return RequestResultBuilder.failed("服务远程调用出错！");
+        return RequestResultBuilder.failed("User服务远程调用出错！");
     }
 }

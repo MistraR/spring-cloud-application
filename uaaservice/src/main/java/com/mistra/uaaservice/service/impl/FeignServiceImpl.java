@@ -7,6 +7,8 @@ import com.mistra.uaaservice.dao.EmailTemplateDao;
 import com.mistra.uaaservice.dto.EmailContentDTO;
 import com.mistra.uaaservice.service.FeignService;
 import com.mistra.utilservice.dto.MailDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,8 @@ import java.util.Map;
  */
 @Service
 public class FeignServiceImpl implements FeignService {
+
+    private Logger logger = LoggerFactory.getLogger(FeignServiceImpl.class);
 
     @Autowired
     private UserFeignClient userFeignClient;
@@ -50,7 +54,7 @@ public class FeignServiceImpl implements FeignService {
         paramsMap.put("name", "丶小王瑞");
         paramsMap.put("haveHeader", 1);
         List<EmailContentDTO> emailContentDTOList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             EmailContentDTO emailContentDTO = new EmailContentDTO();
             emailContentDTO.setSheetName("表" + i);
             emailContentDTO.setCell("单元格" + i);
@@ -59,6 +63,7 @@ public class FeignServiceImpl implements FeignService {
         }
         paramsMap.put("exceptionList", emailContentDTOList);
         mailDTO.setParamsMap(paramsMap);
+        logger.info("开始调用邮件发送服务！");
         return utilFeignClient.sendMail(mailDTO);
     }
 }

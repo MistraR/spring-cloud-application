@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * Time: 下午5:14
  * Description:
  */
-@FeignClient(value = "util-service", configuration = FeignConfig.class,fallback = FeignHystrixFallback.class)
+@FeignClient(value = "util-service", configuration = FeignConfig.class,fallback = UtilFeignHystrixFallback.class)
 @Component
 public interface UtilFeignClient {
 

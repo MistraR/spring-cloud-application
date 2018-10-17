@@ -82,8 +82,8 @@ pagehelper:
   reasonable: true
 
 mailgun:
-  domain: sandbox28f0d0cf3ce04837952c2d8a8980fb87.mailgun.org
-  key: pubkey-78450717b46047c60a8ffad1e0e4bd3e
-  from: wrmistra
+  domain: mistra.wang
+  key: 9ef4cf242df9f5fca6af5b9218523d54-a3d67641-247111d9
+  from: 丶小王瑞
   fromAddress: wrmistra@gmail.com
 
