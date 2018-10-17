@@ -17,9 +17,11 @@ public class MailgunConfigProperties {
 
     private String domain;
 
-    private String key;
+    private String apiKey;
 
     private String from;
 
     private String fromAddress;
+
+    private String mailgunResource;
 }

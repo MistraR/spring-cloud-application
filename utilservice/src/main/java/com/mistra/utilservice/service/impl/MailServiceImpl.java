@@ -1,6 +1,7 @@
 package com.mistra.utilservice.service.impl;
 
 import com.mistra.base.result.Result;
+import com.mistra.utilservice.config.MailgunConfigProperties;
 import com.mistra.utilservice.dto.MailDTO;
 import com.mistra.utilservice.service.MailService;
 import com.sun.jersey.api.client.Client;
@@ -21,7 +22,6 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -49,6 +49,9 @@ public class MailServiceImpl implements MailService {
 
     @Autowired
     private Configuration mailgunConfiguration;
+
+    @Autowired
+    private MailgunConfigProperties mailgunConfigProperties;
 
     @Autowired
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
@@ -103,10 +106,10 @@ public class MailServiceImpl implements MailService {
     public Result sendTwo(MailDTO mailDTO) {
         Result result = new Result();
         Client client = Client.create();
-        client.addFilter(new HTTPBasicAuthFilter("api", "key-8f05453a0bc436b91370c22d0af8c869"));
-        WebResource webResource = client.resource("https://api.mailgun.net/v3/mistra.wang/messages");
+        client.addFilter(new HTTPBasicAuthFilter("api", mailgunConfigProperties.getApiKey()));
+        WebResource webResource = client.resource(mailgunConfigProperties.getMailgunResource());
         MultivaluedMapImpl formData = new MultivaluedMapImpl();
-        formData.add("from", "丶小王瑞 <rui@mistra.wang>");
+        formData.add("from", mailgunConfigProperties.getFrom() + "" + mailgunConfigProperties.getFromAddress());
         mailDTO.getSendToAddress().stream().forEach(temp -> formData.add("to", temp));
         formData.add("subject", mailDTO.getSubject());
         formData.add("text", "纯文本邮件测试！");

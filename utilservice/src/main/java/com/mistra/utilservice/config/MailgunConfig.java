@@ -23,7 +23,7 @@ public class MailgunConfig {
     public net.sargue.mailgun.Configuration mailgunConfiguration(){
         net.sargue.mailgun.Configuration configuration = new net.sargue.mailgun.Configuration()
                 .from(mailgunConfigProperties.getFrom(), mailgunConfigProperties.getFromAddress())
-                .apiKey(mailgunConfigProperties.getKey())
+                .apiKey(mailgunConfigProperties.getApiKey())
                 .domain(mailgunConfigProperties.getDomain());
         return configuration;
     }
