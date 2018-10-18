@@ -15,7 +15,6 @@
         <module name="routeservice" />
         <module name="uaaservice" />
         <module name="userservice" />
-        <module name="util" />
         <module name="utilservice" />
       </profile>
     </annotationProcessing>
