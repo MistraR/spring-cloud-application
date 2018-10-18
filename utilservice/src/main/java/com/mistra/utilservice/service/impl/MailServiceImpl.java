@@ -87,13 +87,16 @@ public class MailServiceImpl implements MailService {
         for (String sendTo : mailDTO.getSendToAddress()) {
             mailBuilder.to(sendTo);
         }
-
+        result.setSuccess(true);
+        result.setMessage("邮件发送成功！");
         threadPoolTaskExecutor.submit(() -> {
             Response response = mailBuilder.build().send();
             logger.info("Send mail complete. Code: {}, Response Type: {}. Message: {}", response.responseCode(), response.responseType(), response.responseMessage());
+            if (response.responseCode() != 200) {
+                result.setSuccess(false);
+                result.setMessage("邮件发送失败！" + response.responseMessage());
+            }
         });
-        result.setSuccess(true);
-        result.setMessage("邮件发送成功！");
         return result;
     }
 
