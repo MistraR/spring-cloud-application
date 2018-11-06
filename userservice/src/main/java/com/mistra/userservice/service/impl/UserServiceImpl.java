@@ -90,7 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Wrapper<User> userWrapper = new EntityWrapper<User>().like(StringUtils.isNotBlank(userDTO.getUserName()), "name", userDTO.getUserName())
                 .like(StringUtils.isNotBlank(userDTO.getEmail()), "email", userDTO.getEmail());
         userPage = selectPage(userPage, userWrapper);
-        return RequestResultBuilder.pageResult(userPage.getRecords().stream().map(this::convertDTO).collect(Collectors.toList()), userPage.getTotal(),
+        return RequestResultBuilder.pageResult(userPage.getRecords().parallelStream().map(this::convertDTO).collect(Collectors.toList()), userPage.getTotal(),
                 userPage.getPages(), userPage.getCurrent(), userPage.getSize());
     }
 
@@ -121,7 +121,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         com.github.pagehelper.PageInfo<User> pageInfo2 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize())
                 .doSelectPageInfo(() -> userMapper.getSelectList2(userDTO));
         logger.info("userList3.size---------------------------------------" + pageInfo2.getList().size());
-        return RequestResultBuilder.pageResult(pageInfo1.getResult().stream().map(this::convertDTO).collect(Collectors.toList()), pageInfo1.getTotal(),
+        return RequestResultBuilder.pageResult(pageInfo1.getResult().parallelStream().map(this::convertDTO).collect(Collectors.toList()), pageInfo1.getTotal(),
                 pageInfo1.getPages(), pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
     }
 
