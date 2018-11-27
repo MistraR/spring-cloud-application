@@ -105,8 +105,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
         //测试JWT认证
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        String userId = authorizationService.parseToken(authorizationService.getToken(servletRequestAttributes.getRequest()));
+        String userId = authorizationService.parseTokenGetUserId(authorizationService.getToken(servletRequestAttributes.getRequest()));
+        Long expire = authorizationService.parseTokenGetExpire(authorizationService.getToken(servletRequestAttributes.getRequest()));
+        logger.info("当前时间是：" + new Date() + " --- token过期时间是" + new Date(expire));
         if (StringUtils.isEmpty(userId)) {
+            logger.info("无效的token");
+            return null;
+        }
+        if (expire < System.currentTimeMillis() || expire == null || expire == 0) {
+            logger.info("当前用户token已过期");
             return null;
         }
         //1、当UserDTO含有pageNum和pageSize参数并且都不为空时，直接传入UserDTO也可以实现分页
@@ -127,6 +134,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     /**
      * Entity转换DTO
+     *
      * @param entity
      * @return
      */

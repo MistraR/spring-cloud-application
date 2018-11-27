@@ -8,6 +8,8 @@ import com.mistra.base.constant.JWTConstant;
 import com.mistra.base.date.TimeUtil;
 import com.mistra.userservice.service.AuthorizationService;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,8 @@ import java.util.Date;
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
 
+    private Logger logger = LoggerFactory.getLogger(AuthorizationServiceImpl.class);
+
     @Value("${jwt.secret}")
     private String secret;
 
@@ -35,6 +39,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Value("${jwt.source}")
     private String source;
+
+    @Value("${jwt.expire}")
+    private String expireTime;
 
     private Algorithm algorithm;
 
@@ -62,9 +69,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         Date expire = Date.from(instant);
         return JWT.create()
                 .withClaim(JWTConstant.HEADER_USER_ID_FLAG, userId)
+                .withClaim(JWTConstant.TOKEN_EXPIRE_TIME, System.currentTimeMillis() + Long.valueOf(expireTime))
                 .withClaim("source", source)
                 .withIssuer(issuer)
-                .withExpiresAt(expire)
+                .withExpiresAt(new Date(System.currentTimeMillis() + Long.valueOf(expireTime)))
                 .sign(algorithm);
     }
 
@@ -75,19 +83,36 @@ public class AuthorizationServiceImpl implements AuthorizationService {
      * @return
      */
     @Override
-    public String parseToken(String token) {
-        if (StringUtils.isEmpty(token)){
+    public String parseTokenGetUserId(String token) {
+        if (StringUtils.isEmpty(token)) {
             return null;
         }
         DecodedJWT jwt = jwtVerifier.verify(token);
         if (jwt.getExpiresAt().before(TimeUtil.getNowTime())) {
+            logger.info("----当前用户token已过期");
             return null;
         }
         return jwt.getClaim(JWTConstant.HEADER_USER_ID_FLAG).asString();
     }
 
     /**
+     * 从token中解析出过期时间
+     *
+     * @param token
+     * @return
+     */
+    @Override
+    public Long parseTokenGetExpire(String token) {
+        if (StringUtils.isEmpty(token)) {
+            return null;
+        }
+        DecodedJWT jwt = jwtVerifier.verify(token);
+        return jwt.getClaim(JWTConstant.TOKEN_EXPIRE_TIME).asLong();
+    }
+
+    /**
      * 从请求拿到token
+     *
      * @param httpServletRequest 从httpServletRequest中获取token
      * @return
      */

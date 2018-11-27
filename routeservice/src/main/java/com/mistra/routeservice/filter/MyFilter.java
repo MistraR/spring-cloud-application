@@ -10,14 +10,16 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Author: WangRui
- * Time: 2018/9/19/003
+ * @Author: WangRui
+ * @Time: 2018/9/19/003
  * Describe: Zuul 过滤器
  */
 @Component
 public class MyFilter extends ZuulFilter {
 
     private static Logger log = LoggerFactory.getLogger(MyFilter.class);
+
+    final private static String loginFlag = "user/login";
 
     @Override
     public String filterType() {
@@ -44,6 +46,7 @@ public class MyFilter extends ZuulFilter {
      * shouldFilter：这里可以写逻辑判断，是否要过滤，本文true,永远过滤。
      * run：过滤器的具体逻辑。可用很复杂，包括查sql，nosql去判断该请求到底有没有权限访问。
      * 访问测试：http://localhost:8888/api-feign/hi?name=forezp||http://localhost:8888/api-feign/hi?name=forezp&token=22
+     *
      * @return
      * @throws ZuulException
      */
@@ -52,8 +55,9 @@ public class MyFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         log.info(String.format("%s >>> %s", request.getMethod(), request.getRequestURL().toString()));
-        Object accessToken = request.getParameter("Token");
-        if (accessToken == null) {
+        Object accessToken = request.getHeader("Token");
+        //如果么有拿到token    除登陆接口意外的接口都要经过这个判断
+        if (accessToken == null && !request.getRequestURI().endsWith(loginFlag)) {
             log.warn("Token is empty");
             ctx.setSendZuulResponse(false);
             ctx.setResponseStatusCode(401);

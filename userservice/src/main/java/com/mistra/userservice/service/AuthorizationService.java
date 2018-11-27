@@ -22,7 +22,14 @@ public interface AuthorizationService {
      * @param token
      * @return 从token中解析出userId
      */
-    String parseToken(String token);
+    String parseTokenGetUserId(String token);
+
+    /**
+     * 解析token
+     * @param token
+     * @return 从token中解析出过期时间
+     */
+    Long parseTokenGetExpire(String token);
 
     /**
      * 获取token

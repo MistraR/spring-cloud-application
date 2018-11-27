@@ -14,6 +14,11 @@ public class JWTConstant {
     public final static String HEADER_USER_ID_FLAG = "userId";
 
     /**
+     * token过期时间
+     */
+    public final static String TOKEN_EXPIRE_TIME = "expire";
+
+    /**
      * token头
      */
     public final static String TOKEN_HEAD = "Mistra";
@@ -24,7 +29,7 @@ public class JWTConstant {
     public final static int TOKEN_LENGTH = 2;
 
     /**
-     * token过期时间-72小时
+     * token过期时间-小时
      */
-    public final static int OVERDUE_TIME = 72;
+    public final static int OVERDUE_TIME = 1;
 }
