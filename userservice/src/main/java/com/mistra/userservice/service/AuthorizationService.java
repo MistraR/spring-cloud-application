@@ -1,5 +1,7 @@
 package com.mistra.userservice.service;
 
+import com.mistra.base.JWT.JWTVerifyStatus;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -12,6 +14,7 @@ public interface AuthorizationService {
 
     /**
      * 生成token
+     *
      * @param userId 把userId编码到token负载中
      * @return
      */
@@ -19,20 +22,23 @@ public interface AuthorizationService {
 
     /**
      * 解析token
+     *
      * @param token
      * @return 从token中解析出userId
      */
     String parseTokenGetUserId(String token);
 
     /**
-     * 解析token
+     * 验证token是否有效
+     *
      * @param token
-     * @return 从token中解析出过期时间
+     * @return
      */
-    Long parseTokenGetExpire(String token);
+    JWTVerifyStatus verification(String token);
 
     /**
      * 获取token
+     *
      * @param httpServletRequest 从httpServletRequest中获取token
      * @return
      */

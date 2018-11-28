@@ -4,8 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.mistra.base.constant.JWTConstant;
-import com.mistra.base.date.TimeUtil;
+import com.mistra.base.JWT.JWTConstant;
+import com.mistra.base.JWT.JWTVerifyStatus;
 import com.mistra.userservice.service.AuthorizationService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -40,9 +39,6 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Value("${jwt.source}")
     private String source;
 
-    @Value("${jwt.expire}")
-    private String expireTime;
-
     private Algorithm algorithm;
 
     private JWTVerifier jwtVerifier;
@@ -59,21 +55,51 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     /**
      * 生成token
      *
-     * @param userId 把userId编码到token负载中
+     * @param userId 把userId编码到token负载中   同时把刷新token操作的过期时间也编码到负载中
      * @return
      */
     @Override
     public String generateToken(String userId) {
         //过期时间
-        Instant instant = LocalDateTime.now().plusHours(JWTConstant.OVERDUE_TIME).atZone(ZoneId.systemDefault()).toInstant();
-        Date expire = Date.from(instant);
+        Date expire = Date.from(LocalDateTime.now().plusMinutes(JWTConstant.OVERDUE_TIME).atZone(ZoneId.systemDefault()).toInstant());
+        //token可刷新过期时间
+        Date refresh = Date.from(LocalDateTime.now().plusMinutes(JWTConstant.REFRESH_EXPIRE_TIME).atZone(ZoneId.systemDefault()).toInstant());
         return JWT.create()
                 .withClaim(JWTConstant.HEADER_USER_ID_FLAG, userId)
-                .withClaim(JWTConstant.TOKEN_EXPIRE_TIME, System.currentTimeMillis() + Long.valueOf(expireTime))
+                .withClaim(JWTConstant.TOKEN_REFRESH_EXPIRE_TIME, refresh)
                 .withClaim("source", source)
                 .withIssuer(issuer)
-                .withExpiresAt(new Date(System.currentTimeMillis() + Long.valueOf(expireTime)))
+                .withExpiresAt(expire)
                 .sign(algorithm);
+    }
+
+    /**
+     * 验证token是否有效
+     *
+     * @param token
+     * @return
+     */
+    @Override
+    public JWTVerifyStatus verification(String token) {
+        if (StringUtils.isEmpty(token)) {
+            logger.info("当前用户token为空，需要重新登录。");
+            return JWTVerifyStatus.LOGIN;
+        }
+        DecodedJWT jwt = jwtVerifier.verify(token);
+        Date refresh = jwt.getClaim(JWTConstant.TOKEN_REFRESH_EXPIRE_TIME).asDate();
+        if (jwt.getExpiresAt().getTime() < System.currentTimeMillis()) {
+            logger.info("access_token过期时间：" + jwt.getExpiresAt() + "  当前时间：" + new Date());
+            logger.info("refresh_token过期时间：" + refresh + "  当前时间：" + new Date());
+            if (refresh.getTime() < System.currentTimeMillis()) {
+                logger.info("当前用户token已过期和refresh也过期，需要重新登录。");
+                return JWTVerifyStatus.LOGIN;
+            } else {
+                logger.info("当前用户token已过期!refresh时间还在限制范围内，返回一个新token。token续期");
+                return JWTVerifyStatus.CREATE_NEW;
+            }
+        }
+        logger.info("token验证通过，正常访问！");
+        return JWTVerifyStatus.SUCCESS;
     }
 
     /**
@@ -84,30 +110,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
      */
     @Override
     public String parseTokenGetUserId(String token) {
-        if (StringUtils.isEmpty(token)) {
-            return null;
-        }
         DecodedJWT jwt = jwtVerifier.verify(token);
-        if (jwt.getExpiresAt().before(TimeUtil.getNowTime())) {
-            logger.info("----当前用户token已过期");
-            return null;
-        }
         return jwt.getClaim(JWTConstant.HEADER_USER_ID_FLAG).asString();
-    }
-
-    /**
-     * 从token中解析出过期时间
-     *
-     * @param token
-     * @return
-     */
-    @Override
-    public Long parseTokenGetExpire(String token) {
-        if (StringUtils.isEmpty(token)) {
-            return null;
-        }
-        DecodedJWT jwt = jwtVerifier.verify(token);
-        return jwt.getClaim(JWTConstant.TOKEN_EXPIRE_TIME).asLong();
     }
 
     /**

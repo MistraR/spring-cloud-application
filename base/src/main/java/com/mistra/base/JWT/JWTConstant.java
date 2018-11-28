@@ -1,4 +1,4 @@
-package com.mistra.base.constant;
+package com.mistra.base.JWT;
 
 /**
  * @Author: WangRui
@@ -16,7 +16,7 @@ public class JWTConstant {
     /**
      * token过期时间
      */
-    public final static String TOKEN_EXPIRE_TIME = "expire";
+    public final static String TOKEN_REFRESH_EXPIRE_TIME = "refreshExpire";
 
     /**
      * token头
@@ -29,7 +29,12 @@ public class JWTConstant {
     public final static int TOKEN_LENGTH = 2;
 
     /**
-     * token过期时间-小时
+     * access_token过期时间-分钟
      */
-    public final static int OVERDUE_TIME = 1;
+    public final static int OVERDUE_TIME = 3;
+
+    /**
+     * refresh_token过期时间-分钟
+     */
+    public final static int REFRESH_EXPIRE_TIME = 10;
 }
