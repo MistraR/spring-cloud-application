@@ -85,21 +85,26 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             logger.info("当前用户token为空，需要重新登录。");
             return JWTVerifyStatus.LOGIN;
         }
-        DecodedJWT jwt = jwtVerifier.verify(token);
-        Date refresh = jwt.getClaim(JWTConstant.TOKEN_REFRESH_EXPIRE_TIME).asDate();
-        if (jwt.getExpiresAt().getTime() < System.currentTimeMillis()) {
-            logger.info("access_token过期时间：" + jwt.getExpiresAt() + "  当前时间：" + new Date());
-            logger.info("refresh_token过期时间：" + refresh + "  当前时间：" + new Date());
-            if (refresh.getTime() < System.currentTimeMillis()) {
-                logger.info("当前用户token已过期和refresh也过期，需要重新登录。");
-                return JWTVerifyStatus.LOGIN;
-            } else {
-                logger.info("当前用户token已过期!refresh时间还在限制范围内，返回一个新token。token续期");
-                return JWTVerifyStatus.CREATE_NEW;
+        try {
+            DecodedJWT jwt = jwtVerifier.verify(token);
+            Date refresh = jwt.getClaim(JWTConstant.TOKEN_REFRESH_EXPIRE_TIME).asDate();
+            if (jwt.getExpiresAt().getTime() < System.currentTimeMillis()) {
+                logger.info("access_token过期时间：{},  当前时间：{}", jwt.getExpiresAt(), new Date());
+                logger.info("refresh_token过期时间：{},  当前时间：{}", refresh, LocalDateTime.now());
+                if (refresh.getTime() < System.currentTimeMillis()) {
+                    logger.info("当前用户token已过期和refresh也过期，需要重新登录。");
+                    return JWTVerifyStatus.LOGIN;
+                } else {
+                    logger.info("当前用户token已过期!refresh时间还在限制范围内，返回一个新token。token续期");
+                    return JWTVerifyStatus.CREATE_NEW;
+                }
             }
+            logger.info("token验证通过，正常访问！");
+            return JWTVerifyStatus.SUCCESS;
+        } catch (Exception e) {
+            logger.info("token验证失败");
+            return JWTVerifyStatus.LOGIN;
         }
-        logger.info("token验证通过，正常访问！");
-        return JWTVerifyStatus.SUCCESS;
     }
 
     /**

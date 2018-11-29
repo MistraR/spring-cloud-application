@@ -1,9 +1,7 @@
 package com.mistra.excelservice.controller;
 
-import com.mistra.base.result.PaginationResult;
+import com.mistra.base.result.RequestResultBuilder;
 import com.mistra.base.result.Result;
-import com.mistra.base.result.ResultCode;
-import com.mistra.base.result.Results;
 import com.mistra.excelservice.entity.ExcelEntity;
 import com.mistra.excelservice.service.ExcelService;
 import com.mistra.excelservice.util.ExcelImport;
@@ -35,18 +33,16 @@ public class ExcelController {
     private ExcelService excelService;
 
     @ApiOperation("Excel导入")
-    @ApiImplicitParam(name = "file",dataType = "MultipartFile",value = "Excel文件",required = true)
+    @ApiImplicitParam(name = "file", dataType = "MultipartFile", value = "Excel文件", required = true)
     @PostMapping(value = "/import")
-    public Result<PaginationResult<ExcelEntity>> ledgerImport(MultipartFile file) throws ParseException {
+    public Result ledgerImport(MultipartFile file) throws ParseException {
         try {
             List<ExcelEntity> list = ExcelImport.excelTransformationEntityList(ExcelEntity.class, file.getInputStream(), file.getOriginalFilename(), 1, 1);
             excelService.saveBatch(list);
-            PaginationResult<ExcelEntity> paginationResult = new PaginationResult<>();
-            Result result = new Result(true, ResultCode.SUCCESS.value(),"",paginationResult);
-            return result;
+            return RequestResultBuilder.success();
         } catch (IOException e) {
             e.printStackTrace();
-            return new Result<PaginationResult<ExcelEntity>>(true, ResultCode.SUCCESS.value(),"",null);
+            return RequestResultBuilder.failed("Excel解析错误！");
         }
     }
 

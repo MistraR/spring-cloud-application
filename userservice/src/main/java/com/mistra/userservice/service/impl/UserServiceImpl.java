@@ -103,12 +103,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
+    public PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition){
         //测试JWT认证
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         String token = authorizationService.getToken(servletRequestAttributes.getRequest());
-        String userId = authorizationService.parseTokenGetUserId(token);
         JWTVerifyStatus jwtVerifyStatus = authorizationService.verification(token);
+        if (!jwtVerifyStatus.getCode().equals(JWTVerifyStatus.SUCCESS.getCode())) {
+            return null;
+        }
+        String userId = authorizationService.parseTokenGetUserId(token);
         logger.debug(jwtVerifyStatus.getMessage());
         if (StringUtils.isEmpty(userId)) {
             logger.info("无效的token!");
