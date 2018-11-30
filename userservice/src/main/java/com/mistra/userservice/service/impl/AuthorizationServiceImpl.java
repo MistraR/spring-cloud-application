@@ -23,7 +23,8 @@ import java.util.Date;
  * @Author: WangRui
  * @Date: 2018-09-14
  * Time: 上午11:19
- * Description:
+ * Description: token设计，token本身的过期时间作为用户是否重新登录的判断条件，在负载里放入一个刷新token的过期时间，这个时间一旦过期就会抛异常
+ * 只要当前时间大于这个时间，而且token还没有过期，就重新生成一个token返回，不需要用户再登录
  */
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
@@ -74,7 +75,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     /**
-     * 验证token是否有效
+     * 验证token，返回状态
      *
      * @param token
      * @return
@@ -82,27 +83,21 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public JWTVerifyStatus verification(String token) {
         if (StringUtils.isEmpty(token)) {
-            logger.info("当前用户token为空，需要重新登录。");
+            logger.info("当前用户token为空，搞什么搞，需要重新登录！");
             return JWTVerifyStatus.LOGIN;
         }
         try {
             DecodedJWT jwt = jwtVerifier.verify(token);
             Date refresh = jwt.getClaim(JWTConstant.TOKEN_REFRESH_EXPIRE_TIME).asDate();
-            if (jwt.getExpiresAt().getTime() < System.currentTimeMillis()) {
-                logger.info("access_token过期时间：{},  当前时间：{}", jwt.getExpiresAt(), new Date());
-                logger.info("refresh_token过期时间：{},  当前时间：{}", refresh, LocalDateTime.now());
-                if (refresh.getTime() < System.currentTimeMillis()) {
-                    logger.info("当前用户token已过期和refresh也过期，需要重新登录。");
-                    return JWTVerifyStatus.LOGIN;
-                } else {
-                    logger.info("当前用户token已过期!refresh时间还在限制范围内，返回一个新token。token续期");
-                    return JWTVerifyStatus.CREATE_NEW;
-                }
+            String userId = jwt.getClaim(JWTConstant.HEADER_USER_ID_FLAG).asString();
+            logger.info("当前用户id:{},access_token过期时间:{}, refresh_token时间:{}, 当前时间:{}!", userId, jwt.getExpiresAt(), refresh, LocalDateTime.now());
+            if (refresh.getTime() > System.currentTimeMillis()) {
+                logger.info("返回一个新token。token续期！");
+                return JWTVerifyStatus.CREATE_NEW;
             }
-            logger.info("token验证通过，正常访问！");
             return JWTVerifyStatus.SUCCESS;
         } catch (Exception e) {
-            logger.info("token验证失败");
+            logger.info("token验证失败！");
             return JWTVerifyStatus.LOGIN;
         }
     }
@@ -120,24 +115,26 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     }
 
     /**
-     * 从请求拿到token
+     * 从HttpServletRequest拿到token
      *
      * @param httpServletRequest 从httpServletRequest中获取token
      * @return
      */
     @Override
     public String getToken(HttpServletRequest httpServletRequest) {
-        return getTokenFormRequest(httpServletRequest);
-    }
-
-    private String getTokenFormRequest(HttpServletRequest requestContext) {
-        String token = getTokenFromHeader(requestContext);
+        String token = getTokenFromHeader(httpServletRequest);
         if (StringUtils.isEmpty(token)) {
-            token = getTokenFromQuery(requestContext);
+            token = getTokenFromQuery(httpServletRequest);
         }
         return token;
     }
 
+    /**
+     * 从请求头获取
+     *
+     * @param request
+     * @return
+     */
     private String getTokenFromHeader(HttpServletRequest request) {
         String header = request.getHeader("Token");
         if (StringUtils.isEmpty(header)) {
@@ -153,6 +150,12 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return arr[1];
     }
 
+    /**
+     * 从携带参数获取
+     *
+     * @param request
+     * @return
+     */
     private String getTokenFromQuery(HttpServletRequest request) {
         return request.getParameter("token");
     }

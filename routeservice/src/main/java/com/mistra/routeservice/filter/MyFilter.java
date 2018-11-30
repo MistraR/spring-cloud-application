@@ -45,7 +45,7 @@ public class MyFilter extends ZuulFilter {
      * filterOrder：过滤的顺序
      * shouldFilter：这里可以写逻辑判断，是否要过滤，本文true,永远过滤。
      * run：过滤器的具体逻辑。可用很复杂，包括查sql，nosql去判断该请求到底有没有权限访问。
-     * 访问测试：http://localhost:8888/api-feign/hi?name=forezp||http://localhost:8888/api-feign/hi?name=forezp&token=22
+     * 访问测试：http://localhost:8888/api-feign/hi?name=forezp  ||  http://localhost:8888/api-feign/hi?name=forezp&token=22
      *
      * @return
      * @throws ZuulException
@@ -54,7 +54,7 @@ public class MyFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        log.info(String.format("%s >>> %s", request.getMethod(), request.getRequestURL().toString()));
+        log.info("{} >>> {}", request.getMethod(), request.getRequestURL());
         Object accessToken = request.getHeader("Token");
         //如果么有拿到token    除登陆接口意外的接口都要经过这个判断
         if (accessToken == null && !request.getRequestURI().endsWith(loginFlag)) {
