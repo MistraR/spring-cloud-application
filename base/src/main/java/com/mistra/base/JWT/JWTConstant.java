@@ -36,5 +36,21 @@ public class JWTConstant {
     /**
      * refresh_token过期时间-分钟
      */
-    public final static int REFRESH_EXPIRE_TIME = 10;
+    public final static int REFRESH_EXPIRE_TIME = 1;
+
+    /**
+     * 编码密钥
+     */
+    public final static String SECRET = "mistra.wang";
+
+    /**
+     * 作者
+     */
+    public final static String ISSURE = "MistraR";
+
+    /**
+     * source
+     */
+    public final static String SOURCE = "springCloud";
+
 }

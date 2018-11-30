@@ -5,16 +5,18 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
-import com.mistra.base.JWT.JWTVerifyStatus;
-import com.mistra.base.result.*;
+import com.mistra.base.JWT.JWTUtil;
+import com.mistra.base.result.PageResult;
+import com.mistra.base.result.RequestResultBuilder;
+import com.mistra.base.result.Result;
+import com.mistra.base.result.ResultMessage;
 import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.dao.UserMapper;
-import com.mistra.userservice.entity.User;
-import com.mistra.userservice.service.AuthorizationService;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
 import com.mistra.userservice.dto.TokenDTO;
 import com.mistra.userservice.dto.UserDTO;
+import com.mistra.userservice.entity.User;
 import com.mistra.userservice.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -48,14 +50,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private ModelMapper modelMapper;
 
     @Autowired
-    private AuthorizationService authorizationService;
+    private JWTUtil jwtUtil;
 
     @Override
     public Result login(LoginDTO loginDTO) {
         User user = userMapper.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
         if (user != null) {
             TokenDTO tokenDTO = new TokenDTO();
-            tokenDTO.setToken(authorizationService.generateToken(user.getId().toString()));
+            tokenDTO.setToken(jwtUtil.generateToken(user.getId().toString()));
             return RequestResultBuilder.entityResult(tokenDTO);
         }
         return RequestResultBuilder.failed(ResultMessage.PASSWORD_ERROR);
@@ -103,20 +105,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition){
+    public PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
         //测试JWT认证
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        String token = authorizationService.getToken(servletRequestAttributes.getRequest());
-        JWTVerifyStatus jwtVerifyStatus = authorizationService.verification(token);
-        if (!jwtVerifyStatus.getCode().equals(JWTVerifyStatus.SUCCESS.getCode())) {
-            return null;
-        }
-        String userId = authorizationService.parseTokenGetUserId(token);
-        logger.debug(jwtVerifyStatus.getMessage());
-        if (StringUtils.isEmpty(userId)) {
-            logger.info("无效的token!");
-            return null;
-        }
+        String token = jwtUtil.getToken(servletRequestAttributes.getRequest());
+        String userId = jwtUtil.parseTokenGetUserId(token);
         //1、当UserDTO含有pageNum和pageSize参数并且都不为空时，直接传入UserDTO也可以实现分页
         List<User> userList1 = userMapper.getSelectList3(userDTO);
         logger.info("userList1.size---------------------------------------" + userList1.size());
@@ -125,6 +118,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         com.github.pagehelper.Page<User> pageInfo1 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
         List<User> userList2 = userMapper.getSelectList2(userDTO);
         logger.info("userList2.size---------------------------------------" + userList2.size());
+
         //lambda写法
         com.github.pagehelper.PageInfo<User> pageInfo2 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize())
                 .doSelectPageInfo(() -> userMapper.getSelectList2(userDTO));

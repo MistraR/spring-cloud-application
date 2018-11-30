@@ -1,13 +1,17 @@
 package com.mistra.routeservice.filter;
 
+import com.mistra.base.JWT.JWTUtil;
+import com.mistra.base.JWT.JWTVerifyStatus;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author: WangRui
@@ -19,18 +23,36 @@ public class MyFilter extends ZuulFilter {
 
     private static Logger log = LoggerFactory.getLogger(MyFilter.class);
 
-    final private static String loginFlag = "user/login";
+    final private static String loginFlag = "/user/login";
 
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    /**
+     * 前置过滤器
+     *
+     * @return
+     */
     @Override
     public String filterType() {
         return "pre";
     }
 
+    /**
+     * 优先级为0，数字越大，优先级越低
+     *
+     * @return
+     */
     @Override
     public int filterOrder() {
         return 0;
     }
 
+    /**
+     * 是否执行该过滤器，此处为true，说明需要过滤
+     *
+     * @return
+     */
     @Override
     public boolean shouldFilter() {
         return true;
@@ -52,22 +74,32 @@ public class MyFilter extends ZuulFilter {
      */
     @Override
     public Object run() throws ZuulException {
-        RequestContext ctx = RequestContext.getCurrentContext();
-        HttpServletRequest request = ctx.getRequest();
-        log.info("{} >>> {}", request.getMethod(), request.getRequestURL());
-        Object accessToken = request.getHeader("Token");
-        //如果么有拿到token    除登陆接口意外的接口都要经过这个判断
-        if (accessToken == null && !request.getRequestURI().endsWith(loginFlag)) {
-            log.warn("Token is empty");
-            ctx.setSendZuulResponse(false);
-            ctx.setResponseStatusCode(401);
-            try {
-                ctx.getResponse().getWriter().write("Token is empty");
-            } catch (Exception e) {
+        RequestContext requestContext = RequestContext.getCurrentContext();
+        HttpServletRequest httpServletRequest = requestContext.getRequest();
+        HttpServletResponse httpServletResponse = requestContext.getResponse();
+        log.info("{} >>> {}", httpServletRequest.getMethod(), httpServletRequest.getRequestURL());
+        String token = jwtUtil.getToken(httpServletRequest);
+        //除登陆接口以外的接口都要经过这个判断
+        if (token == null && httpServletRequest.getRequestURI().endsWith(loginFlag)) {
+            requestContext.setSendZuulResponse(true);
+        } else {
+            Integer code = jwtUtil.verification(token).getCode();
+            if (code.equals(JWTVerifyStatus.SUCCESS.getCode())) {
+                //验证成功，继续访问
+                requestContext.setSendZuulResponse(true);
+            } else if (code.equals(JWTVerifyStatus.CREATE_NEW.getCode())) {
+                //需要重新生成token
+                //不对该请求进行路由
+                requestContext.setSendZuulResponse(false);
+                httpServletResponse.setHeader("code", "10001");
+                httpServletResponse.setHeader("token", jwtUtil.generateToken(jwtUtil.parseTokenGetUserId(token)));
+            } else {
+                //需要重新登录
+                requestContext.setSendZuulResponse(false);
+                httpServletResponse.setHeader("code", "10002");
             }
-            return null;
         }
-        log.info("ok");
         return null;
     }
+
 }
