@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @Author: WangRui
  * @Time: 2018/9/19/003
- * Describe: Zuul 过滤器
+ * Describe: Zuul 前置过滤器
  */
 @Component
 public class MyFilter extends ZuulFilter {

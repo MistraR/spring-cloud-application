@@ -108,8 +108,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
         //测试JWT认证
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        String token = jwtUtil.getToken(servletRequestAttributes.getRequest());
-        String userId = jwtUtil.parseTokenGetUserId(token);
         //1、当UserDTO含有pageNum和pageSize参数并且都不为空时，直接传入UserDTO也可以实现分页
         List<User> userList1 = userMapper.getSelectList3(userDTO);
         logger.info("userList1.size---------------------------------------" + userList1.size());
