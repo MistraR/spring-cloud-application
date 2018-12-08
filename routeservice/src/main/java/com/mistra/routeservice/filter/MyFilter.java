@@ -1,7 +1,6 @@
 package com.mistra.routeservice.filter;
 
 import com.mistra.base.JWT.JWTUtil;
-import com.mistra.base.JWT.JWTVerifyStatus;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class MyFilter extends ZuulFilter {
 
-    private static Logger log = LoggerFactory.getLogger(MyFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(MyFilter.class);
 
     final private static String loginFlag = "/user/login";
 
@@ -77,26 +76,38 @@ public class MyFilter extends ZuulFilter {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest httpServletRequest = requestContext.getRequest();
         HttpServletResponse httpServletResponse = requestContext.getResponse();
-        log.info("{} >>> {}", httpServletRequest.getMethod(), httpServletRequest.getRequestURL());
+        httpServletResponse.setIntHeader("zuul_code", 200);
+        requestContext.setSendZuulResponse(true);
+        logger.info("{} >>> {}", httpServletRequest.getMethod(), httpServletRequest.getRequestURL());
         String token = jwtUtil.getToken(httpServletRequest);
-        //除登陆接口以外的接口都要经过这个判断
-        if (token == null && httpServletRequest.getRequestURI().endsWith(loginFlag)) {
-            requestContext.setSendZuulResponse(true);
-        } else {
-            Integer code = jwtUtil.verification(token).getCode();
-            if (code.equals(JWTVerifyStatus.SUCCESS.getCode())) {
-                //验证成功，继续访问
+        // 在zuul进行token认证  除登陆接口以外的接口都要经过这个判断
+//        if (token == null) {
+//            if (!httpServletRequest.getRequestURI().endsWith(loginFlag)) {
+//                requestContext.setSendZuulResponse(false);
+//            }
+//        } else {
+//            Integer code = jwtUtil.verification(token).getCode();
+//            if (code.equals(JWTVerifyStatus.CREATE_NEW.getCode())) {
+//                //需要重新生成token
+//                //不对该请求进行路由
+//                requestContext.setSendZuulResponse(false);
+//                //header的key相同时会覆盖value
+//                httpServletResponse.setHeader("zuulCode", "10001");
+//                httpServletResponse.setHeader("token", jwtUtil.generateToken(jwtUtil.parseTokenGetUserId(token)));
+//            } else if (code.equals(JWTVerifyStatus.LOGIN.getCode())){
+//                //需要重新登录
+//                requestContext.setSendZuulResponse(false);
+//                httpServletResponse.setHeader("zuulCode", "10002");
+//            }
+//        }
+
+        //不在zuul进行token认证，让userservice服务自己认证
+        if (token == null) {
+            requestContext.setSendZuulResponse(false);
+            httpServletResponse.setIntHeader("zuul_code", 403);
+            if (httpServletRequest.getRequestURI().endsWith(loginFlag)) {
                 requestContext.setSendZuulResponse(true);
-            } else if (code.equals(JWTVerifyStatus.CREATE_NEW.getCode())) {
-                //需要重新生成token
-                //不对该请求进行路由
-                requestContext.setSendZuulResponse(false);
-                httpServletResponse.setHeader("code", "10001");
-                httpServletResponse.setHeader("token", jwtUtil.generateToken(jwtUtil.parseTokenGetUserId(token)));
-            } else {
-                //需要重新登录
-                requestContext.setSendZuulResponse(false);
-                httpServletResponse.setHeader("code", "10002");
+                httpServletResponse.setIntHeader("zuul_code", 200);
             }
         }
         return null;
