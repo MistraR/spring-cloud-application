@@ -22,7 +22,7 @@ public class MyFilter extends ZuulFilter {
 
     private static Logger logger = LoggerFactory.getLogger(MyFilter.class);
 
-    final private static String loginFlag = "/user/login";
+    final private static String LOGIN_FLAG = "/user/login";
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -105,7 +105,7 @@ public class MyFilter extends ZuulFilter {
         if (token == null) {
             requestContext.setSendZuulResponse(false);
             httpServletResponse.setIntHeader("zuul_code", 403);
-            if (httpServletRequest.getRequestURI().endsWith(loginFlag)) {
+            if (httpServletRequest.getRequestURI().endsWith(LOGIN_FLAG)) {
                 requestContext.setSendZuulResponse(true);
                 httpServletResponse.setIntHeader("zuul_code", 200);
             }

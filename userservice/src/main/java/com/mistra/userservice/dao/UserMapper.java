@@ -18,10 +18,23 @@ import java.util.List;
 @Repository
 public interface UserMapper extends BaseMapper<User> {
 
+    /**
+     * @param email
+     * @param password
+     * @return
+     */
     User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
+    /**
+     * @param userDTO
+     * @return
+     */
     List<User> getSelectList2(UserDTO userDTO);
 
+    /**
+     * @param userDTO
+     * @return
+     */
     List<User> getSelectList3(UserDTO userDTO);
 
 }

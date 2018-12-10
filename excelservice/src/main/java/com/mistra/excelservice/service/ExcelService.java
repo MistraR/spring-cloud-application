@@ -12,5 +12,10 @@ import java.util.List;
  */
 public interface ExcelService {
 
-   void saveBatch(List<ExcelEntity> list);
+    /**
+     * 批量保存
+     *
+     * @param list
+     */
+    void saveBatch(List<ExcelEntity> list);
 }

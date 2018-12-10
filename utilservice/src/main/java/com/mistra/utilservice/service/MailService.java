@@ -13,6 +13,7 @@ public interface MailService {
 
     /**
      * 邮件发送
+     *
      * @param mailDTO
      */
     Result sendMail(MailDTO mailDTO);

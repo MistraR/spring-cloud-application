@@ -50,7 +50,7 @@ public class FeignServiceImpl implements FeignService {
         mailDTO.setSendToAddress(toList);
         mailDTO.setSubject("我与你数千次离合，刹那间上演");
         mailDTO.setTemplate(emailTemplateDao.selectById(1).getContent());
-        Map<String, Object> paramsMap = new HashMap<>();
+        Map<String, Object> paramsMap = new HashMap<>(32);
         paramsMap.put("name", "丶小王瑞");
         paramsMap.put("haveHeader", 1);
         List<EmailContentDTO> emailContentDTOList = new ArrayList<>();

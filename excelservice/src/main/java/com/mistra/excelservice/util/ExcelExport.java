@@ -31,7 +31,8 @@ public class ExcelExport {
         FileInputStream fileInputStream = new FileInputStream(file);
         Workbook workbook = getWorkBook(fileInputStream, modelPath);
         Sheet sheet = workbook.getSheetAt(0);
-        sheet.setForceFormulaRecalculation(true);//公式自动计算
+        //公式自动计算
+        sheet.setForceFormulaRecalculation(true);
         Map<Integer, CellStyleAndType> cellStyleMap = getModelRowCellStyle(sheet, headerLine);
         //sheet.shiftRows(headerLine, headerLine, -1);//删除模板的样式行(预留的第一行数据行)
         for (int i = 0; i < list.size(); i++) {
@@ -85,9 +86,7 @@ public class ExcelExport {
         if (modelPath.contains(".xlsx")) {
             fileNameSuffix = ".xlsx";
         }
-        /*FileOutputStream out = new FileOutputStream("D:/"+fileName+fileNameSuffix);//本地输出
-        workbook.write(out);
-        out.close();*/
+
         response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8") + fileNameSuffix);
         response.setContentType("application/ms-excel;charset=UTF-8");
         ServletOutputStream outputStream = response.getOutputStream();
@@ -116,7 +115,7 @@ public class ExcelExport {
      * @return
      */
     public static Map<Integer, CellStyleAndType> getModelRowCellStyle(Sheet sheet, int headerLine) {
-        Map<Integer, CellStyleAndType> cellStyleAndTypeMap = new HashMap<>();
+        Map<Integer, CellStyleAndType> cellStyleAndTypeMap = new HashMap<>(32);
         Row row = sheet.getRow(headerLine);
         Iterator<Cell> cellIterator = row.cellIterator();
         int index = 0;

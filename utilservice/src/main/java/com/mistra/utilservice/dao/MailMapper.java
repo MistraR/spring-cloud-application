@@ -14,5 +14,10 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface MailMapper {
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     Template findByKey(String key);
 }

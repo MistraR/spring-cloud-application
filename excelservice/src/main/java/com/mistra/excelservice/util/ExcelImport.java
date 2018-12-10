@@ -45,6 +45,7 @@ public class ExcelImport {
 
     /**
      * 获取工作簿
+     *
      * @param in
      * @param fileName
      * @return
@@ -57,6 +58,7 @@ public class ExcelImport {
 
     /**
      * 获取所有工作表
+     *
      * @param book
      * @return
      */
@@ -71,12 +73,13 @@ public class ExcelImport {
 
     /**
      * 对所有工作表进行操作
+     *
      * @param sheets
      * @param headerLine        表头行数
      * @param stopReadCondition 停止读取的条件（判断某个cell为空时就停止读取）
      * @return
      */
-    private static <T> List<T>  sheetIterator(Class<T> clazz, List<Sheet> sheets, int headerLine, int stopReadCondition) throws ParseException {
+    private static <T> List<T> sheetIterator(Class<T> clazz, List<Sheet> sheets, int headerLine, int stopReadCondition) throws ParseException {
         List<T> list = new ArrayList<>();
         Field[] fields = clazz.getDeclaredFields();
         Sheet sheet = sheets.get(0);
@@ -106,7 +109,7 @@ public class ExcelImport {
                         ExcelCellType cellType = fieldAnnotation.value();
                         Cell cell = nextRow.getCell(columnIndex);
                         //CELL_TYPE_BLANK = 3
-                        if (cell.getCellType() == 3){
+                        if (cell.getCellType() == 3) {
                             continue;
                         }
                         switch (cellType) {
@@ -120,10 +123,10 @@ public class ExcelImport {
                                 field.set(entity, new BigDecimal(cell.getNumericCellValue()));
                                 break;
                             case CELL_TYPE_DATE:
-                                if (cell.getCellType()==1){
-                                    field.set(entity,simpleDateFormat.parse(cell.getStringCellValue().replace(".","-")));
-                                }else if (cell.getCellType()==0){
-                                    field.set(entity,simpleDateFormat.parse(String.valueOf(cell.getNumericCellValue()).replace(".","-")));
+                                if (cell.getCellType() == 1) {
+                                    field.set(entity, simpleDateFormat.parse(cell.getStringCellValue().replace(".", "-")));
+                                } else if (cell.getCellType() == 0) {
+                                    field.set(entity, simpleDateFormat.parse(String.valueOf(cell.getNumericCellValue()).replace(".", "-")));
                                 }
                                 break;
                             case CELL_TYPE_BOOLEAN:
@@ -148,36 +151,42 @@ public class ExcelImport {
         return list;
     }
 
-    public static String setStringValue(Cell cell){
+    public static String setStringValue(Cell cell) {
         String value;
         switch (cell.getCellType()) {
-            case HSSFCell.CELL_TYPE_NUMERIC: // 数字
+            case HSSFCell.CELL_TYPE_NUMERIC:
+                // 数字
                 //如果为时间格式的内容
                 if (HSSFDateUtil.isCellDateFormatted(cell)) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                    value=sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue()));
+                    value = sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue()));
                     break;
                 } else {
                     value = new DecimalFormat("##########.###").format(cell.getNumericCellValue());
                 }
                 break;
-            case HSSFCell.CELL_TYPE_STRING: // 字符串
+            case HSSFCell.CELL_TYPE_STRING:
+                // 字符串
                 value = cell.getStringCellValue();
                 break;
-            case HSSFCell.CELL_TYPE_BOOLEAN: // Boolean
+            case HSSFCell.CELL_TYPE_BOOLEAN:
+                // Boolean
                 value = cell.getBooleanCellValue() + "";
                 break;
-            case HSSFCell.CELL_TYPE_FORMULA: // 公式
+            case HSSFCell.CELL_TYPE_FORMULA:
+                // 公式
                 try {
                     value = String.valueOf(cell.getStringCellValue());
                 } catch (IllegalStateException e) {
                     value = String.valueOf(cell.getNumericCellValue());
                 }
                 break;
-            case HSSFCell.CELL_TYPE_BLANK: // 空值
+            case HSSFCell.CELL_TYPE_BLANK:
+                // 空值
                 value = "";
                 break;
-            case HSSFCell.CELL_TYPE_ERROR: // 故障
+            case HSSFCell.CELL_TYPE_ERROR:
+                // 故障
                 value = "非法字符";
                 break;
             default:
@@ -186,9 +195,11 @@ public class ExcelImport {
         }
         return value;
     }
+
     private static final String XLS = "xls";
     private static final String XLSX = "xlsx";
-    public static Workbook generateWorkbook(MultipartFile multipartFile){
+
+    public static Workbook generateWorkbook(MultipartFile multipartFile) {
         Workbook wb;
         try {
             String fileName = multipartFile.getOriginalFilename();

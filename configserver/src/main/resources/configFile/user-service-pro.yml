@@ -43,6 +43,8 @@ spring:
       connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       # 合并多个DruidDataSource的监控数据
       use-global-data-source-stat: true
+  messages:
+    basename: i18n/messages
 
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/mistra/axela/*/mapper/*Mapper.xml
