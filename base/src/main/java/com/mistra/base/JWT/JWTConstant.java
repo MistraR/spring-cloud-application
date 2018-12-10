@@ -31,12 +31,12 @@ public class JWTConstant {
     /**
      * access_token过期时间-分钟
      */
-    public final static int OVERDUE_TIME = 3;
+    public final static int OVERDUE_TIME = 60000;
 
     /**
      * refresh_token过期时间-分钟
      */
-    public final static int REFRESH_EXPIRE_TIME = 1;
+    public final static int REFRESH_EXPIRE_TIME = 30000;
 
     /**
      * 编码密钥
