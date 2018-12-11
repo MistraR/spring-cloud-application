@@ -18,8 +18,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private WebInterceptor webInterceptor;
 
+    @Autowired
+    private InterceptorIgnoreUrl interceptorIgnoreUrl;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(webInterceptor).addPathPatterns("/**").excludePathPatterns("/user/login");
+        registry.addInterceptor(webInterceptor).addPathPatterns("/**").excludePathPatterns(interceptorIgnoreUrl.getUrl());
     }
 }

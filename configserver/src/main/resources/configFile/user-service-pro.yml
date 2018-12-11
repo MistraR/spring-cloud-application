@@ -87,4 +87,7 @@ jwt:
   #该JWT的签发者
   issuer: MistraR
   source: springCloud
+  ignore:
+    - /user/login
+    - /user/regist
 
