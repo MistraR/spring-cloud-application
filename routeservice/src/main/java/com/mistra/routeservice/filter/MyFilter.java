@@ -120,7 +120,7 @@ public class MyFilter extends ZuulFilter {
      * @param url
      * @return
      */
-    public boolean verificationRequestUrl(String url) {
+    private boolean verificationRequestUrl(String url) {
         return zuulIgnoreFilterUrlProperties.getUrl().contains(url);
     }
 

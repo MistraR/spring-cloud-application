@@ -1,7 +1,7 @@
 package com.mistra.userservice.base;
 
-import com.mistra.base.JWT.JWTUtil;
-import com.mistra.base.JWT.JWTVerifyStatus;
+import com.mistra.base.JWT.JsonWwbTokenUtil;
+import com.mistra.base.JWT.JsonWwbTokenVerifyStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class WebInterceptor implements HandlerInterceptor {
     Logger logger = LoggerFactory.getLogger(WebInterceptor.class);
 
     @Autowired
-    private JWTUtil jwtUtil;
+    private JsonWwbTokenUtil jwtUtil;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -35,11 +35,11 @@ public class WebInterceptor implements HandlerInterceptor {
         String token = jwtUtil.getToken(request);
         Integer code = jwtUtil.verification(token).getCode();
         boolean isContinue = true;
-        if (code.equals(JWTVerifyStatus.CREATE_NEW.getCode())) {
+        if (code.equals(JsonWwbTokenVerifyStatus.CREATE_NEW.getCode())) {
             //需要重新生成token 继续请求数据  把新token放在header
             response.setIntHeader("pre_code", 10001);
             response.setHeader("token", jwtUtil.generateToken(jwtUtil.parseTokenGetUserId(token)));
-        } else if (code.equals(JWTVerifyStatus.LOGIN.getCode())) {
+        } else if (code.equals(JsonWwbTokenVerifyStatus.LOGIN.getCode())) {
             //需要重新登录
             response.setIntHeader("pre_code", 10002);
             isContinue = false;

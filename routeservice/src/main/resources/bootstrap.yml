@@ -39,3 +39,4 @@ zuul:
 zuul-filter:
   url:
     - /user/login
+    - /user/regist

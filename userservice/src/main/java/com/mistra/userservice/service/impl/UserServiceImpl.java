@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
-import com.mistra.base.JWT.JWTUtil;
+import com.mistra.base.JWT.JsonWwbTokenUtil;
 import com.mistra.base.result.PageResult;
 import com.mistra.base.result.RequestResultBuilder;
 import com.mistra.base.result.Result;
@@ -50,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private ModelMapper modelMapper;
 
     @Autowired
-    private JWTUtil jwtUtil;
+    private JsonWwbTokenUtil jwtUtil;
 
     @Override
     public Result login(LoginDTO loginDTO) {
