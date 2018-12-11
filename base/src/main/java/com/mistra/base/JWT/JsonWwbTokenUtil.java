@@ -21,9 +21,9 @@ import java.util.Date;
  * Description: JWT工具类
  */
 @Data
-public class JWTUtil {
+public class JsonWwbTokenUtil {
 
-    private Logger logger = LoggerFactory.getLogger(JWTUtil.class);
+    private Logger logger = LoggerFactory.getLogger(JsonWwbTokenUtil.class);
 
     private Algorithm algorithm;
 
@@ -37,14 +37,14 @@ public class JWTUtil {
      */
     public String generateToken(String userId) {
         //过期时间
-        Date expire = Date.from(LocalDateTime.now().plusMinutes(JWTConstant.OVERDUE_TIME).atZone(ZoneId.systemDefault()).toInstant());
+        Date expire = Date.from(LocalDateTime.now().plusMinutes(JsonWebTokenConstant.OVERDUE_TIME).atZone(ZoneId.systemDefault()).toInstant());
         //token可刷新过期时间
-        Date refresh = Date.from(LocalDateTime.now().plusMinutes(JWTConstant.REFRESH_EXPIRE_TIME).atZone(ZoneId.systemDefault()).toInstant());
+        Date refresh = Date.from(LocalDateTime.now().plusMinutes(JsonWebTokenConstant.REFRESH_EXPIRE_TIME).atZone(ZoneId.systemDefault()).toInstant());
         return JWT.create()
-                .withClaim(JWTConstant.HEADER_USER_ID_FLAG, userId)
-                .withClaim(JWTConstant.TOKEN_REFRESH_EXPIRE_TIME, refresh)
-                .withClaim("source", JWTConstant.SOURCE)
-                .withIssuer(JWTConstant.ISSURE)
+                .withClaim(JsonWebTokenConstant.HEADER_USER_ID_FLAG, userId)
+                .withClaim(JsonWebTokenConstant.TOKEN_REFRESH_EXPIRE_TIME, refresh)
+                .withClaim("source", JsonWebTokenConstant.SOURCE)
+                .withIssuer(JsonWebTokenConstant.ISSUER)
                 .withExpiresAt(expire)
                 .sign(algorithm);
     }
@@ -55,24 +55,24 @@ public class JWTUtil {
      * @param token
      * @return
      */
-    public JWTVerifyStatus verification(String token) {
+    public JsonWwbTokenVerifyStatus verification(String token) {
         if (StringUtils.isEmpty(token)) {
             logger.info("当前用户token为空，搞什么搞，需要重新登录！");
-            return JWTVerifyStatus.LOGIN;
+            return JsonWwbTokenVerifyStatus.LOGIN;
         }
         try {
             DecodedJWT jwt = jwtVerifier.verify(token);
-            Date refresh = jwt.getClaim(JWTConstant.TOKEN_REFRESH_EXPIRE_TIME).asDate();
-            String userId = jwt.getClaim(JWTConstant.HEADER_USER_ID_FLAG).asString();
+            Date refresh = jwt.getClaim(JsonWebTokenConstant.TOKEN_REFRESH_EXPIRE_TIME).asDate();
+            String userId = jwt.getClaim(JsonWebTokenConstant.HEADER_USER_ID_FLAG).asString();
             logger.info("当前用户id:{},access_token过期时间:{}, refresh_token时间:{}, 当前时间:{}!", userId, jwt.getExpiresAt(), refresh, LocalDateTime.now());
             if (refresh.getTime() < System.currentTimeMillis()) {
                 logger.info("返回一个新token。token续期！");
-                return JWTVerifyStatus.CREATE_NEW;
+                return JsonWwbTokenVerifyStatus.CREATE_NEW;
             }
-            return JWTVerifyStatus.SUCCESS;
+            return JsonWwbTokenVerifyStatus.SUCCESS;
         } catch (Exception e) {
             logger.info("token验证失败！");
-            return JWTVerifyStatus.LOGIN;
+            return JsonWwbTokenVerifyStatus.LOGIN;
         }
     }
 
@@ -84,7 +84,7 @@ public class JWTUtil {
      */
     public String parseTokenGetUserId(String token) {
         DecodedJWT jwt = jwtVerifier.verify(token);
-        return jwt.getClaim(JWTConstant.HEADER_USER_ID_FLAG).asString();
+        return jwt.getClaim(JsonWebTokenConstant.HEADER_USER_ID_FLAG).asString();
     }
 
     /**
@@ -113,10 +113,10 @@ public class JWTUtil {
             return null;
         }
         String[] arr = header.split(" ");
-        if (arr.length != JWTConstant.TOKEN_LENGTH) {
+        if (arr.length != JsonWebTokenConstant.TOKEN_LENGTH) {
             return null;
         }
-        if (!JWTConstant.TOKEN_HEAD.equals(arr[0])) {
+        if (!JsonWebTokenConstant.TOKEN_HEAD.equals(arr[0])) {
             return null;
         }
         return arr[1];

@@ -6,7 +6,7 @@ package com.mistra.base.JWT;
  * Time: 下午3:48
  * Description: JWT Token 常量
  */
-public class JWTConstant {
+public class JsonWebTokenConstant {
 
     /**
      * header里面用户key值
@@ -46,7 +46,7 @@ public class JWTConstant {
     /**
      * 作者
      */
-    public final static String ISSURE = "MistraR";
+    public final static String ISSUER = "MistraR";
 
     /**
      * source
