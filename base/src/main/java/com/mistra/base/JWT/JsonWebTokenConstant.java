@@ -19,6 +19,12 @@ public class JsonWebTokenConstant {
     public final static String TOKEN_REFRESH_EXPIRE_TIME = "refreshExpire";
 
     /**
+     * header里面用户token标记
+     */
+    public static final String RESPONSE_HEADER_USER_TOKEN_FLAG = "token";
+
+
+    /**
      * token头
      */
     public final static String TOKEN_HEAD = "Mistra";

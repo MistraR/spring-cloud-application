@@ -1,7 +1,10 @@
 package com.mistra.userservice.base;
 
+import com.mistra.base.JWT.JsonWebTokenConstant;
 import com.mistra.base.JWT.JsonWwbTokenUtil;
 import com.mistra.base.JWT.JsonWwbTokenVerifyStatus;
+import com.mistra.base.exception.BaseServiceException;
+import com.mistra.base.exception.ResultCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,29 +30,33 @@ public class WebInterceptor implements HandlerInterceptor {
     @Autowired
     private JsonWwbTokenUtil jwtUtil;
 
+    /**
+     * 验证token,通常情况下结合redis做刷新token缓存，比如同一个页面有多个请求时需要刷新token不用每次都重新生成，在redis拿
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        logger.info("preHandle()方法！");
         logger.info("{} >>> {}", request.getMethod(), request.getRequestURL());
-        response.setIntHeader("pre_code", 200);
         String token = jwtUtil.getToken(request);
         Integer code = jwtUtil.verification(token).getCode();
-        boolean isContinue = true;
-        if (code.equals(JsonWwbTokenVerifyStatus.CREATE_NEW.getCode())) {
-            //需要重新生成token 继续请求数据  把新token放在header
-            response.setIntHeader("pre_code", 10001);
-            response.setHeader("token", jwtUtil.generateToken(jwtUtil.parseTokenGetUserId(token)));
+        if (code.equals(JsonWwbTokenVerifyStatus.SUCCESS.getCode())) {
+            return true;
+        } else if (code.equals(JsonWwbTokenVerifyStatus.CREATE_NEW.getCode())) {
+            String userId = jwtUtil.parseTokenGetUserId(token);
+            String allNewToken = jwtUtil.generateToken(userId);
+            response.setHeader(JsonWebTokenConstant.RESPONSE_HEADER_USER_TOKEN_FLAG, allNewToken);
+            return true;
         } else if (code.equals(JsonWwbTokenVerifyStatus.LOGIN.getCode())) {
-            //需要重新登录
-            response.setIntHeader("pre_code", 10002);
-            isContinue = false;
+            throw new BaseServiceException(ResultCode.LOGIN_EXPIRED_ERROR);
         }
-        return isContinue;
+        return false;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
-        logger.info("进入postHandle()方法！");
-        response.setIntHeader("post_code",20000);
     }
 }

@@ -6,18 +6,18 @@ package com.mistra.base.exception;
  * Time: 上午11:05
  * Description:
  */
-public class AjaxResult<T> {
+public class ResponseResult<T> {
     private String msg;
     private T data;
     private Integer code;
 
-    public AjaxResult() {
+    public ResponseResult() {
         this.msg = ResultCode.SUCCESS.getMessage();
         this.code = ResultCode.SUCCESS.getCode();
         this.data = null;
     }
 
-    public AjaxResult(T data) {
+    public ResponseResult(T data) {
         this.msg = ResultCode.SUCCESS.getMessage();
         this.code = ResultCode.SUCCESS.getCode();
         this.data = data;
@@ -30,12 +30,12 @@ public class AjaxResult<T> {
      * @param <T>
      * @return
      */
-    public static <T> AjaxResult<T> success(T data) {
-        return new AjaxResult<>(data);
+    public static <T> ResponseResult<T> success(T data) {
+        return new ResponseResult<>(data);
     }
 
-    public static <T> AjaxResult<T> success() {
-        return new AjaxResult<>();
+    public static <T> ResponseResult<T> success() {
+        return new ResponseResult<>();
     }
 
 
@@ -47,16 +47,16 @@ public class AjaxResult<T> {
      * @param <T>
      * @return
      */
-    public static <T> AjaxResult<T> serviceError(String msg) {
-        AjaxResult<T> result = new AjaxResult<>();
+    public static <T> ResponseResult<T> serviceError(String msg) {
+        ResponseResult<T> result = new ResponseResult<>();
         result.setCode(ResultCode.SERVICE_ERROR.getCode());
         result.setMsg(msg);
         result.setData(null);
         return result;
     }
 
-    public static <T> AjaxResult<T> parameterError(String msg) {
-        AjaxResult<T> result = new AjaxResult<>();
+    public static <T> ResponseResult<T> parameterError(String msg) {
+        ResponseResult<T> result = new ResponseResult<>();
         result.setCode(ResultCode.PARAMETER_ERROR.getCode());
         if (msg == null) {
             result.setMsg(ResultCode.PARAMETER_ERROR.getMessage());
@@ -74,8 +74,8 @@ public class AjaxResult<T> {
      * @param <T>
      * @return
      */
-    public static <T> AjaxResult<T> error(ResultCode code) {
-        AjaxResult<T> result = new AjaxResult<>();
+    public static <T> ResponseResult<T> error(ResultCode code) {
+        ResponseResult<T> result = new ResponseResult<>();
         result.setCode(code.getCode());
         result.setMsg(code.getMessage());
         result.setData(null);
@@ -86,7 +86,7 @@ public class AjaxResult<T> {
         return msg;
     }
 
-    public AjaxResult setMsg(String msg) {
+    public ResponseResult setMsg(String msg) {
         this.msg = msg;
         return this;
     }
@@ -95,7 +95,7 @@ public class AjaxResult<T> {
         return data;
     }
 
-    public AjaxResult<T> setData(T data) {
+    public ResponseResult<T> setData(T data) {
         this.data = data;
         return this;
     }
@@ -104,7 +104,7 @@ public class AjaxResult<T> {
         return code;
     }
 
-    public AjaxResult setCode(Integer code) {
+    public ResponseResult setCode(Integer code) {
         this.code = code;
         return this;
     }

@@ -37,9 +37,9 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = {MissingServletRequestParameterException.class})
-    public AjaxResult handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+    public ResponseResult handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         logger.error("缺少请求参数：", e);
-        return AjaxResult.parameterError("缺少请求参数");
+        return ResponseResult.parameterError("缺少请求参数");
     }
 
     /**
@@ -47,9 +47,9 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public AjaxResult handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public ResponseResult handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         logger.error("参数解析失败：", e);
-        return AjaxResult.parameterError("参数解析失败");
+        return ResponseResult.parameterError("参数解析失败");
     }
 
     /**
@@ -57,14 +57,14 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public AjaxResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         logger.error("参数验证失败：", e);
         BindingResult result = e.getBindingResult();
         FieldError error = result.getFieldError();
         String field = error.getField();
         String code = error.getDefaultMessage();
         String message = String.format("%s:%s", field, code);
-        return AjaxResult.parameterError(message);
+        return ResponseResult.parameterError(message);
     }
 
     /**
@@ -72,14 +72,14 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    public AjaxResult handleBindException(BindException e) {
+    public ResponseResult handleBindException(BindException e) {
         logger.error("参数绑定失败", e);
         BindingResult result = e.getBindingResult();
         FieldError error = result.getFieldError();
         String field = error.getField();
         String code = error.getDefaultMessage();
         String message = String.format("%s:%s", field, code);
-        return AjaxResult.parameterError(message);
+        return ResponseResult.parameterError(message);
     }
 
     /**
@@ -87,12 +87,12 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
-    public AjaxResult handleConstraintViolationException(ConstraintViolationException e) {
+    public ResponseResult handleConstraintViolationException(ConstraintViolationException e) {
         logger.error("参数验证失败", e);
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         ConstraintViolation<?> violation = violations.iterator().next();
         String message = violation.getMessage();
-        return AjaxResult.parameterError(message);
+        return ResponseResult.parameterError(message);
     }
 
     /**
@@ -100,9 +100,9 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidationException.class)
-    public AjaxResult handleValidationException(ValidationException e) {
+    public ResponseResult handleValidationException(ValidationException e) {
         logger.error("参数验证失败", e);
-        return AjaxResult.parameterError("参数验证失败: " + e.getMessage());
+        return ResponseResult.parameterError("参数验证失败: " + e.getMessage());
     }
 
 
@@ -111,9 +111,9 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public AjaxResult handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    public ResponseResult handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         logger.error("不支持当前请求方法", e);
-        return AjaxResult.error(ResultCode.METHOD_NOT_ALLOWED);
+        return ResponseResult.error(ResultCode.METHOD_NOT_ALLOWED);
     }
 
     /**
@@ -121,9 +121,9 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public AjaxResult handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+    public ResponseResult handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
         logger.error("不支持当前媒体类型：", e);
-        return AjaxResult.error(ResultCode.UNSUPPORTED_MEDIA_TYPE);
+        return ResponseResult.error(ResultCode.UNSUPPORTED_MEDIA_TYPE);
     }
 
     /***
@@ -131,17 +131,17 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BaseServiceException.class)
-    public AjaxResult handlerIbServiceException(BaseServiceException e) {
-        AjaxResult ajaxResult = AjaxResult.error(e.getResultCode());
-        ajaxResult.setMsg(e.getMessage());
-        return ajaxResult;
+    public ResponseResult handlerIbServiceException(BaseServiceException e) {
+        ResponseResult responseResult = ResponseResult.error(e.getResultCode());
+        responseResult.setMsg(e.getMessage());
+        return responseResult;
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(FeignException.class)
-    public AjaxResult handlerF(FeignException ex) {
+    public ResponseResult handlerF(FeignException ex) {
         logger.error("Feign调用异常：", ex);
-        return AjaxResult.error(ResultCode.UNKNOWN_ERROR);
+        return ResponseResult.error(ResultCode.UNKNOWN_ERROR);
     }
 
     /**
@@ -152,9 +152,9 @@ public class ExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
-    public AjaxResult handleException(Exception ex) {
+    public ResponseResult handleException(Exception ex) {
         logger.error("system exception handler:  ", ex);
-        return AjaxResult.error(ResultCode.UNKNOWN_ERROR);
+        return ResponseResult.error(ResultCode.UNKNOWN_ERROR);
     }
 
 }
