@@ -9,9 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
+/**
+ * @author Mistra
+ */
 @SpringBootApplication
 @EnableEurekaClient
-public class UserserviceApplication {
+public class UserserviceApplication extends BaseApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(UserserviceApplication.class, args);
