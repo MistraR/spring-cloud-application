@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author: WangRui
@@ -77,14 +76,8 @@ public class MyFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest httpServletRequest = requestContext.getRequest();
-        HttpServletResponse httpServletResponse = requestContext.getResponse();
         String method = httpServletRequest.getMethod();
         String url = httpServletRequest.getRequestURI();
-        System.out.println(url);
-        if (zuulIgnoreFilterUrlProperties.getUrl().contains(url)) {
-            requestContext.setSendZuulResponse(true);
-            return null;
-        }
         requestContext.setSendZuulResponse(true);
         logger.info("请求到达路由: method+{} >>> url+{}", method, url);
         String token = jsonWwbTokenUtil.getToken(httpServletRequest);
@@ -110,6 +103,7 @@ public class MyFilter extends ZuulFilter {
 //        }
 
         //不在zuul进行token认证，让服务自己认证
+
         if (token == null) {
             requestContext.setSendZuulResponse(false);
             if (verificationRequestUrl(url)) {
