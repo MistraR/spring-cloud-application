@@ -38,5 +38,5 @@ zuul:
   #prefix: /V1
 zuul-filter:
   url:
-    - /user/login
-    - /user/regist
+    - /userApi/user/login
+    - /userApi/user/regist

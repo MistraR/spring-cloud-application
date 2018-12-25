@@ -11,6 +11,7 @@ import com.mistra.base.result.RequestResultBuilder;
 import com.mistra.base.result.Result;
 import com.mistra.base.result.ResultMessage;
 import com.mistra.userservice.base.PageQueryCondition;
+import com.mistra.userservice.config.RedisUtils;
 import com.mistra.userservice.dao.UserMapper;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
@@ -51,6 +52,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private JsonWwbTokenUtil jwtUtil;
+
+    @Autowired
+    private RedisUtils redisUtils;
 
     @Override
     public Result login(LoginDTO loginDTO) {
@@ -106,6 +110,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     @Override
     public PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
+        redisUtils.set("mistra", "王瑞");
+        System.out.println(redisUtils.get("mistra"));
         //测试JWT认证
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         //1、当UserDTO含有pageNum和pageSize参数并且都不为空时，直接传入UserDTO也可以实现分页

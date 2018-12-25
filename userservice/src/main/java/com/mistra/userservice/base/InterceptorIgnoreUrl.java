@@ -20,5 +20,5 @@ public class InterceptorIgnoreUrl {
     /**
      * 拦截器需要忽略的路径
      */
-    List<String> url;
+    List<String> ignoreUrl;
 }

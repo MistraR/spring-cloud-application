@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mistra.base.JWT.JsonWebTokenConstant;
 import com.mistra.base.JWT.JsonWwbTokenUtil;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
@@ -14,10 +15,10 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 @EnableEurekaClient
-public class UserserviceApplication extends BaseApplication{
+public class UserServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserserviceApplication.class, args);
+        SpringApplication.run(UserServiceApplication.class, args);
     }
 
     @Bean
@@ -26,5 +27,10 @@ public class UserserviceApplication extends BaseApplication{
         jwtUtil.setAlgorithm(Algorithm.HMAC256(JsonWebTokenConstant.SECRET));
         jwtUtil.setJwtVerifier(JWT.require(jwtUtil.getAlgorithm()).withIssuer(JsonWebTokenConstant.ISSUER).build());
         return jwtUtil;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 }

@@ -68,6 +68,7 @@
         <spring-boot-admin-starter-client>2.0.2</spring-boot-admin-starter-client>
         <spring-boot-admin-starter-server>2.0.2</spring-boot-admin-starter-server>
         <spring-boot-starter-security>2.0.5.RELEASE</spring-boot-starter-security>
+        <spring-boot-starter-data-redis>2.1.1.RELEASE</spring-boot-starter-data-redis>
         <spring-cloud-starter-hystrix-dashboard>1.4.5.RELEASE</spring-cloud-starter-hystrix-dashboard>
     </properties>
 
@@ -317,6 +318,11 @@
                 <artifactId>jersey-hk2</artifactId>
                 <version>${jersey-hk2}</version>
             </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+                <!--<version>${spring-boot-starter-data-redis}</version>-->
+            <!--</dependency>-->
         </dependencies>
     </dependencyManagement>
 
