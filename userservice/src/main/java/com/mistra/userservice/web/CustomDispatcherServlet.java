@@ -19,8 +19,6 @@ import java.util.Locale;
  */
 public class CustomDispatcherServlet extends DispatcherServlet {
 
-    Logger logger = LoggerFactory.getLogger(CustomDispatcherServlet.class);
-
     private static final long serialVersionUID = 1L;
 
     private static final String ZH_CN = "zh";

@@ -8,7 +8,7 @@ package com.mistra.base.exception;
  */
 public class BaseServiceException extends RuntimeException {
 
-    private ResultCode resultCode;
+    private final ResultCode resultCode;
 
     public BaseServiceException(ResultCode resultCode) {
         super(resultCode.getMessage());
@@ -24,7 +24,4 @@ public class BaseServiceException extends RuntimeException {
         return resultCode;
     }
 
-    public void setResultCode(ResultCode resultCode) {
-        this.resultCode = resultCode;
-    }
 }
