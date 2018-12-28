@@ -20,10 +20,10 @@ public class SystemRole {
     private String description;
 
     /**
-     * 是否可用,如果不可用将不会添加给用户
+     * 是否可用,如果不可用将不会添加给用户,0:可用 1:不可用
      */
-    private Boolean available = Boolean.FALSE;
+    private int available;
 
-    private List<SysPermission> sysPermissionList;
+    private List<SystemPermission> sysPermissionList;
 
 }

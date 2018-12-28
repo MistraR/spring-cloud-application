@@ -12,11 +12,14 @@ import com.mistra.base.result.Result;
 import com.mistra.base.result.ResultMessage;
 import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.config.RedisUtils;
+import com.mistra.userservice.dao.SystemPermissionMapper;
+import com.mistra.userservice.dao.SystemRoleMapper;
 import com.mistra.userservice.dao.UserMapper;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
 import com.mistra.userservice.dto.TokenDTO;
 import com.mistra.userservice.dto.UserDTO;
+import com.mistra.userservice.entity.SystemRole;
 import com.mistra.userservice.entity.User;
 import com.mistra.userservice.service.UserService;
 import org.apache.commons.lang.StringUtils;
@@ -28,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +55,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private ModelMapper modelMapper;
 
     @Autowired
+    private SystemRoleMapper systemRoleMapper;
+
+    @Autowired
+    private SystemPermissionMapper systemPermissionMapper;
+
+    @Autowired
     private JsonWwbTokenUtil jwtUtil;
 
     @Autowired
@@ -68,8 +78,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserDTO findUserRolePermission(String userName) {
-        return null;
+    public User findUserRolePermission(String userName) {
+        User user = userMapper.findByUserName(userName);
+        List<SystemRole> systemRoles = new ArrayList<>();
+        SystemRole systemRole = systemRoleMapper.selectById(user.getSystemRoleId());
+        systemRole.setSysPermissionList(systemPermissionMapper.findBySystemRoleId(user.getSystemRoleId()));
+        systemRoles.add(systemRole);
+        user.setRoleList(systemRoles);
+        return user;
     }
 
     @Override

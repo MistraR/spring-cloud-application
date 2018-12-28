@@ -6,6 +6,7 @@ import com.mistra.userservice.base.PageQueryCondition;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
 import com.mistra.userservice.dto.UserDTO;
+import com.mistra.userservice.entity.User;
 
 /**
  * @Author: WangRui
@@ -27,7 +28,7 @@ public interface UserService {
      * @param userName
      * @return
      */
-    UserDTO findUserRolePermission(String userName);
+    User findUserRolePermission(String userName);
 
     /**
      * 用户注册

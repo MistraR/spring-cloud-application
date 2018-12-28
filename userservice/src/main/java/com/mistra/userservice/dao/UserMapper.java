@@ -37,4 +37,12 @@ public interface UserMapper extends BaseMapper<User> {
      */
     List<User> getSelectList3(UserDTO userDTO);
 
+    /**
+     * 根据用户名查询用户
+     *
+     * @param userName
+     * @return
+     */
+    User findByUserName(@Param("userName") String userName);
+
 }

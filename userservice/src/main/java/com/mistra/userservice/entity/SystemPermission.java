@@ -9,7 +9,7 @@ import lombok.Data;
  * Description:
  */
 @Data
-public class SysPermission {
+public class SystemPermission {
 
     private Integer id;
     private String name;
@@ -30,12 +30,12 @@ public class SysPermission {
      */
     private Long parentId;
     /**
-     * 父编号列表
-     */
-    private String parentIds;
-    /**
      * 是否可用
      */
-    private Boolean available = Boolean.FALSE;
+    private int available;
+    /**
+     * SystemRole Id
+     */
+    private int systemRoleId;
 
 }
