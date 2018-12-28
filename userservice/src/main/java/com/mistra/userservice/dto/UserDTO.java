@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @Author: WangRui
  * @Date: 2018-09-14
@@ -19,4 +21,8 @@ public class UserDTO {
 
     @ApiModelProperty(name = "userName",value = "用户姓名")
     private String userName;
+
+    private String password;
+
+    private List<SystemRoleDTO> systemRoleDTOList;
 }

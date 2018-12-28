@@ -68,6 +68,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    public UserDTO findUserRolePermission(String userName) {
+        return null;
+    }
+
+    @Override
     public Result register(RegisterDTO registerDTO) {
         Wrapper<User> userWrapper = new EntityWrapper<User>().like("email", registerDTO.getEmail());
         if (selectList(userWrapper).size() > 0) {

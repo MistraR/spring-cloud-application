@@ -23,6 +23,13 @@ public interface UserService {
     Result login(LoginDTO loginDTO);
 
     /**
+     * 通过用户账号查询用户的角色以及对于的角色权限
+     * @param userName
+     * @return
+     */
+    UserDTO findUserRolePermission(String userName);
+
+    /**
      * 用户注册
      * @param registerDTO
      * @return
