@@ -4,14 +4,19 @@ import com.mistra.base.result.PageResult;
 import com.mistra.base.result.RequestResultBuilder;
 import com.mistra.base.result.Result;
 import com.mistra.userservice.base.PageQueryCondition;
-import com.mistra.userservice.service.UserService;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
 import com.mistra.userservice.dto.UserDTO;
+import com.mistra.userservice.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -47,10 +52,20 @@ public class UserController {
         return userService.register(registerDTO);
     }
 
-    @GetMapping("/login")
-    @ApiOperation("登录")
-    public Result login(@Valid LoginDTO loginDTO) {
-        return userService.login(loginDTO);
+//    @GetMapping("/login")
+//    @ApiOperation("登录")
+//    public Result login(@Valid LoginDTO loginDTO) {
+//        return userService.login(loginDTO);
+//    }
+
+    @PostMapping(value = "/login")
+    public String shiroLogin(@RequestBody LoginDTO loginDTO){
+        //添加用户认证信息
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginDTO.getUserName(),loginDTO.getPassword());
+        //进行验证，这里可以捕获异常，然后返回对应信息
+        subject.login(usernamePasswordToken);
+        return "login";
     }
 
     @GetMapping("/list")
@@ -94,6 +109,24 @@ public class UserController {
     })
     public PageResult<UserDTO> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition) {
         return userService.getSelectList2(userDTO, pageQueryCondition);
+    }
+
+    /**
+     * Shiro注解的使用
+     */
+    @RequiresRoles("admin")
+    @RequiresPermissions("create")
+    @GetMapping(value = "/shiro/create")
+    public String create(){
+        return "Create success!";
+    }
+
+
+    @RequiresRoles("admin")
+    @RequiresPermissions("delete")
+    @GetMapping(value = "/shiro/delete")
+    public String delete(){
+        return "Delete success!";
     }
 
 }

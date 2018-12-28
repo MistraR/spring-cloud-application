@@ -19,11 +19,11 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
 
     /**
-     * @param email
+     * @param userName
      * @param password
      * @return
      */
-    User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+    User findByUserNameAndPassword(@Param("userName") String userName, @Param("password") String password);
 
     /**
      * @param userDTO

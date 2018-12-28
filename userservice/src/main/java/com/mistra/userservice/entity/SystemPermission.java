@@ -28,14 +28,14 @@ public class SystemPermission {
     /**
      * 父编号
      */
-    private Long parentId;
+    private Integer parentId;
     /**
      * 是否可用
      */
-    private int available;
+    private Integer available;
     /**
      * SystemRole Id
      */
-    private int systemRoleId;
+    private Integer systemRoleId;
 
 }

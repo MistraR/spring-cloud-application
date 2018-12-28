@@ -79,7 +79,7 @@ public class MyFilter extends ZuulFilter {
         String method = httpServletRequest.getMethod();
         String url = httpServletRequest.getRequestURI();
         requestContext.setSendZuulResponse(true);
-        logger.info("请求到达路由: method+{} >>> url+{}", method, url);
+        logger.info("请求到达路由: method:{} >>> url:{}", method, url);
         String token = jsonWwbTokenUtil.getToken(httpServletRequest);
         // 在zuul进行token认证
 //        if (token == null) {

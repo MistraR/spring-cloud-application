@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mistra.userservice.dao.SystemPermissionMapper">
+    <resultMap id="BaseResultMap" type="com.mistra.userservice.entity.SystemPermission">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="resource_type" property="resourceType" jdbcType="VARCHAR"/>
+        <result column="permission" property="permission" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="available" property="available" jdbcType="INTEGER"/>
+        <result column="system_role_id" property="systemRoleId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, resource_type,permission,parent_id, available,system_role_id
+    </sql>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=INTEGER} and status = 1;
+    </select>
+
+    <select id="findBySystemRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where system_role_id = #{systemRoleId,jdbcType=INTEGER};
+    </select>
+
+</mapper>

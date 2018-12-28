@@ -34,10 +34,10 @@
              #{updateTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
     </insert>
 
-    <select id="findByEmailAndPassword" resultMap="BaseResultMap">
+    <select id="findByUserNameAndPassword" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from user where email = #{email} and password = #{password} and status = 1;
+        from user where user_name = #{userName} and password = #{password} and status = 1;
     </select>
 
     <select id="findByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -47,7 +47,7 @@
         WHERE email = #{email};
     </select>
 
-    <select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="findByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user

@@ -18,8 +18,8 @@ import javax.validation.constraints.NotBlank;
 public class LoginDTO {
 
     @Email
-    @ApiModelProperty(name = "email", value = "用户邮箱", required = true)
-    private String email;
+    @ApiModelProperty(name = "userName", value = "用户邮箱", required = true)
+    private String userName;
 
     @NotBlank
     @ApiModelProperty(name = "password", value = "用户密码", required = true)

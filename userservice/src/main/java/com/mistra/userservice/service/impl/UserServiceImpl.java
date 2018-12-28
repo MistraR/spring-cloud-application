@@ -68,7 +68,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result login(LoginDTO loginDTO) {
-        User user = userMapper.findByEmailAndPassword(loginDTO.getEmail(), loginDTO.getPassword());
+        User user = userMapper.findByUserNameAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
         if (user != null) {
             TokenDTO tokenDTO = new TokenDTO();
             tokenDTO.setToken(jwtUtil.generateToken(user.getId().toString()));

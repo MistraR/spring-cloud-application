@@ -106,6 +106,7 @@ jwt:
   issuer: MistraR
   source: springCloud
   ignoreUrl:
+    - /login
     - /user/login
     - /user/regist
 

@@ -1,10 +1,6 @@
 package com.mistra.userservice.base;
 
-import com.mistra.base.JWT.JsonWebTokenConstant;
 import com.mistra.base.JWT.JsonWwbTokenUtil;
-import com.mistra.base.JWT.JsonWwbTokenVerifyStatus;
-import com.mistra.base.exception.BaseServiceException;
-import com.mistra.base.exception.ResultCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,19 +37,20 @@ public class WebInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         logger.info("{} >>> {}", request.getMethod(), request.getRequestURL());
-        String token = jwtUtil.getToken(request);
-        Integer code = jwtUtil.verification(token).getCode();
-        if (code.equals(JsonWwbTokenVerifyStatus.SUCCESS.getCode())) {
-            return true;
-        } else if (code.equals(JsonWwbTokenVerifyStatus.CREATE_NEW.getCode())) {
-            String userId = jwtUtil.parseTokenGetUserId(token);
-            String allNewToken = jwtUtil.generateToken(userId);
-            response.setHeader(JsonWebTokenConstant.RESPONSE_HEADER_USER_TOKEN_FLAG, allNewToken);
-            return true;
-        } else if (code.equals(JsonWwbTokenVerifyStatus.LOGIN.getCode())) {
-            throw new BaseServiceException(ResultCode.LOGIN_EXPIRED_ERROR);
-        }
-        return false;
+        String url = request.getRequestURI();
+//        String token = jwtUtil.getToken(request);
+//        Integer code = jwtUtil.verification(token).getCode();
+//        if (code.equals(JsonWwbTokenVerifyStatus.SUCCESS.getCode())) {
+//            return true;
+//        } else if (code.equals(JsonWwbTokenVerifyStatus.CREATE_NEW.getCode())) {
+//            String userId = jwtUtil.parseTokenGetUserId(token);
+//            String allNewToken = jwtUtil.generateToken(userId);
+//            response.setHeader(JsonWebTokenConstant.RESPONSE_HEADER_USER_TOKEN_FLAG, allNewToken);
+//            return true;
+//        } else if (code.equals(JsonWwbTokenVerifyStatus.LOGIN.getCode())) {
+//            throw new BaseServiceException(ResultCode.LOGIN_EXPIRED_ERROR);
+//        }
+        return true;
     }
 
     @Override
