@@ -1,7 +1,9 @@
 package com.mistra.userservice.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +13,7 @@ import java.util.List;
  * Description:
  */
 @Data
-public class SystemRole {
+public class SystemRole implements Serializable {
 
     private Integer id;
 
@@ -24,6 +26,7 @@ public class SystemRole {
      */
     private int available;
 
+    @TableField(exist = false)
     private List<SystemPermission> sysPermissionList;
 
 }

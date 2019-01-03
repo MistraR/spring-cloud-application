@@ -1,5 +1,6 @@
 package com.mistra.userservice.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.mistra.base.entity.BaseEntity;
 import lombok.Data;
 
@@ -38,7 +39,9 @@ public class User extends BaseEntity implements Cloneable, Serializable {
     private int systemRoleId;
     /**
      * 假如一个用户具有多个角色
+     *
      */
+    @TableField(exist = false)
     private List<SystemRole> roleList;
 
     @Override

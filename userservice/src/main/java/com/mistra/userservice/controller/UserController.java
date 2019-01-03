@@ -52,20 +52,20 @@ public class UserController {
         return userService.register(registerDTO);
     }
 
-//    @GetMapping("/login")
-//    @ApiOperation("登录")
-//    public Result login(@Valid LoginDTO loginDTO) {
-//        return userService.login(loginDTO);
-//    }
-
     @PostMapping(value = "/login")
-    public String shiroLogin(@RequestBody LoginDTO loginDTO){
+    public Result shiroLogin(@RequestBody LoginDTO loginDTO) {
         //添加用户认证信息
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginDTO.getUserName(),loginDTO.getPassword());
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginDTO.getUserName(), loginDTO.getPassword());
         //进行验证，这里可以捕获异常，然后返回对应信息
         subject.login(usernamePasswordToken);
-        return "login";
+        return userService.login(loginDTO);
+    }
+
+    @GetMapping("/error")
+    @ApiOperation("权限认证失败")
+    public Result login() {
+        return RequestResultBuilder.failed("鉴权失败!");
     }
 
     @GetMapping("/list")
@@ -117,7 +117,7 @@ public class UserController {
     @RequiresRoles("admin")
     @RequiresPermissions("create")
     @GetMapping(value = "/shiro/create")
-    public String create(){
+    public String create() {
         return "Create success!";
     }
 
@@ -125,7 +125,7 @@ public class UserController {
     @RequiresRoles("admin")
     @RequiresPermissions("delete")
     @GetMapping(value = "/shiro/delete")
-    public String delete(){
+    public String delete() {
         return "Delete success!";
     }
 

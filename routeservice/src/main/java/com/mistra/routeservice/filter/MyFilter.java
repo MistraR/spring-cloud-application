@@ -80,7 +80,7 @@ public class MyFilter extends ZuulFilter {
         String url = httpServletRequest.getRequestURI();
         requestContext.setSendZuulResponse(true);
         logger.info("请求到达路由: method:{} >>> url:{}", method, url);
-        String token = jsonWwbTokenUtil.getToken(httpServletRequest);
+       // String token = jsonWwbTokenUtil.getToken(httpServletRequest);
         // 在zuul进行token认证
 //        if (token == null) {
 //            if (!verificationRequestUrl(url)) {
@@ -104,12 +104,12 @@ public class MyFilter extends ZuulFilter {
 
         //不在zuul进行token认证，让服务自己认证
 
-        if (token == null) {
-            requestContext.setSendZuulResponse(false);
-            if (verificationRequestUrl(url)) {
-                requestContext.setSendZuulResponse(true);
-            }
-        }
+//        if (token == null) {
+//            requestContext.setSendZuulResponse(false);
+//            if (verificationRequestUrl(url)) {
+//                requestContext.setSendZuulResponse(true);
+//            }
+//        }
         return null;
     }
 
