@@ -1,9 +1,10 @@
-package com.mistra.base.JWT;
+package com.mistra.userservice.base.JWT;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.mistra.userservice.core.CurrentUserSession;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -64,6 +65,7 @@ public class JsonWwbTokenUtil {
             DecodedJWT jwt = jwtVerifier.verify(token);
             Date refresh = jwt.getClaim(JsonWebTokenConstant.TOKEN_REFRESH_EXPIRE_TIME).asDate();
             String userId = jwt.getClaim(JsonWebTokenConstant.HEADER_USER_ID_FLAG).asString();
+            CurrentUserSession.setUserId(Long.valueOf(userId));
             logger.info("当前用户id:{},access_token过期时间:{}, refresh_token时间:{}, 当前时间:{}!", userId, jwt.getExpiresAt(), refresh, LocalDateTime.now());
             if (refresh.getTime() < System.currentTimeMillis()) {
                 logger.info("返回一个新token。token续期！");

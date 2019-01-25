@@ -2,8 +2,8 @@ package com.mistra.userservice;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.mistra.base.JWT.JsonWebTokenConstant;
-import com.mistra.base.JWT.JsonWwbTokenUtil;
+import com.mistra.userservice.base.JWT.JsonWebTokenConstant;
+import com.mistra.userservice.base.JWT.JsonWwbTokenUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

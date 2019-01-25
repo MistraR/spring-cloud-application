@@ -26,7 +26,7 @@ public class BaseConfig {
     private String reasonable;
 
     /**
-     * 注册MyBatis分页插件PageHelper
+     * 注册MyBatis分页插件PageHelper  使用MyBatis时才用
      */
     @Bean
     public PageHelper pageHelper() {

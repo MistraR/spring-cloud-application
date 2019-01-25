@@ -1,4 +1,4 @@
-package com.mistra.userservice.base;
+package com.mistra.userservice.base.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

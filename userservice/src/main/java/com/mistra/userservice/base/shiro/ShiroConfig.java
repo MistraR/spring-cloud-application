@@ -1,5 +1,6 @@
-package com.mistra.userservice.config;
+package com.mistra.userservice.base.shiro;
 
+import com.mistra.userservice.base.properties.InterceptorIgnoreUrl;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -10,11 +11,14 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @Author: WangRui
@@ -24,6 +28,9 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
+
+    @Autowired
+    private InterceptorIgnoreUrl interceptorIgnoreUrl;
 
     /**
      * 将自定义的验证方式加入容器
@@ -78,32 +85,22 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        Map<String,String> map = new HashMap<String, String>();
+        Set<String> urlSet = new HashSet<>(interceptorIgnoreUrl.getIgnoreUrl());
+        //必须采用LinkedHashMap有序存储过滤条件
+        Map<String, String> map = new LinkedHashMap<>();
+        //anon表示所有用户都可以不鉴权匿名访问
+        urlSet.stream().forEach(temp -> map.put(temp, "anon"));
         //登出
-        map.put("/logout","logout");
-        map.put("/user/login", "anon");
-        map.put("/**","authc");
+        //map.put("/loginOut", "logout");
+        //此路径必须放在最后
+        map.put("/**", "authc");
         //登录
         shiroFilterFactoryBean.setLoginUrl("/user/login");
         //首页
-        shiroFilterFactoryBean.setSuccessUrl("/user/test");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
         //错误页面，认证不通过跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/error");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
-//        // 设置登录路径
-//        shiroFilterFactoryBean.setLoginUrl("/user/login");
-//        // 登录成功后要跳转的链接
-//        //shiroFilterFactoryBean.setSuccessUrl("/user/loginSuccess");
-//        // 无权限时跳转的url，认证不通过跳转
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/user/error");
-//        //拦截器map
-//        Map<String,String> filterChainDefinitionMap = new HashMap<String, String>();
-//        //登出
-//        filterChainDefinitionMap.put("/logout","logout");
-//        //authc:所有url都必须认证通过才可以访问; anon:所有url都可以匿名访问
-//        filterChainDefinitionMap.put("/user/login","anon");
-//        filterChainDefinitionMap.put("/**","authc");
-       // shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
 

@@ -1,4 +1,4 @@
-package com.mistra.userservice.base;
+package com.mistra.userservice.base.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

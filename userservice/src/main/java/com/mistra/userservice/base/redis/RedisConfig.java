@@ -1,4 +1,4 @@
-package com.mistra.userservice.config;
+package com.mistra.userservice.base.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

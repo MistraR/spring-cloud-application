@@ -1,6 +1,5 @@
-package com.mistra.userservice.config;
+package com.mistra.userservice.base.shiro;
 
-import com.mistra.userservice.entity.SystemPermission;
 import com.mistra.userservice.entity.SystemRole;
 import com.mistra.userservice.entity.User;
 import com.mistra.userservice.service.UserService;
@@ -14,8 +13,9 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.stream.Collectors;
 
 /**
  * @Author: WangRui
@@ -33,19 +33,17 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //获取登录用户名
+        //获取登录用户名 此用户名是在UserHandler里的UsernamePasswordToken设置的
         String name = (String) principalCollection.getPrimaryPrincipal();
         //查询用户
         User user = userService.findUserRolePermission(name);
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         for (SystemRole role : user.getRoleList()) {
-            //添加角色
+            //添加角色  也可以只添加权限，不用角色控制
             simpleAuthorizationInfo.addRole(role.getRoleName());
-            for (SystemPermission permission : role.getSysPermissionList()) {
-                //添加权限
-                simpleAuthorizationInfo.addStringPermission(permission.getPermission());
-            }
+            //添加权限
+            simpleAuthorizationInfo.addStringPermissions(role.getSysPermissionList().stream().map(systemPermission -> systemPermission.getPermission()).collect(Collectors.toList()));
         }
         return simpleAuthorizationInfo;
     }
@@ -67,11 +65,10 @@ public class MyShiroRealm extends AuthorizingRealm {
             throw new AuthenticationException("授权失败！");
         } else {
             //这里验证authenticationToken和simpleAuthenticationInfo的信息
-            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(), ByteSource.Util.bytes(name), getName());
-            //当验证都通过后，把用户信息放在session里
+            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
+            //当验证都通过后，把用户信息放在session里  此Session是Shiro封装过后的HttpSession
             Session session = SecurityUtils.getSubject().getSession();
             session.setAttribute("userSession", user);
-            session.setAttribute("userSessionId", user.getId());
             return simpleAuthenticationInfo;
         }
     }

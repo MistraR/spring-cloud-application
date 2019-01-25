@@ -1,4 +1,4 @@
-package com.mistra.userservice.config;
+package com.mistra.userservice.base.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

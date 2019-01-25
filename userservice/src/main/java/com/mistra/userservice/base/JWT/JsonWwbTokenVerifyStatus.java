@@ -1,4 +1,4 @@
-package com.mistra.base.JWT;
+package com.mistra.userservice.base.JWT;
 
 /**
  * @Author: WangRui

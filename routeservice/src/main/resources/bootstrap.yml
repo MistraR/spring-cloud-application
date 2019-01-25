@@ -5,10 +5,10 @@ spring:
   application:
     name: route-service
 #  cloud:
-#    config:
+#    shiro:
 #      fail-fast: true
 #      discovery:
-#        service-id: config-server
+#        service-id: shiro-server
 #        enabled: true
 #  profiles:
 #    active: pro

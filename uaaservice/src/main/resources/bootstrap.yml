@@ -5,7 +5,7 @@ spring:
     config:
       fail-fast: true
       discovery:
-        service-id: config-server
+        service-id: shiro-server
         enabled: true
   profiles:
       active: pro

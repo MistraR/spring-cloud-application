@@ -1,6 +1,7 @@
 package com.mistra.userservice.base;
 
 
+import com.mistra.userservice.base.properties.InterceptorIgnoreUrl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
