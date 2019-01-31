@@ -1,8 +1,8 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.base.result.PageResult;
-import com.mistra.base.result.RequestResultBuilder;
-import com.mistra.base.result.Result;
+import com.mistra.userservice.base.result.PageResult;
+import com.mistra.userservice.base.result.RequestResultBuilder;
+import com.mistra.userservice.base.result.Result;
 import com.mistra.userservice.base.model.PageQueryCondition;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;

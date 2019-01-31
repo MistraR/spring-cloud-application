@@ -1,5 +1,6 @@
-package com.mistra.base.result;
+package com.mistra.userservice.base.result;
 
+import com.mistra.userservice.base.exception.SystemCodeMessage;
 import lombok.Data;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class RequestResultBuilder {
     public static Result success() {
         Result result = new Result();
         result.setSuccess(true);
-        result.setMessage(ResultCode.valueOf(200).message);
+        result.setMessage(SystemCodeMessage.valueOf(200).message);
         return result;
     }
 
@@ -30,7 +31,7 @@ public class RequestResultBuilder {
     public static <T> EntityResult<T> entityResult(T data) {
         EntityResult<T> result = new EntityResult<>();
         result.setSuccess(true);
-        result.setMessage(ResultCode.valueOf(200).message);
+        result.setMessage(SystemCodeMessage.valueOf(200).message);
         result.setData(data);
         return result;
     }
@@ -46,7 +47,7 @@ public class RequestResultBuilder {
     public static <T> ListResult<T> listResult(List<T> data) {
         ListResult<T> result = new ListResult<>();
         result.setSuccess(true);
-        result.setMessage(ResultCode.valueOf(200).message);
+        result.setMessage(SystemCodeMessage.valueOf(200).message);
         result.setData(data);
         return result;
     }
@@ -62,7 +63,7 @@ public class RequestResultBuilder {
     public static <T> PageResult<T> pageResult(List<T> data, long totalData, long totalPageNumber, int currentPageNumber, int pageSize) {
         PageResult<T> result = new PageResult<>();
         result.setData(data);
-        result.setMessage(ResultCode.valueOf(200).message);
+        result.setMessage(SystemCodeMessage.valueOf(200).message);
         result.setSuccess(true);
         result.setTotalPageNumber(totalPageNumber);
         result.setTotalData(totalData);

@@ -1,7 +1,7 @@
 package com.mistra.uaaservice.config;
 
-import com.mistra.base.result.RequestResultBuilder;
-import com.mistra.base.result.Result;
+import com.mistra.userservice.base.result.RequestResultBuilder;
+import com.mistra.userservice.base.result.Result;
 import com.mistra.utilservice.dto.MailDTO;
 import org.springframework.stereotype.Component;
 

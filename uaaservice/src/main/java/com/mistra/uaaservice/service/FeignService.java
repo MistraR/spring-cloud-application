@@ -1,9 +1,6 @@
 package com.mistra.uaaservice.service;
 
-import com.mistra.base.result.Result;
-import com.mistra.uaaservice.config.UserFeignClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.mistra.userservice.base.result.Result;
 
 /**
  * @Author: WangRui

@@ -1,4 +1,4 @@
-package com.mistra.base.exception;
+package com.mistra.userservice.base.exception;
 
 import feign.FeignException;
 import org.slf4j.Logger;

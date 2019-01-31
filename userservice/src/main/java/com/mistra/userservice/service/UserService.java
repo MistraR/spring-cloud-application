@@ -1,7 +1,7 @@
 package com.mistra.userservice.service;
 
-import com.mistra.base.result.PageResult;
-import com.mistra.base.result.Result;
+import com.mistra.userservice.base.result.PageResult;
+import com.mistra.userservice.base.result.Result;
 import com.mistra.userservice.base.model.PageQueryCondition;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;

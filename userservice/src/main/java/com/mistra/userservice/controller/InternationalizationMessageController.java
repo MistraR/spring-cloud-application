@@ -1,7 +1,7 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.base.result.RequestResultBuilder;
-import com.mistra.base.result.Result;
+import com.mistra.userservice.base.result.RequestResultBuilder;
+import com.mistra.userservice.base.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;

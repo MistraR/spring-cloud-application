@@ -61,6 +61,7 @@
         <zipkin.version>2.0.0.RELEASE</zipkin.version>
         <netflix-ribbon>2.0.1.RELEASE</netflix-ribbon>
         <jolokia-core.version>1.6.0</jolokia-core.version>
+        <com.alibaba.fastjson>1.2.49</com.alibaba.fastjson>
         <mysql-connector-java>5.1.46</mysql-connector-java>
         <spring-boot-starter-web>2.0.5.RELEASE</spring-boot-starter-web>
         <spring-boot-starter-mail>2.0.5.RELEASE</spring-boot-starter-mail>
@@ -329,6 +330,11 @@
                 <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
                 <!--<version>${spring-boot-starter-data-redis}</version>-->
             <!--</dependency>-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${com.alibaba.fastjson}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

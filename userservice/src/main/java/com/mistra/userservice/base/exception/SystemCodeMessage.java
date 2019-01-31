@@ -1,4 +1,4 @@
-package com.mistra.base.result;
+package com.mistra.userservice.base.exception;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -9,12 +9,17 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Time: 下午4:41
  * Description:
  */
-public enum ResultCode {
+public enum SystemCodeMessage {
 
     /**
      * 请求成功
      */
-    SUCCESS(200, "请求处理成功！"),
+    SUCCESS(0, "请求处理成功！"),
+
+    /**
+     * 系统错误
+     */
+    FAIL(-1, "系统错误！"),
 
     /**
      * 请求报文存在语法错误或参数错误
@@ -39,17 +44,12 @@ public enum ResultCode {
     /**
      * 服务器超负载或正停机维护，无法处理请求
      */
-    INTERNAL_SERVER_ERROR(500,"服务器超负载或正停机维护，无法处理请求"),
-
-    /**
-     * 业务逻辑错误
-     */
-    SERVICE_ERROR(999,"业务逻辑错误");
+    INTERNAL_SERVER_ERROR(500,"服务器超负载或正停机维护，无法处理请求");
 
     int code;
     String message;
 
-    ResultCode(int code, String message) {
+    SystemCodeMessage(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -60,12 +60,28 @@ public enum ResultCode {
     }
 
     @JsonCreator
-    public static ResultCode valueOf(int code) {
-        for (ResultCode resultCode : values()) {
-            if (resultCode.code == code) {
-                return resultCode;
+    public static SystemCodeMessage valueOf(int code) {
+        for (SystemCodeMessage systemCodeMessage : values()) {
+            if (systemCodeMessage.code == code) {
+                return systemCodeMessage;
             }
         }
         throw new IllegalArgumentException("invalid code");
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

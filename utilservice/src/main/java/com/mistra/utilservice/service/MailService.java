@@ -1,6 +1,6 @@
 package com.mistra.utilservice.service;
 
-import com.mistra.base.result.Result;
+import com.mistra.userservice.base.result.Result;
 import com.mistra.utilservice.dto.MailDTO;
 
 /**

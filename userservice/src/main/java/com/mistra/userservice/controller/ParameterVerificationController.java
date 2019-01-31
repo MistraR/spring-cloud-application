@@ -1,7 +1,7 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.base.result.RequestResultBuilder;
-import com.mistra.base.result.Result;
+import com.mistra.userservice.base.result.RequestResultBuilder;
+import com.mistra.userservice.base.result.Result;
 import com.mistra.userservice.dto.ParameterVerificationDTO;
 import io.swagger.annotations.*;
 import org.springframework.validation.annotation.Validated;
