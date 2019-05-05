@@ -1,6 +1,5 @@
 server:
   port: 8001
-  servletPath: /userStatus
 
 management:
   endpoints:
