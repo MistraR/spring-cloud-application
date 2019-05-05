@@ -34,7 +34,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-cloud-starter-hystrix>1.4.5.RELEASE</spring-cloud-starter-hystrix>
         <spring-boot-starter-actuator>2.0.3.RELEASE</spring-boot-starter-actuator>
-        <hibernate.validator.version>5.4.2.Final</hibernate.validator.version>
+        <hibernate.validator.version>6.1.0.Alpha4</hibernate.validator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
         <mybatis.srping.version>1.3.2</mybatis.srping.version>
@@ -51,7 +51,7 @@
         <java-jwt>3.4.0</java-jwt>
         <lombok>1.18.2</lombok>
         <mailgun>1.9.0</mailgun>
-        <greenmail>1.5.8</greenmail>
+        <greenmail>1.5.9</greenmail>
         <modelmapper>2.2.0</modelmapper>
         <hutool-core>4.1.12</hutool-core>
         <slf4j-api>1.8.0-beta2</slf4j-api>
@@ -63,6 +63,7 @@
         <jolokia-core.version>1.6.0</jolokia-core.version>
         <com.alibaba.fastjson>1.2.49</com.alibaba.fastjson>
         <mysql-connector-java>5.1.46</mysql-connector-java>
+        <spring-kafka.version>2.2.4.RELEASE</spring-kafka.version>
         <spring-boot-starter-web>2.0.5.RELEASE</spring-boot-starter-web>
         <spring-boot-starter-mail>2.0.5.RELEASE</spring-boot-starter-mail>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
@@ -129,7 +130,7 @@
             </dependency>
             <!--hibernate-->
             <dependency>
-                <groupId>org.hibernate</groupId>
+                <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate.validator.version}</version>
             </dependency>
@@ -298,13 +299,19 @@
                 <artifactId>spring-boot-starter-mail</artifactId>
                 <version>${spring-boot-starter-mail}</version>
             </dependency>
-            <!--mail测试-->
+            <!--kafka-->
             <dependency>
-                <groupId>com.icegreen</groupId>
-                <artifactId>greenmail</artifactId>
-                <version>${greenmail}</version>
-                <scope>test</scope>
+                <groupId>org.springframework.kafka</groupId>
+                <artifactId>spring-kafka</artifactId>
+                <version>${spring-kafka.version}</version>
             </dependency>
+            <!--mail测试-->
+            <!--<dependency>-->
+                <!--<groupId>com.icegreen</groupId>-->
+                <!--<artifactId>greenmail</artifactId>-->
+                <!--<version>1.5.5</version>-->
+                <!--<scope>test</scope>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
