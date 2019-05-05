@@ -1,8 +1,7 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.userservice.base.result.PageResult;
-import com.mistra.userservice.base.result.RequestResultBuilder;
-import com.mistra.userservice.base.result.Result;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.mistra.userservice.base.annotation.MistraResponseBody;
 import com.mistra.userservice.base.model.PageQueryCondition;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
@@ -12,25 +11,23 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 /**
- * @Author: WangRui
- * @Date: 2018-09-14
+ * @ Author: WangRui
+ * @ Date: 2018-09-14
  * Time: 上午9:39
  * Description:
  */
-@Api("用户模块controller")
+@Api("用户模块Controller")
 @RequestMapping("/user")
 @RestController
 @Validated
@@ -39,33 +36,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/test")
-    @ApiOperation("访问成功测试")
-    public Result test() {
-        return RequestResultBuilder.success();
+    @GetMapping("/returnBoolean")
+    @ApiOperation("返回Boolean")
+    @MistraResponseBody
+    public Boolean returnBoolean() {
+        return true;
     }
 
     @PostMapping("/register")
     @ApiOperation("用户注册")
     @ApiImplicitParam(name = "registerDTO", dataType = "RegisterDTO", value = "用户注册信息", required = true)
-    public Result register(@Valid @RequestBody RegisterDTO registerDTO) {
-        return userService.register(registerDTO);
+    @MistraResponseBody
+    public void register(@Valid @RequestBody RegisterDTO registerDTO) {
+        userService.register(registerDTO);
     }
 
     @PostMapping(value = "/login")
-    public Result shiroLogin(@RequestBody LoginDTO loginDTO) {
-        //添加用户认证信息
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginDTO.getUserName(), loginDTO.getPassword());
-        //进行验证，这里可以捕获异常，然后返回对应信息
-        subject.login(usernamePasswordToken);
-        return userService.login(loginDTO);
-    }
-
-    @GetMapping("/error")
-    @ApiOperation("权限认证失败")
-    public Result login() {
-        return RequestResultBuilder.failed("鉴权失败!");
+    @ApiOperation("用户登录，登录成功则返回token")
+    @MistraResponseBody
+    public void shiroLogin(@Valid @RequestBody LoginDTO loginDTO, HttpServletResponse httpServletResponse) {
+        userService.login(loginDTO, httpServletResponse);
     }
 
     @GetMapping("/list")
@@ -73,16 +63,17 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "pageNumber", dataType = "int", value = "当前页码", required = true),
             @ApiImplicitParam(name = "pageSize", dataType = "int", value = "分页大小", required = true)})
-    public PageResult<UserDTO> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber, @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
+    @MistraResponseBody
+    public Page<UserDTO> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber, @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
         return null;
     }
 
     /**
-     * * 使用mybatis-plus自带的分页插件查询，返回结果转换为自定义带DTO的PaginationResult
+     * * 使用mybatis-plus自带的分页插件查询，返回结果转换为DTO类
      *
-     * @param userDTO
-     * @param pageQueryCondition
-     * @return
+     * @param userDTO userDTO
+     * @param pageQueryCondition PageQueryCondition
+     * @return Page<UserDTO>
      */
     @GetMapping("/selectList")
     @ApiOperation("带查询条件的分页列表---mybatis-plus分页插件")
@@ -90,16 +81,17 @@ public class UserController {
             @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
             @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
     })
-    public PageResult<UserDTO> getSelectList(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition) {
+    @MistraResponseBody
+    public Page<UserDTO> getSelectList(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition) {
         return userService.getSelectList(userDTO, pageQueryCondition);
     }
 
     /**
-     * * 使用github page-helper分页插件查询，返回结果转换为自定义带DTO的PaginationResult
+     * * 使用github page-helper分页插件查询，返回结果转换为DTO类
      *
-     * @param userDTO
-     * @param pageQueryCondition
-     * @return
+     * @param userDTO UserDTO
+     * @param pageQueryCondition PageQueryCondition
+     * @return Page<UserDTO>
      */
     @GetMapping("/selectList2")
     @ApiOperation("带查询条件的分页列表---github分页插件")
@@ -107,7 +99,8 @@ public class UserController {
             @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
             @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
     })
-    public PageResult<UserDTO> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition) {
+    @MistraResponseBody
+    public Page<UserDTO> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition) {
         return userService.getSelectList2(userDTO, pageQueryCondition);
     }
 
@@ -117,14 +110,15 @@ public class UserController {
     @RequiresRoles("admin")
     @RequiresPermissions("create")
     @GetMapping(value = "/shiro/create")
+    @MistraResponseBody
     public String create() {
         return "Create success!";
     }
 
-
     @RequiresRoles("admin")
     @RequiresPermissions("delete")
     @GetMapping(value = "/shiro/delete")
+    @MistraResponseBody
     public String delete() {
         return "Delete success!";
     }

@@ -6,10 +6,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.mistra.userservice.base.JWT.JsonWwbTokenUtil;
-import com.mistra.userservice.base.result.PageResult;
-import com.mistra.userservice.base.result.RequestResultBuilder;
-import com.mistra.userservice.base.result.Result;
-import com.mistra.userservice.base.result.ResultMessage;
 import com.mistra.userservice.base.model.PageQueryCondition;
 import com.mistra.userservice.base.redis.RedisUtils;
 import com.mistra.userservice.dao.SystemPermissionMapper;
@@ -23,6 +19,9 @@ import com.mistra.userservice.entity.SystemRole;
 import com.mistra.userservice.entity.User;
 import com.mistra.userservice.service.UserService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,7 +67,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private RedisUtils redisUtils;
 
     @Override
-    public Result login(LoginDTO loginDTO) {
+    public void login(LoginDTO loginDTO, HttpServletResponse httpServletResponse) {
+        //添加用户认证信息
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginDTO.getUserName(), loginDTO.getPassword());
+        //进行验证，这里可以捕获异常，然后返回对应信息
+        subject.login(usernamePasswordToken);
         User user = userMapper.findByUserNameAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
         if (user != null) {
             TokenDTO tokenDTO = new TokenDTO();
@@ -89,7 +94,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public Result register(RegisterDTO registerDTO) {
+    public void register(RegisterDTO registerDTO) {
         Wrapper<User> userWrapper = new EntityWrapper<User>().like("email", registerDTO.getEmail());
         if (selectList(userWrapper).size() > 0) {
             return RequestResultBuilder.failed(ResultMessage.REPEAT_EMAIL);
@@ -108,12 +113,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public PageResult<UserDTO> getUserList(int pageNumber, int pageSize) {
+    public Page<UserDTO> getUserList(int pageNumber, int pageSize) {
         return null;
     }
 
     @Override
-    public PageResult<UserDTO> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
+    public Page<UserDTO> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
         Page<User> userPage = new Page<>(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
         Wrapper<User> userWrapper = new EntityWrapper<User>().like(StringUtils.isNotBlank(userDTO.getUserName()), "name", userDTO.getUserName())
                 .like(StringUtils.isNotBlank(userDTO.getEmail()), "email", userDTO.getEmail());
@@ -130,7 +135,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @return
      */
     @Override
-    public PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
+    public Page<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
         redisUtils.set("mistra", "王瑞");
         System.out.println(redisUtils.get("mistra"));
         //测试JWT认证

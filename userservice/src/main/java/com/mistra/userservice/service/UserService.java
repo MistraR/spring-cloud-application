@@ -1,12 +1,13 @@
 package com.mistra.userservice.service;
 
-import com.mistra.userservice.base.result.PageResult;
-import com.mistra.userservice.base.result.Result;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.mistra.userservice.base.model.PageQueryCondition;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
 import com.mistra.userservice.dto.UserDTO;
 import com.mistra.userservice.entity.User;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @Author: WangRui
@@ -21,7 +22,7 @@ public interface UserService {
      * @param loginDTO
      * @return
      */
-    Result login(LoginDTO loginDTO);
+    void login(LoginDTO loginDTO, HttpServletResponse httpServletResponse);
 
     /**
      * 通过用户账号查询用户的角色以及对于的角色权限
@@ -35,7 +36,7 @@ public interface UserService {
      * @param registerDTO
      * @return
      */
-    Result register(RegisterDTO registerDTO);
+    void register(RegisterDTO registerDTO);
 
     /**
      * 获取用户列表
@@ -43,7 +44,7 @@ public interface UserService {
      * @param pageSize
      * @return
      */
-    PageResult<UserDTO> getUserList(int pageNumber, int pageSize);
+    Page<UserDTO> getUserList(int pageNumber, int pageSize);
 
     /**
      * 获取用户列表，带筛选条件
@@ -52,7 +53,7 @@ public interface UserService {
      * @param pageQueryCondition
      * @return
      */
-    PageResult<UserDTO> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition);
+    Page<UserDTO> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition);
 
     /**
      * 获取用户列表，带筛选条件
@@ -61,5 +62,5 @@ public interface UserService {
      * @param pageQueryCondition
      * @return
      */
-    PageResult<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition);
+    Page<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition);
 }

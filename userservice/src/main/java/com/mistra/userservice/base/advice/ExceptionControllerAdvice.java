@@ -3,6 +3,7 @@ package com.mistra.userservice.base.advice;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.mistra.userservice.base.exception.BusinessCodeMessage;
 import com.mistra.userservice.base.exception.BusinessException;
+import com.mistra.userservice.base.exception.BusinessExceptionCode;
 import com.mistra.userservice.base.exception.ExceptionAdvice;
 import com.mistra.userservice.base.i18n.InternationalizationUtil;
 import com.mistra.userservice.base.result.Result;
@@ -46,15 +47,15 @@ public class ExceptionControllerAdvice {
     /**
      * 处理BusinessException异常返回信息
      *
-     * @param businessException
-     * @return
+     * @param businessException BusinessException
+     * @return Result
      */
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     public Result handleBusinessException(BusinessException businessException) {
         String errorCode = businessException.getMessage();
         if (StringUtils.isEmpty(errorCode)) {
-            errorCode = String.valueOf(SystemErrorCode.SYSTEM_ERROR);
+            errorCode = String.valueOf(BusinessExceptionCode.FAIL);
         }
         String resultMessage = i18nUtil.i18n(errorCode);
         logger.info("业务异常:{} >>> {}", errorCode, resultMessage);
@@ -65,14 +66,14 @@ public class ExceptionControllerAdvice {
     @ResponseBody
     public Object handle(RuntimeException runtimeException) {
         logger.error("运行时异常:", runtimeException);
-        return new Result(BusinessCodeMessage.FAIL, i18nUtil.i18n(SystemErrorCode.SYSTEM_ERROR));
+        return new Result(BusinessCodeMessage.FAIL, i18nUtil.i18n(BusinessExceptionCode.FAIL));
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Object handle(Exception exception) {
         logger.error("异常:", exception);
-        return new Result(BusinessCodeMessage.FAIL, i18nUtil.i18n(SystemErrorCode.SYSTEM_ERROR));
+        return new Result(BusinessCodeMessage.FAIL, i18nUtil.i18n(BusinessExceptionCode.FAIL));
     }
 
     @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})

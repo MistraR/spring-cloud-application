@@ -14,8 +14,8 @@ import lombok.Data;
 @Data
 public class Result {
 
-    private int code = SystemCodeMessage.SUCCESS.code;
-    private String message = SystemCodeMessage.SUCCESS.message;
+    private int code = SystemCodeMessage.SUCCESS.getCode();
+    private String message = SystemCodeMessage.SUCCESS.getMessage();
     private Object data;
 
     public Result() {
@@ -73,7 +73,7 @@ public class Result {
     }
 
     public static Result fail(String message) {
-        return new Result(SystemCodeMessage.FAIL.code, message);
+        return new Result(SystemCodeMessage.FAIL.getCode(), message);
     }
 
 
