@@ -3,7 +3,6 @@ package com.mistra.userservice.base.advice;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.mistra.userservice.base.exception.BusinessException;
 import com.mistra.userservice.base.exception.BusinessErrorCode;
-import com.mistra.userservice.base.exception.ExceptionAdvice;
 import com.mistra.userservice.base.i18n.InternationalizationUtil;
 import com.mistra.userservice.base.result.Result;
 import org.apache.commons.lang.StringUtils;
@@ -39,7 +38,7 @@ import java.util.List;
 @ResponseBody
 public class ExceptionControllerAdvice {
 
-    private Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
+    private Logger logger = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 
     @Autowired
     private InternationalizationUtil i18nUtil;
@@ -58,7 +57,7 @@ public class ExceptionControllerAdvice {
         if (StringUtils.isEmpty(errorCode.toString())) {
             errorCode = BusinessErrorCode.SYSTEM_ERROR;
         }
-        String resultMessage = i18nUtil.i18n(errorCode+"",businessException.getArgs());
+        String resultMessage = i18nUtil.i18n(errorCode + "", businessException.getArgs());
         logger.info("业务异常:{}-{}-{}", errorCode, message, resultMessage);
         return new Result(errorCode, resultMessage);
     }
@@ -117,9 +116,9 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(MyBatisSystemException.class)
     @ResponseBody
-    public Result handleSqlException(MyBatisSystemException e){
-        logger.error("sql error",e);
-        String resultMessage = i18nUtil.i18n(BusinessErrorCode.SERVER_BUSY_ERROR+"");
+    public Result handleSqlException(MyBatisSystemException e) {
+        logger.error("sql error", e);
+        String resultMessage = i18nUtil.i18n(BusinessErrorCode.SERVER_BUSY_ERROR + "");
         return new Result(BusinessErrorCode.SERVER_BUSY_ERROR, resultMessage);
     }
 

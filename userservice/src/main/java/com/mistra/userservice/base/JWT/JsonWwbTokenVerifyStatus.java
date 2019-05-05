@@ -10,15 +10,27 @@ public enum JsonWwbTokenVerifyStatus {
     /**
      * 验证成功，可以继续访问
      */
-    SUCCESS(1, "验证成功，可以继续访问"),
+    SUCCESS(1001, "Token authentication successful！"),
     /**
      * 重新生成token
      */
-    CREATE_NEW(2, "重新生成token"),
+    CREATE_NEW(1002, "Return a new token！Token renewal!"),
     /**
-     * 需要重新登录
+     * token版本相差1
      */
-    LOGIN(3, "token无效，需要重新登录");
+    TOKEN_DIFFER_ONE(1005, "Token version differ one!"),
+    /**
+     * 在别处登录
+     */
+    LOGIN_OTHER(1003, "Login other!"),
+    /**
+     * Token过期或者无效，需要重新登录
+     */
+    LOGIN(1004, "Token is invalid or overdue，To login!"),
+    /**
+     * token版本相差1
+     */
+    LATEST_REFRESH(1006, "Token differ one!"),;
 
     Integer code;
     String message;

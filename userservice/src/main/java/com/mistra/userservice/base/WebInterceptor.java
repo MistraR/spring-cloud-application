@@ -4,6 +4,8 @@ import com.mistra.userservice.base.JWT.JsonWebTokenConstant;
 import com.mistra.userservice.base.JWT.JsonWwbTokenUtil;
 import com.mistra.userservice.base.JWT.JsonWwbTokenVerifyStatus;
 import com.mistra.userservice.base.exception.BaseServiceException;
+import com.mistra.userservice.base.exception.BusinessErrorCode;
+import com.mistra.userservice.base.exception.BusinessException;
 import com.mistra.userservice.base.exception.ResultCode;
 import com.mistra.userservice.core.CurrentUserSession;
 import org.slf4j.Logger;
@@ -54,7 +56,7 @@ public class WebInterceptor implements HandlerInterceptor {
             response.setHeader(JsonWebTokenConstant.RESPONSE_HEADER_USER_TOKEN_FLAG, allNewToken);
             return true;
         } else if (code.equals(JsonWwbTokenVerifyStatus.LOGIN.getCode())) {
-            throw new BaseServiceException(ResultCode.LOGIN_EXPIRED_ERROR);
+            throw new BusinessException(BusinessErrorCode.USER_LOGIN_PWD_ERROR_FAIL);
         }
         return true;
     }

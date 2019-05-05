@@ -9,54 +9,61 @@ package com.mistra.userservice.base.JWT;
 public class JsonWebTokenConstant {
 
     /**
-     * header里面用户key值
+     * token里面用户id标记
      */
-    public final static String HEADER_USER_ID_FLAG = "userId";
-
+    public static final String TOKEN_USER_ID_FLAG = "u";
     /**
-     * token过期时间
+     * token里面token版本标记
      */
-    public final static String TOKEN_REFRESH_EXPIRE_TIME = "refreshExpire";
+    public static final String TOKEN_VERSION_ID_FLAG = "v";
+    /**
+     * refresh_token 时间标记
+     */
+    public static final String REFRESH_TOKEN_FLAG = "r";
 
     /**
      * header里面用户token标记
      */
-    public static final String RESPONSE_HEADER_USER_TOKEN_FLAG = "token";
-
-
-    /**
-     * token头
-     */
-    public final static String TOKEN_HEAD = "Mistra";
+    public static final String RESPONSE_HEADER_USER_TOKEN_FLAG = "new_user_token";
 
     /**
-     * token分割后长度
+     * redis token 标记后缀
      */
-    public final static int TOKEN_LENGTH = 2;
+    public static final String REDIS_TOKEN_SUFFIX = "_token";
 
     /**
-     * access_token过期时间-分钟
+     * redis token 保存时间-秒
      */
-    public final static int OVERDUE_TIME = 60000;
+    public static final int REDIS_TOKEN_EXPIRE = 30;
 
     /**
-     * refresh_token过期时间-分钟
+     * 近期token刷新时间间隔  毫秒
      */
-    public final static int REFRESH_EXPIRE_TIME = 30000;
+    public static final int LATEST_REFRESH_TIME = 30000;
 
     /**
-     * 编码密钥
+     * 签发人
      */
-    public final static String SECRET = "mistra.wang";
-
-    /**
-     * 作者
-     */
-    public final static String ISSUER = "MistraR";
+    public static final String ISSUER = "Mistra";
 
     /**
      * source
      */
-    public final static String SOURCE = "springCloud";
+    public static final String SOURCE = "API";
+
+    /**
+     * 登录版本标签
+     */
+    public static final int LOGIN_VERSION_TAG = 1;
+
+    /**
+     * token版本标签
+     */
+    public static final int TOKEN_VERSION_TAG = 2;
+
+    /**
+     * version 二进制初始值
+     */
+    public static final String VERSION_INITIAL_VALUE = "00000000000001";
 
 }
