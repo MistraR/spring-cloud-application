@@ -5,7 +5,7 @@ package com.mistra.userservice.base.exception;
  * Time : 2019-05-05 17:30
  * Description:
  */
-public class BusinessExceptionCode {
+public class BusinessErrorCode {
     /**
      * 请求成功!
      */
@@ -14,6 +14,10 @@ public class BusinessExceptionCode {
      * 请求失败!
      */
     public static final int FAIL = -1;
+    /**
+     * 系统错误!
+     */
+    public static final int SYSTEM_ERROR = -2;
 
     /**
      * 请求参数为空!
@@ -23,6 +27,14 @@ public class BusinessExceptionCode {
      * 请求参数错误!
      */
     public static final int REQUEST_PARAM_ERROR = 100002;
+    /**
+     * 请求地址不存在!
+     */
+    public static final int REQUEST_NO_HANDLER_FOUND = 100003;
+    /**
+     * 服务器繁忙，请稍后重试
+     */
+    public static final int SERVER_BUSY_ERROR = 100104;
     /**
      * 密码错误!
      */

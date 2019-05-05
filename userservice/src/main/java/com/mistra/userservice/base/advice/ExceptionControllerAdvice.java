@@ -1,13 +1,13 @@
 package com.mistra.userservice.base.advice;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.mistra.userservice.base.exception.BusinessCodeMessage;
 import com.mistra.userservice.base.exception.BusinessException;
-import com.mistra.userservice.base.exception.BusinessExceptionCode;
+import com.mistra.userservice.base.exception.BusinessErrorCode;
 import com.mistra.userservice.base.exception.ExceptionAdvice;
 import com.mistra.userservice.base.i18n.InternationalizationUtil;
 import com.mistra.userservice.base.result.Result;
 import org.apache.commons.lang.StringUtils;
+import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,33 +47,34 @@ public class ExceptionControllerAdvice {
     /**
      * 处理BusinessException异常返回信息
      *
-     * @param businessException BusinessException
-     * @return Result
+     * @param businessException
+     * @return
      */
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     public Result handleBusinessException(BusinessException businessException) {
-        String errorCode = businessException.getMessage();
-        if (StringUtils.isEmpty(errorCode)) {
-            errorCode = String.valueOf(BusinessExceptionCode.FAIL);
+        String message = businessException.getMessage();
+        Integer errorCode = businessException.getCode();
+        if (StringUtils.isEmpty(errorCode.toString())) {
+            errorCode = BusinessErrorCode.SYSTEM_ERROR;
         }
-        String resultMessage = i18nUtil.i18n(errorCode);
-        logger.info("业务异常:{} >>> {}", errorCode, resultMessage);
-        return new Result(Integer.valueOf(errorCode), resultMessage);
+        String resultMessage = i18nUtil.i18n(errorCode+"",businessException.getArgs());
+        logger.info("业务异常:{}-{}-{}", errorCode, message, resultMessage);
+        return new Result(errorCode, resultMessage);
     }
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     public Object handle(RuntimeException runtimeException) {
         logger.error("运行时异常:", runtimeException);
-        return new Result(BusinessCodeMessage.FAIL, i18nUtil.i18n(BusinessExceptionCode.FAIL));
+        return new Result(BusinessErrorCode.FAIL, i18nUtil.i18n(BusinessErrorCode.SYSTEM_ERROR));
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Object handle(Exception exception) {
         logger.error("异常:", exception);
-        return new Result(BusinessCodeMessage.FAIL, i18nUtil.i18n(BusinessExceptionCode.FAIL));
+        return new Result(BusinessErrorCode.FAIL, i18nUtil.i18n(BusinessErrorCode.SYSTEM_ERROR));
     }
 
     @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class})
@@ -96,14 +97,14 @@ public class ExceptionControllerAdvice {
             }
             messages.add(message);
         }
-        return new Result(BusinessCodeMessage.PARAMETER_FAIL, String.join(",", messages));
+        return new Result(BusinessErrorCode.REQUEST_PARAM_ERROR, String.join(",", messages));
     }
 
     @ExceptionHandler({JsonMappingException.class, HttpMessageNotReadableException.class})
     @ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
     @ResponseBody
     public Result handleInvalidParamException(Exception e) {
-        return new Result(BusinessCodeMessage.REQUEST_PARAM_ERROR, i18nUtil.i18n(BusinessCodeMessage.REQUEST_PARAM_ERROR));
+        return new Result(BusinessErrorCode.REQUEST_PARAM_ERROR, i18nUtil.i18n(BusinessErrorCode.REQUEST_PARAM_ERROR));
     }
 
     @ExceptionHandler({NoHandlerFoundException.class, HttpMediaTypeNotSupportedException.class,
@@ -111,7 +112,15 @@ public class ExceptionControllerAdvice {
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ResponseBody
     public Result handleNotFound() {
-        return new Result(BusinessCodeMessage.REQUEST_NO_HANDLER_FOUND, i18nUtil.i18n(BusinessCodeMessage.REQUEST_NO_HANDLER_FOUND));
+        return new Result(BusinessErrorCode.REQUEST_NO_HANDLER_FOUND, i18nUtil.i18n(BusinessErrorCode.REQUEST_NO_HANDLER_FOUND));
+    }
+
+    @ExceptionHandler(MyBatisSystemException.class)
+    @ResponseBody
+    public Result handleSqlException(MyBatisSystemException e){
+        logger.error("sql error",e);
+        String resultMessage = i18nUtil.i18n(BusinessErrorCode.SERVER_BUSY_ERROR+"");
+        return new Result(BusinessErrorCode.SERVER_BUSY_ERROR, resultMessage);
     }
 
 }

@@ -30,4 +30,8 @@ public class InternationalizationUtil {
     public String i18n(String errorCode) {
         return messageSource.getMessage(errorCode, null, errorCode, LocaleContextHolder.getLocale());
     }
+
+    public String i18n(String errorCode, Object[] args) {
+        return messageSource.getMessage(errorCode, args, LocaleContextHolder.getLocale());
+    }
 }
