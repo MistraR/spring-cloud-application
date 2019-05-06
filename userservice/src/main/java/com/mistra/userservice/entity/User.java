@@ -1,6 +1,6 @@
 package com.mistra.userservice.entity;
 
-import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.mistra.base.entity.BaseEntity;
 import lombok.Data;
 

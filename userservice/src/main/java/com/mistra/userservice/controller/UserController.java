@@ -1,6 +1,6 @@
 package com.mistra.userservice.controller;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mistra.userservice.base.annotation.MistraResponseBody;
 import com.mistra.userservice.base.model.PageQueryCondition;
 import com.mistra.userservice.dto.LoginDTO;
@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -54,18 +55,8 @@ public class UserController {
     @PostMapping(value = "/login")
     @ApiOperation("用户登录，登录成功则返回token")
     @MistraResponseBody
-    public void shiroLogin(@Valid @RequestBody LoginDTO loginDTO, HttpServletResponse httpServletResponse) {
-        userService.login(loginDTO, httpServletResponse);
-    }
-
-    @GetMapping("/list")
-    @ApiOperation("获取用户分页列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNumber", dataType = "int", value = "当前页码", required = true),
-            @ApiImplicitParam(name = "pageSize", dataType = "int", value = "分页大小", required = true)})
-    @MistraResponseBody
-    public Page<UserDTO> getUserList(@RequestParam(defaultValue = "1") @Min(0) int pageNumber, @RequestParam(defaultValue = "10") @Min(0) int pageSize) {
-        return null;
+    public void shiroLogin(@Valid @RequestBody LoginDTO loginDTO, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
+        userService.login(loginDTO, httpServletResponse,httpServletRequest);
     }
 
     /**
@@ -82,26 +73,8 @@ public class UserController {
             @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
     })
     @MistraResponseBody
-    public Page<UserDTO> getSelectList(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition) {
+    public IPage<UserDTO> getSelectList(@Valid @RequestBody UserDTO userDTO, @Valid @RequestBody PageQueryCondition pageQueryCondition) {
         return userService.getSelectList(userDTO, pageQueryCondition);
-    }
-
-    /**
-     * * 使用github page-helper分页插件查询，返回结果转换为DTO类
-     *
-     * @param userDTO UserDTO
-     * @param pageQueryCondition PageQueryCondition
-     * @return Page<UserDTO>
-     */
-    @GetMapping("/selectList2")
-    @ApiOperation("带查询条件的分页列表---github分页插件")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userDTO", dataType = "UserDTO", value = "筛选条件", required = true),
-            @ApiImplicitParam(name = "pageQueryCondition", dataType = "PageQueryCondition", value = "分页参数", required = true)
-    })
-    @MistraResponseBody
-    public Page<UserDTO> getSelectList2(@Valid UserDTO userDTO, @Valid PageQueryCondition pageQueryCondition) {
-        return userService.getSelectList2(userDTO, pageQueryCondition);
     }
 
     /**

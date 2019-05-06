@@ -26,8 +26,8 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @Author: WangRui
- * @Date: 2018/11/30
+ * @ Author: WangRui
+ * @ Date: 2018/11/30
  * Time: 15:00
  * Description: JWT工具类
  */
@@ -138,15 +138,9 @@ public class JsonWebTokenUtils {
     public String loginGenerateToken(String userId, HttpServletRequest request) {
         //loginVersion和tokenVersion都+1
         Integer versionCode = this.addAndUpdateVersionCodeGetBuyDb(userId, request, JsonWebTokenConstant.LOGIN_VERSION_TAG);
-        try {
-            // 添加登陆日志 start
-            // 十进制转二进制
-            String sourceBinary = BitUtils.decimalToBinary(versionCode);
-            // 截取登陆版本号
-            String loginVersionBinary = sourceBinary.substring(sourceBinary.length() - jsonWebTokenProperties.getLoginTokenVersionCodeTokenLength());
-        } catch (Exception e) {
-            logger.error("add login log fail,error message:{}", e.getMessage());
-        }
+        // 添加登陆日志 。。。
+        // 统计登录人数 。。。
+        //生成token
         return this.generateToken(userId, versionCode);
     }
 

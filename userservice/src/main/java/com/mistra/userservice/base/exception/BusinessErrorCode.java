@@ -51,4 +51,8 @@ public class BusinessErrorCode {
      * 该账号在别的设备登录！
      */
     public static final int LOGIN_OTHER = 200012;
+    /**
+     * 邮箱已存在
+     */
+    public static final int EMAIL_EXIST = 100352;
 }

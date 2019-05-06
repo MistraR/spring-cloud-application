@@ -2,6 +2,7 @@ package com.mistra.userservice.base;
 
 
 import com.mistra.userservice.base.JWT.JsonWebTokenProperties;
+import com.mistra.userservice.core.BasedInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,13 +18,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     @Autowired
-    private WebInterceptor webInterceptor;
+    private BasedInterceptor basedInterceptor;
 
     @Autowired
     private JsonWebTokenProperties jsonWebTokenProperties;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(webInterceptor).addPathPatterns("/**").excludePathPatterns(jsonWebTokenProperties.getIgnoreUrl());
+        registry.addInterceptor(basedInterceptor).addPathPatterns("/**").excludePathPatterns(jsonWebTokenProperties.getIgnoreUrl());
     }
 }

@@ -1,6 +1,6 @@
 package com.mistra.userservice.dao;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mistra.userservice.entity.SystemPermission;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

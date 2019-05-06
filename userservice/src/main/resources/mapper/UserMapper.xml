@@ -24,13 +24,6 @@
         id, email, password, user_name,salt,name,system_role_id,create_time,update_time,create_by,update_by,status
     </sql>
 
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from user
-        where id = #{id,jdbcType=INTEGER} and status = 1;
-    </select>
-
     <insert id="insert" parameterType="com.mistra.userservice.entity.User" useGeneratedKeys="true" keyProperty="id">
         insert into user (id, email, password,user_name, create_time,create_by, update_time, update_by,status)
         values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
@@ -44,25 +37,11 @@
         from user where user_name = #{userName} and password = #{password} and status = 1;
     </select>
 
-    <select id="findByEmail" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM user
-        WHERE email = #{email};
-    </select>
-
     <select id="findByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
         <include refid="Base_Column_List"/>
         FROM user
         WHERE user_name = #{userName};
-    </select>
-
-    <select id="findAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM user
-        WHERE status = 1
     </select>
 
     <select id="getSelectList2" resultMap="BaseResultMap" parameterType="com.mistra.userservice.dto.UserDTO">

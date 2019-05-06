@@ -12,11 +12,4 @@
         id, role_name, description, available
     </sql>
 
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from system_role
-        where id = #{id,jdbcType=INTEGER} and status = 1;
-    </select>
-
 </mapper>

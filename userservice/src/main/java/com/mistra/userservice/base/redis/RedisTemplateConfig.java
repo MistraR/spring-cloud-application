@@ -11,16 +11,16 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * @Author: WangRui
- * @Date: 2018/12/25
+ * @ Author: WangRui
+ * @ Date: 2018/12/25
  * Time: 14:23
  * Description:
  */
 @Configuration
-public class RedisConfig   {
+public class RedisTemplateConfig {
 
-    @Bean
-    @SuppressWarnings("all")
+//    @Bean
+//    @SuppressWarnings("all")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
         template.setConnectionFactory(factory);

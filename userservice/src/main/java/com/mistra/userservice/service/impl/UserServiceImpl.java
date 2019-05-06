@@ -1,35 +1,36 @@
 package com.mistra.userservice.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.github.pagehelper.PageHelper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mistra.userservice.base.JWT.JsonWebTokenUtils;
+import com.mistra.userservice.base.JWT.RequestConstans;
+import com.mistra.userservice.base.exception.BusinessErrorCode;
+import com.mistra.userservice.base.exception.BusinessException;
 import com.mistra.userservice.base.model.PageQueryCondition;
-import com.mistra.userservice.base.redis.RedisUtils;
 import com.mistra.userservice.dao.SystemPermissionMapper;
 import com.mistra.userservice.dao.SystemRoleMapper;
 import com.mistra.userservice.dao.UserMapper;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
-import com.mistra.userservice.dto.TokenDTO;
 import com.mistra.userservice.dto.UserDTO;
 import com.mistra.userservice.entity.SystemRole;
 import com.mistra.userservice.entity.User;
 import com.mistra.userservice.service.UserService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,40 +49,62 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private SystemRoleMapper systemRoleMapper;
 
-    @Autowired
     private SystemPermissionMapper systemPermissionMapper;
 
-    @Autowired
-    private JsonWebTokenUtils jwtUtil;
+    private JsonWebTokenUtils jsonWebTokenUtils;
 
+    /**
+     * Spring推荐的构造函数注入方式，可以避免NPE,可以在IOC环境外被new,但是如果依赖多的话会显得代码臃肿
+     *
+     * @param userMapper             UserMapper
+     * @param systemRoleMapper       SystemRoleMapper
+     * @param systemPermissionMapper SystemPermissionMapper
+     * @param jsonWebTokenUtils      JsonWebTokenUtils
+     */
     @Autowired
-    private RedisUtils redisUtils;
-
-    @Override
-    public void login(LoginDTO loginDTO, HttpServletResponse httpServletResponse) {
-        //添加用户认证信息
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginDTO.getUserName(), loginDTO.getPassword());
-        //进行验证，这里可以捕获异常，然后返回对应信息
-        subject.login(usernamePasswordToken);
-        User user = userMapper.findByUserNameAndPassword(loginDTO.getUserName(), loginDTO.getPassword());
-        if (user != null) {
-            TokenDTO tokenDTO = new TokenDTO();
-            tokenDTO.setToken(jwtUtil.generateToken(user.getId().toString()));
-            return RequestResultBuilder.entityResult(tokenDTO);
-        }
-        return RequestResultBuilder.failed(ResultMessage.PASSWORD_ERROR);
+    public UserServiceImpl(UserMapper userMapper, SystemRoleMapper systemRoleMapper, SystemPermissionMapper systemPermissionMapper, JsonWebTokenUtils jsonWebTokenUtils) {
+        this.userMapper = userMapper;
+        this.systemRoleMapper = systemRoleMapper;
+        this.systemPermissionMapper = systemPermissionMapper;
+        this.jsonWebTokenUtils = jsonWebTokenUtils;
     }
 
+    /**
+     * 登录，shiro验证用户名密码
+     *
+     * @param loginDTO            LoginDTO
+     * @param httpServletResponse HttpServletResponse
+     * @param httpServletRequest  HttpServletRequest
+     */
+    @Override
+    public void login(LoginDTO loginDTO, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
+        try {
+            //添加用户认证信息  shiro
+            Subject subject = SecurityUtils.getSubject();
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginDTO.getUserName(), loginDTO.getPassword());
+            //进行验证，这里可以捕获异常，然后返回对应信息，未抛异常就是验证通过
+            subject.login(usernamePasswordToken);
+            User user = userMapper.selectOne(new QueryWrapper<User>().eq("name", loginDTO.getUserName()));
+            String token = jsonWebTokenUtils.loginGenerateToken(user.getId().toString(), httpServletRequest);
+            Cookie cookie = new Cookie(RequestConstans.HEAD_USER_TOKEN, token);
+            cookie.setPath("/");
+            httpServletResponse.addCookie(cookie);
+        } catch (AuthenticationException a) {
+            logger.info("UserServiceImpl.login(),USER_LOGIN_PWD_ERROR_FAIL");
+            throw new BusinessException(BusinessErrorCode.USER_LOGIN_PWD_ERROR_FAIL);
+        }
+    }
+
+    /**
+     * 查询用户权限
+     *
+     * @param userName userName
+     * @return User
+     */
     @Override
     public User findUserRolePermission(String userName) {
         User user = userMapper.findByUserName(userName);
@@ -93,13 +116,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return user;
     }
 
+    /**
+     * 注册
+     *
+     * @param registerDTO RegisterDTO
+     */
     @Override
     public void register(RegisterDTO registerDTO) {
-        Wrapper<User> userWrapper = new EntityWrapper<User>().like("email", registerDTO.getEmail());
-        if (selectList(userWrapper).size() > 0) {
-            return RequestResultBuilder.failed(ResultMessage.REPEAT_EMAIL);
+        List<User> userList = userMapper.selectList(new QueryWrapper<User>().eq("email", registerDTO.getEmail()));
+        if (!userList.isEmpty()) {
+            throw new BusinessException(BusinessErrorCode.EMAIL_EXIST);
         }
-        logger.info("开始注册-->email:{}, password:{}", registerDTO.getEmail(), registerDTO.getPassword());
         User user = new User();
         user.setEmail(registerDTO.getEmail());
         user.setPassword(registerDTO.getPassword());
@@ -108,62 +135,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setCreateTime(new Date(System.currentTimeMillis()).getTime());
         user.setUpdateTime(new Date(System.currentTimeMillis()).getTime());
         userMapper.insert(user);
-        logger.info("注册成功-->email:{}", registerDTO.getEmail());
-        return RequestResultBuilder.success();
-    }
-
-    @Override
-    public Page<UserDTO> getUserList(int pageNumber, int pageSize) {
-        return null;
-    }
-
-    @Override
-    public Page<UserDTO> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
-        Page<User> userPage = new Page<>(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
-        Wrapper<User> userWrapper = new EntityWrapper<User>().like(StringUtils.isNotBlank(userDTO.getUserName()), "name", userDTO.getUserName())
-                .like(StringUtils.isNotBlank(userDTO.getEmail()), "email", userDTO.getEmail());
-        userPage = selectPage(userPage, userWrapper);
-        return RequestResultBuilder.pageResult(userPage.getRecords().parallelStream().map(this::convertDTO).collect(Collectors.toList()), userPage.getTotal(),
-                userPage.getPages(), userPage.getCurrent(), userPage.getSize());
     }
 
     /**
-     * mybatis-plus的Page类和github-pageHelper的Page类重复了，这里就用全限定名
+     * 分页筛选查询
      *
-     * @param userDTO
-     * @param pageQueryCondition
-     * @return
+     * @param userDTO            UserDTO
+     * @param pageQueryCondition PageQueryCondition
+     * @return IPage
      */
     @Override
-    public Page<UserDTO> getSelectList2(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
-        redisUtils.set("mistra", "王瑞");
-        System.out.println(redisUtils.get("mistra"));
-        //测试JWT认证
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        //1、当UserDTO含有pageNum和pageSize参数并且都不为空时，直接传入UserDTO也可以实现分页
-        List<User> userList1 = userMapper.getSelectList3(userDTO);
-        logger.info("userList1.size---------------------------------------" + userList1.size());
-
-        //2、startPage()方法之后紧跟mapper接口查询方法  github-pageHelper
-        com.github.pagehelper.Page<User> pageInfo1 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
-        List<User> userList2 = userMapper.getSelectList2(userDTO);
-        logger.info("userList2.size---------------------------------------" + userList2.size());
-
-        //lambda写法
-        com.github.pagehelper.PageInfo<User> pageInfo2 = PageHelper.startPage(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize())
-                .doSelectPageInfo(() -> userMapper.getSelectList2(userDTO));
-        logger.info("userList3.size---------------------------------------" + pageInfo2.getList().size());
-        return RequestResultBuilder.pageResult(pageInfo1.getResult().parallelStream().map(this::convertDTO).collect(Collectors.toList()), pageInfo1.getTotal(),
-                pageInfo1.getPages(), pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize());
+    public IPage<UserDTO> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition) {
+        Page<UserDTO> userPage = new Page<>();
+        QueryWrapper<User> userWrapper = new QueryWrapper<User>().eq(StringUtils.isNotBlank(userDTO.getUserName()), "name", userDTO.getUserName())
+                .eq(StringUtils.isNotBlank(userDTO.getEmail()), "email", userDTO.getEmail());
+        IPage<User> userIPage = userMapper.selectPage(new Page<>(pageQueryCondition.getPageNumber(), pageQueryCondition.getPageSize()), userWrapper);
+        BeanUtils.copyProperties(userIPage, userPage);
+        List<UserDTO> userDTOList = userIPage.getRecords().stream().map(this::convertDTO).collect(Collectors.toList());
+        userPage.setRecords(userDTOList);
+        return userPage;
     }
 
     /**
      * Entity转换DTO
      *
-     * @param entity
-     * @return
+     * @param entity User
+     * @return UserDTO
      */
     private UserDTO convertDTO(User entity) {
-        return modelMapper.map(entity, UserDTO.class);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail(entity.getEmail());
+        userDTO.setUserName(entity.getUserName());
+        return userDTO;
     }
 }

@@ -15,13 +15,6 @@
         id, name, resource_type,permission,parent_id, available,system_role_id
     </sql>
 
-    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select
-        <include refid="Base_Column_List"/>
-        from system_permission
-        where id = #{id,jdbcType=INTEGER} and status = 1;
-    </select>
-
     <select id="findBySystemRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>

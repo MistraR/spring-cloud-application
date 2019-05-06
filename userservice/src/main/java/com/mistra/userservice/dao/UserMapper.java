@@ -1,7 +1,7 @@
 package com.mistra.userservice.dao;
 
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mistra.userservice.entity.User;
 import com.mistra.userservice.dto.UserDTO;
 import org.apache.ibatis.annotations.Param;

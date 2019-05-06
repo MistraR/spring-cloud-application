@@ -1,6 +1,6 @@
 package com.mistra.userservice.dao;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.mistra.userservice.entity.SystemRole;
 import org.springframework.stereotype.Repository;
 

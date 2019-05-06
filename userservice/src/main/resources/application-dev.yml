@@ -45,6 +45,10 @@ spring:
   messages:
     basename: i18n/messages
   redis:
+    cluster:
+      cluster: false
+      nodes:
+        - localhost:6379
     #服务器地址
     host: localhost
     #服务器连接端口

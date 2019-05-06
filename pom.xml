@@ -29,7 +29,7 @@
     </parent>
 
     <properties>
-        <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
+        <mybatisplus-spring-boot-starter.version>3.0.7.1</mybatisplus-spring-boot-starter.version>
         <spring-boot-starter-thymeleaf>2.0.5.RELEASE</spring-boot-starter-thymeleaf>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-cloud-starter-hystrix>1.4.5.RELEASE</spring-cloud-starter-hystrix>
@@ -41,7 +41,6 @@
         <thymeleaf-spring5>3.0.9.RELEASE</thymeleaf-spring5>
         <commons.lang3.version>3.7</commons.lang3.version>
         <spring-aspects>5.0.7.RELEASE</spring-aspects>
-        <mybatisplus.version>2.3</mybatisplus.version>
         <nekohtml.version>1.9.22</nekohtml.version>
         <swagger2.version>2.8.0</swagger2.version>
         <druid.version>1.1.10</druid.version>
@@ -154,7 +153,7 @@
             <!--mybatis-plus-->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatisplus-spring-boot-starter</artifactId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatisplus-spring-boot-starter.version}</version>
             </dependency>
             <!--mysql-->
@@ -162,11 +161,6 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
-                <version>${mybatisplus.version}</version>
             </dependency>
             <!--shiro-->
             <dependency>
@@ -332,11 +326,16 @@
                 <artifactId>jersey-hk2</artifactId>
                 <version>${jersey-hk2}</version>
             </dependency>
-            <!--<dependency>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
-                <!--<version>${spring-boot-starter-data-redis}</version>-->
-            <!--</dependency>-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-boot-starter-data-redis}</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>2.7.3</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
