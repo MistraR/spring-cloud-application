@@ -9,17 +9,13 @@ package com.mistra.userservice.base.JWT;
 public enum LoginTokenVersionCompareEnum {
 
     /**
-     * 刷新版本相差1，login版本一致
-     */
-    TOKEN_DIFFERENCE_ONE(1, "刷新版本相差1，login版本一致"),
-    /**
      * 刷新版本不一致,login版本一致
      */
-    TOKEN_DIFFERENCE(2, "刷新版本不一致，login版本一致"),
+    TOKEN_DIFFERENCE(1, "刷新版本不一致，login版本一致"),
     /**
      * 30秒内刷新过token
      */
-    LATEST_REFRESH(5, "30秒内刷新过token"),
+    LATEST_REFRESH(2, "30秒内刷新过token"),
     /**
      * 都一致
      */

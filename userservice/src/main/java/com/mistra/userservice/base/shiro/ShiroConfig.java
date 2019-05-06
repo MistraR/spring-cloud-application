@@ -1,6 +1,6 @@
 package com.mistra.userservice.base.shiro;
 
-import com.mistra.userservice.base.properties.InterceptorIgnoreUrl;
+import com.mistra.userservice.base.JWT.JsonWebTokenProperties;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -30,7 +30,7 @@ import java.util.Set;
 public class ShiroConfig {
 
     @Autowired
-    private InterceptorIgnoreUrl interceptorIgnoreUrl;
+    private JsonWebTokenProperties jsonWebTokenProperties;
 
     /**
      * 将自定义的验证方式加入容器
@@ -85,7 +85,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        Set<String> urlSet = new HashSet<>(interceptorIgnoreUrl.getIgnoreUrl());
+        Set<String> urlSet = new HashSet<>(jsonWebTokenProperties.getIgnoreUrl());
         //必须采用LinkedHashMap有序存储过滤条件
         Map<String, String> map = new LinkedHashMap<>();
         //anon表示所有用户都可以不鉴权匿名访问

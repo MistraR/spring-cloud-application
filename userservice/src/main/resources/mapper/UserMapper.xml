@@ -14,6 +14,10 @@
         <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
         <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="app_token_version" jdbcType="INTEGER" property="appTokenVersion"/>
+        <result column="web_token_version" jdbcType="INTEGER" property="webTokenVersion"/>
+        <result column="app_token_refresh_time" jdbcType="TIMESTAMP" property="appTokenRefreshTime"/>
+        <result column="web_token_refresh_time" jdbcType="TIMESTAMP" property="webTokenRefreshTime"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -99,5 +103,23 @@
         update_by=#{updateBy},
         status=#{status}
         WHERE id=#{id}
+    </update>
+
+    <update id="updateAppTokenVersion">
+        update user
+        <set>
+            app_token_version = #{newVersion},
+            app_token_refresh_time = #{refreshTime}
+        </set>
+        where id = #{uid} and app_token_version = #{oldVersion}
+    </update>
+
+    <update id="updateWebTokenVersion">
+        update user
+        <set>
+            web_token_version = #{newVersion},
+            web_token_refresh_time = #{refreshTime}
+        </set>
+        where id = #{uid} and web_token_version = #{oldVersion}
     </update>
 </mapper>

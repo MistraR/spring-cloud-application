@@ -32,9 +32,9 @@ public class SystemPermission implements Serializable {
      */
     private Integer parentId;
     /**
-     * 是否可用
+     * 0:不可用 1:可用
      */
-    private Integer available;
+    private Boolean available;
     /**
      * SystemRole Id
      */

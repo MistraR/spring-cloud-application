@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @ Author: WangRui
  * @ Version: 1.0
@@ -39,4 +41,9 @@ public class JsonWebTokenProperties {
      * login token version code中token占用长度
      */
     private Integer loginTokenVersionCodeTokenLength;
+
+    /**
+     * 拦截器需要忽略的路径
+     */
+    List<String> ignoreUrl;
 }

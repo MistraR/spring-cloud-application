@@ -1,7 +1,7 @@
 package com.mistra.userservice.base;
 
 import com.mistra.userservice.base.JWT.JsonWebTokenConstant;
-import com.mistra.userservice.base.JWT.JsonWwbTokenUtil;
+import com.mistra.userservice.base.JWT.JsonWebTokenUtils;
 import com.mistra.userservice.base.JWT.JsonWebTokenVerifyStatus;
 import com.mistra.userservice.base.exception.BusinessErrorCode;
 import com.mistra.userservice.base.exception.BusinessException;
@@ -29,7 +29,7 @@ public class WebInterceptor implements HandlerInterceptor {
     Logger logger = LoggerFactory.getLogger(WebInterceptor.class);
 
     @Autowired
-    private JsonWwbTokenUtil jwtUtil;
+    private JsonWebTokenUtils jwtUtil;
 
     /**
      * 验证token,通常情况下结合redis做刷新token缓存，比如同一个页面有多个请求时需要刷新token不用每次都重新生成，在redis拿

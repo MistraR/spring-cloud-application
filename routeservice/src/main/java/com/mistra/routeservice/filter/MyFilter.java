@@ -1,6 +1,5 @@
 package com.mistra.routeservice.filter;
 
-import com.mistra.userservice.base.JWT.JsonWwbTokenUtil;
 import com.mistra.routeservice.config.ZuulIgnoreFilterUrlProperties;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -22,8 +21,8 @@ public class MyFilter extends ZuulFilter {
 
     private static Logger logger = LoggerFactory.getLogger(MyFilter.class);
 
-    @Autowired
-    private JsonWwbTokenUtil jsonWwbTokenUtil;
+//    @Autowired
+//    private JsonWwbTokenUtil jsonWwbTokenUtil;
 
     @Autowired
     private ZuulIgnoreFilterUrlProperties zuulIgnoreFilterUrlProperties;

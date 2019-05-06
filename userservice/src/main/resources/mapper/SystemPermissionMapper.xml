@@ -7,7 +7,7 @@
         <result column="resource_type" property="resourceType" jdbcType="VARCHAR"/>
         <result column="permission" property="permission" jdbcType="VARCHAR"/>
         <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
-        <result column="available" property="available" jdbcType="INTEGER"/>
+        <result column="available" property="available" />
         <result column="system_role_id" property="systemRoleId" jdbcType="INTEGER"/>
     </resultMap>
 

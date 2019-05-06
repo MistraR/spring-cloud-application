@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
-import com.mistra.userservice.base.JWT.JsonWwbTokenUtil;
+import com.mistra.userservice.base.JWT.JsonWebTokenUtils;
 import com.mistra.userservice.base.model.PageQueryCondition;
 import com.mistra.userservice.base.redis.RedisUtils;
 import com.mistra.userservice.dao.SystemPermissionMapper;
@@ -38,8 +38,8 @@ import java.util.stream.Collectors;
 
 
 /**
- * @Author: WangRui
- * @Date: 2018-09-14
+ * @ Author: WangRui
+ * @ Date: 2018-09-14
  * Time: 上午10:35
  * Description:
  */
@@ -61,7 +61,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     private SystemPermissionMapper systemPermissionMapper;
 
     @Autowired
-    private JsonWwbTokenUtil jwtUtil;
+    private JsonWebTokenUtils jwtUtil;
 
     @Autowired
     private RedisUtils redisUtils;

@@ -3,30 +3,37 @@ package com.mistra.userservice;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.mistra.userservice.base.JWT.JsonWebTokenConstant;
-import com.mistra.userservice.base.JWT.JsonWwbTokenUtil;
+import com.mistra.userservice.base.JWT.JsonWebTokenUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
 /**
- * @author Mistra
+ * @ Author: WangRui
+ * @ Version: 1.0
+ * @ Time: 2019-05-06 09:27
+ * @ Description:
  */
 @SpringBootApplication
 @EnableEurekaClient
 public class UserServiceApplication {
+
+    @Value("${json-web-token.secret}")
+    private String secret;
 
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);
     }
 
     @Bean
-    public JsonWwbTokenUtil jWTUtil() {
-        JsonWwbTokenUtil jwtUtil = new JsonWwbTokenUtil();
-        jwtUtil.setAlgorithm(Algorithm.HMAC256(JsonWebTokenConstant.SECRET));
-        jwtUtil.setJwtVerifier(JWT.require(jwtUtil.getAlgorithm()).withIssuer(JsonWebTokenConstant.ISSUER).build());
-        return jwtUtil;
+    public JsonWebTokenUtils jsonWwbTokenUtil() {
+        JsonWebTokenUtils jsonWebTokenUtils = new JsonWebTokenUtils();
+        jsonWebTokenUtils.setAlgorithm(Algorithm.HMAC256(secret));
+        jsonWebTokenUtils.setJwtVerifier(JWT.require(jsonWebTokenUtils.getAlgorithm()).withIssuer(JsonWebTokenConstant.ISSUER).build());
+        return jsonWebTokenUtils;
     }
 
     @Bean

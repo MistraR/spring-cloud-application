@@ -99,14 +99,15 @@ pagehelper:
   #分页合理化参数
   reasonable: true
 
-jwt:
-  #securitycode: roronorazoro
+json-web-token:
+  #秒
+  accessTokenExpireTime: 2592000
+  refreshTokenExpireTime: 40
+  #jwt 加密密钥
   secret: mistra.wang
-  #该JWT的签发者
-  issuer: MistraR
-  source: springCloud
+  loginTokenVersionCodeHeaderLength: 4
+  loginTokenVersionCodeTokenLength: 14
   ignoreUrl:
     - /login
     - /user/login
     - /user/regist
-

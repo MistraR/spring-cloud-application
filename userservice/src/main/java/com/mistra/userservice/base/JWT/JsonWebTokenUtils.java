@@ -3,12 +3,14 @@ package com.mistra.userservice.base.JWT;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.mistra.userservice.base.exception.BusinessErrorCode;
 import com.mistra.userservice.base.exception.BusinessException;
 import com.mistra.userservice.core.CurrentUserSession;
+import com.mistra.userservice.dao.UserMapper;
+import com.mistra.userservice.entity.User;
+import com.mistra.userservice.utils.BitUtils;
 import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -30,21 +32,15 @@ import java.util.Optional;
  * Description: JWT工具类
  */
 @Data
-public class JsonWwbTokenUtil {
+public class JsonWebTokenUtils {
 
-    private Logger logger = LoggerFactory.getLogger(JsonWwbTokenUtil.class);
+    private Logger logger = LoggerFactory.getLogger(JsonWebTokenUtils.class);
 
     @Autowired
     private JsonWebTokenProperties jsonWebTokenProperties;
 
     @Autowired
-    private ImUserBaseMapper imUserBaseMapper;
-
-    @Autowired
-    private JedisCommands redis;
-
-    @Autowired
-    private ImUserLoginLogService imUserLoginLogService;
+    private UserMapper userMapper;
 
     /**
      * 包含生成Token的密钥和编码算法
@@ -103,9 +99,9 @@ public class JsonWwbTokenUtil {
         Integer versionCode = this.increaseVersion(requestCode, JsonWebTokenConstant.TOKEN_VERSION_TAG);
         int result;
         if (platformEnum.equals(PlatformEnum.ANDROID) || platformEnum.equals(PlatformEnum.IOS)) {
-            result = imUserBaseMapper.updateAppTokenVersion(requestCode, versionCode, Long.valueOf(userId), LocalDateTime.now());
+            result = userMapper.updateAppTokenVersion(requestCode, versionCode, Long.valueOf(userId), LocalDateTime.now());
         } else {
-            result = imUserBaseMapper.updateWebTokenVersion(requestCode, versionCode, Long.valueOf(userId), LocalDateTime.now());
+            result = userMapper.updateWebTokenVersion(requestCode, versionCode, Long.valueOf(userId), LocalDateTime.now());
         }
         logger.debug("uid:{},result:{},requestVersionCode:{},addResultCode:{}--------------------------------------------refreshGenerateTokenByRequestCode()", userId, result, requestCode, versionCode);
         if (result == 0) {
@@ -123,11 +119,11 @@ public class JsonWwbTokenUtil {
     public String refreshGenerateTokenByDbCode(String userId, HttpServletRequest request) {
         PlatformEnum platformEnum = this.getPlatformFromRequest(request);
         Integer versionCode;
-        ImUserBase imUserBase = imUserBaseMapper.selectByPrimaryKey(Long.valueOf(userId));
+        User user = userMapper.selectById(Long.valueOf(userId));
         if (platformEnum.equals(PlatformEnum.ANDROID) || platformEnum.equals(PlatformEnum.IOS)) {
-            versionCode = imUserBase.getAppTokenVersion();
+            versionCode = user.getAppTokenVersion();
         } else {
-            versionCode = imUserBase.getWebTokenVersion();
+            versionCode = user.getWebTokenVersion();
         }
         logger.debug("uid:{},dbResultCode:{}--------------------------------------------refreshGenerateTokenByDbCode()", userId, versionCode);
         return this.generateToken(userId, versionCode);
@@ -148,11 +144,6 @@ public class JsonWwbTokenUtil {
             String sourceBinary = BitUtils.decimalToBinary(versionCode);
             // 截取登陆版本号
             String loginVersionBinary = sourceBinary.substring(sourceBinary.length() - jsonWebTokenProperties.getLoginTokenVersionCodeTokenLength());
-            //记录登陆日志
-            ImUserLoginLogDTO loginLogDTO = getLoginHeader(request);
-            loginLogDTO.setRevUid(Long.parseLong(userId));
-            loginLogDTO.setLoginVersion(BitUtils.binaryToDecimal(loginVersionBinary));
-            imUserLoginLogService.insert(loginLogDTO);
         } catch (Exception e) {
             logger.error("add login log fail,error message:{}", e.getMessage());
         }
@@ -168,15 +159,15 @@ public class JsonWwbTokenUtil {
      * @return Integer
      */
     public Integer addAndUpdateVersionCodeGetBuyDb(String userId, HttpServletRequest request, int type) {
-        ImUserBase imUserBase = imUserBaseMapper.selectByPrimaryKey(Long.valueOf(userId));
+        User user = userMapper.selectById(Long.valueOf(userId));
         PlatformEnum platformEnum = this.getPlatformFromRequest(request);
         Integer versionCode;
         if (platformEnum.equals(PlatformEnum.ANDROID) || platformEnum.equals(PlatformEnum.IOS)) {
-            versionCode = this.increaseVersion(imUserBase.getAppTokenVersion(), type);
-            imUserBaseMapper.updateAppTokenVersion(imUserBase.getAppTokenVersion(), versionCode, Long.valueOf(userId), LocalDateTime.now());
+            versionCode = this.increaseVersion(user.getAppTokenVersion(), type);
+            userMapper.updateAppTokenVersion(user.getAppTokenVersion(), versionCode, Long.valueOf(userId), LocalDateTime.now());
         } else {
-            versionCode = this.increaseVersion(imUserBase.getWebTokenVersion(), type);
-            imUserBaseMapper.updateWebTokenVersion(imUserBase.getWebTokenVersion(), versionCode, Long.valueOf(userId), LocalDateTime.now());
+            versionCode = this.increaseVersion(user.getWebTokenVersion(), type);
+            userMapper.updateWebTokenVersion(user.getWebTokenVersion(), versionCode, Long.valueOf(userId), LocalDateTime.now());
         }
         return versionCode;
     }
@@ -219,7 +210,7 @@ public class JsonWwbTokenUtil {
             if (!userId.equals(request.getHeader(RequestConstans.USER_ID))) {
                 //验证token中的uid是否与header中的uid一致
                 logger.error("header in uid and user_token in uid differ error {} ", userId);
-                throw new BusinessException(BusinessErrorCode.VOICE_CALL_PARAM_ERROR);
+                throw new BusinessException(BusinessErrorCode.REQUEST_PARAM_ERROR);
             }
             if (refresh < System.currentTimeMillis()) {
                 //刷新 token
@@ -266,16 +257,16 @@ public class JsonWwbTokenUtil {
     public LoginTokenVersionCompareEnum checkVersion(Integer requestVersionCode, HttpServletRequest request, Long userId) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
         int loginAndTokenLength = jsonWebTokenProperties.getLoginTokenVersionCodeTokenLength();
-        ImUserBase imUserBase = imUserBaseMapper.selectByPrimaryKey(userId);
+        User user = userMapper.selectById(userId);
         PlatformEnum platformEnum = this.getPlatformFromRequest(request);
         Date date;
         Integer dbVersionCode;
         if (platformEnum.equals(PlatformEnum.ANDROID) || platformEnum.equals(PlatformEnum.IOS)) {
-            dbVersionCode = imUserBase.getAppTokenVersion();
-            date = imUserBase.getAppTokenRefreshTime();
+            dbVersionCode = user.getAppTokenVersion();
+            date = user.getAppTokenRefreshTime();
         } else {
-            dbVersionCode = imUserBase.getWebTokenVersion();
-            date = imUserBase.getWebTokenRefreshTime();
+            dbVersionCode = user.getWebTokenVersion();
+            date = user.getWebTokenRefreshTime();
         }
         String requestVersionCodeBinary = BitUtils.decimalToBinary(requestVersionCode);
         String dbVersionCodeBinary = BitUtils.decimalToBinary(dbVersionCode);
@@ -419,44 +410,6 @@ public class JsonWwbTokenUtil {
      */
     private String getTokenFromQuery(HttpServletRequest request) {
         return request.getParameter("user_token");
-    }
-
-    /**
-     * 获取登陆headers
-     *
-     * @param request
-     * @return ImUserLoginLogDTO
-     */
-    private static ImUserLoginLogDTO getLoginHeader(HttpServletRequest request) {
-        //mac地址
-        String deviceId = request.getHeader(RequestConstans.HEAD_DEVICE_ID);
-        String platform = request.getHeader(RequestConstans.CLIENT_OS);
-        //操作系统
-        Integer clientOs = platform == null ? ClientOsEnum.UNKNOWN.getIndex() : Integer.valueOf(platform);
-        //操作系统版本号
-        String clientOsVersion = request.getHeader(RequestConstans.HEAD_PLATFORM_V);
-        //客户端版本号
-        String clientAppVersion = request.getHeader(RequestConstans.CLIENT_V);
-        //ip
-        String ip = HttpServletHelper.getRequestIpAddr(request);
-        // mac(android)
-        String mac = request.getHeader(RequestConstans.MAC);
-        // IMEI手机序列号、手机“串号”(Android)
-        String imei = request.getHeader(RequestConstans.IMEI);
-        // IDFA广告标示符（IOS）
-        String idfa = request.getHeader(RequestConstans.IDFA);
-
-        // builder ImUserLoginLogDTO
-        return ImUserLoginLogDTO.builder().
-                deviceId(deviceId)
-                .ip(ip)
-                .clientOs(clientOs)
-                .clientOsVersion(clientOsVersion)
-                .clientAppVersion(clientAppVersion)
-                .mac(mac)
-                .imei(imei)
-                .idfa(idfa)
-                .build();
     }
 
     /**

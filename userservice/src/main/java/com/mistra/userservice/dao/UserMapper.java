@@ -7,6 +7,7 @@ import com.mistra.userservice.dto.UserDTO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -44,5 +45,9 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     User findByUserName(@Param("userName") String userName);
+
+    int updateAppTokenVersion(@Param("oldVersion") Integer oldVersion, @Param("newVersion") Integer newVersion, @Param("uid") Long uid,@Param("refreshTime") LocalDateTime time);
+
+    int updateWebTokenVersion(@Param("oldVersion") Integer oldVersion, @Param("newVersion") Integer newVersion, @Param("uid") Long uid,@Param("refreshTime") LocalDateTime time);
 
 }

@@ -36,7 +36,19 @@ public class BusinessErrorCode {
      */
     public static final int SERVER_BUSY_ERROR = 100104;
     /**
+     * 请登录!
+     */
+    public static final int TO_LOGIN = 200000;
+    /**
      * 密码错误!
      */
     public static final int USER_LOGIN_PWD_ERROR_FAIL = 100204;
+    /**
+     * 登录过期，请重新登录
+     */
+    public static final int LOGIN_EXPIRE = 200008;
+    /**
+     * 该账号在别的设备登录！
+     */
+    public static final int LOGIN_OTHER = 200012;
 }

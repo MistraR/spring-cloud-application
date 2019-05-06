@@ -1,8 +1,8 @@
 package com.mistra.userservice.base.JWT;
 
 /**
- * @Author: WangRui
- * @Date: 2018-09-18
+ * @ Author: WangRui
+ * @ Date: 2018-09-18
  * Time: 下午3:48
  * Description: JWT Token 常量
  */

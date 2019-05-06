@@ -5,10 +5,11 @@ import com.mistra.base.entity.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * @Author: RoronoaZoro丶WangRui
+ * @ Author: RoronoaZoro丶WangRui
  * Time: 2018/7/15/015
  * Describe:
  */
@@ -37,6 +38,26 @@ public class User extends BaseEntity implements Cloneable, Serializable {
      * 角色id
      */
     private int systemRoleId;
+
+    /**
+     * app登录和Token Version版本号
+     */
+    private Integer appTokenVersion;
+
+    /**
+     * H5登录和Token Version版本号
+     */
+    private Integer webTokenVersion;
+
+    /**
+     * app token最后刷新时间
+     */
+    private Timestamp appTokenRefreshTime;
+
+    /**
+     * web token最后刷新时间
+     */
+    private Timestamp webTokenRefreshTime;
     /**
      * 假如一个用户具有多个角色
      *

@@ -4,7 +4,7 @@ package com.mistra.userservice.base.JWT;
  * @ Author: WangRui
  * @ Version: 1.0
  * @ Time: 2019-05-06 09:27
- * @ Description:
+ * @ Description: 平台枚举
  */
 public enum PlatformEnum {
 

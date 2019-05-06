@@ -22,9 +22,9 @@ public class SystemRole implements Serializable {
     private String description;
 
     /**
-     * 是否可用,如果不可用将不会添加给用户,0:可用 1:不可用
+     * 是否可用,如果不可用将不会添加给用户,0:不可用 1:可用
      */
-    private int available;
+    private Boolean available;
 
     @TableField(exist = false)
     private List<SystemPermission> sysPermissionList;

@@ -1,8 +1,8 @@
 package com.mistra.userservice.base.JWT;
 
 /**
- * @Author: WangRui
- * @Date: 2018/11/28
+ * @ Author: WangRui
+ * @ Date: 2018/11/28
  * Time: 16:56
  * Description:
  */
@@ -16,11 +16,7 @@ public enum JsonWebTokenVerifyStatus {
      */
     CREATE_NEW(1002, "Return a new token！Token renewal!"),
     /**
-     * token版本相差1
-     */
-    TOKEN_DIFFER_ONE(1005, "Token version differ one!"),
-    /**
-     * 在别处登录
+     * 在别处登录过
      */
     LOGIN_OTHER(1003, "Login other!"),
     /**
