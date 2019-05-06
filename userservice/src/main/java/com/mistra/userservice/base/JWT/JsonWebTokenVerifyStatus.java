@@ -6,7 +6,7 @@ package com.mistra.userservice.base.JWT;
  * Time: 16:56
  * Description:
  */
-public enum JsonWwbTokenVerifyStatus {
+public enum JsonWebTokenVerifyStatus {
     /**
      * 验证成功，可以继续访问
      */
@@ -35,7 +35,7 @@ public enum JsonWwbTokenVerifyStatus {
     Integer code;
     String message;
 
-    JsonWwbTokenVerifyStatus(Integer code, String message) {
+    JsonWebTokenVerifyStatus(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

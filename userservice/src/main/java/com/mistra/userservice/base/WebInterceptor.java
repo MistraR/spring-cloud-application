@@ -2,11 +2,9 @@ package com.mistra.userservice.base;
 
 import com.mistra.userservice.base.JWT.JsonWebTokenConstant;
 import com.mistra.userservice.base.JWT.JsonWwbTokenUtil;
-import com.mistra.userservice.base.JWT.JsonWwbTokenVerifyStatus;
-import com.mistra.userservice.base.exception.BaseServiceException;
+import com.mistra.userservice.base.JWT.JsonWebTokenVerifyStatus;
 import com.mistra.userservice.base.exception.BusinessErrorCode;
 import com.mistra.userservice.base.exception.BusinessException;
-import com.mistra.userservice.base.exception.ResultCode;
 import com.mistra.userservice.core.CurrentUserSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,15 +45,15 @@ public class WebInterceptor implements HandlerInterceptor {
         String url = request.getRequestURI();
         logger.info("{} >>> {}", request.getMethod(), url);
         String token = jwtUtil.getToken(request);
-        Integer code = jwtUtil.verification(token).getCode();
-        if (code.equals(JsonWwbTokenVerifyStatus.SUCCESS.getCode())) {
+        Integer code = jwtUtil.verification(request,token).getCode();
+        if (code.equals(JsonWebTokenVerifyStatus.SUCCESS.getCode())) {
             return true;
-        } else if (code.equals(JsonWwbTokenVerifyStatus.CREATE_NEW.getCode())) {
+        } else if (code.equals(JsonWebTokenVerifyStatus.CREATE_NEW.getCode())) {
             String userId = jwtUtil.parseTokenGetUserId(token);
             String allNewToken = jwtUtil.generateToken(userId);
             response.setHeader(JsonWebTokenConstant.RESPONSE_HEADER_USER_TOKEN_FLAG, allNewToken);
             return true;
-        } else if (code.equals(JsonWwbTokenVerifyStatus.LOGIN.getCode())) {
+        } else if (code.equals(JsonWebTokenVerifyStatus.LOGIN.getCode())) {
             throw new BusinessException(BusinessErrorCode.USER_LOGIN_PWD_ERROR_FAIL);
         }
         return true;

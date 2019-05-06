@@ -2,7 +2,7 @@ package com.mistra.userservice.base.result;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.mistra.userservice.base.exception.SystemCodeMessage;
+import com.mistra.userservice.base.exception.BusinessErrorCode;
 import lombok.Data;
 
 /**
@@ -14,8 +14,8 @@ import lombok.Data;
 @Data
 public class Result {
 
-    private int code = SystemCodeMessage.SUCCESS.getCode();
-    private String message = SystemCodeMessage.SUCCESS.getMessage();
+    private int code = BusinessErrorCode.OK;
+    private String message = "OK";
     private Object data;
 
     public Result() {
@@ -73,7 +73,7 @@ public class Result {
     }
 
     public static Result fail(String message) {
-        return new Result(SystemCodeMessage.FAIL.getCode(), message);
+        return new Result(BusinessErrorCode.FAIL, message);
     }
 
 
