@@ -3,6 +3,7 @@ package com.mistra.userservice.base.JWT;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.mistra.userservice.base.exception.BusinessErrorCode;
@@ -139,8 +140,6 @@ public class JsonWwbTokenUtil {
      * @return token
      */
     public String loginGenerateToken(String userId, HttpServletRequest request) {
-        //统计登录人数
-        this.countLoginUser(userId);
         //loginVersion和tokenVersion都+1
         Integer versionCode = this.addAndUpdateVersionCodeGetBuyDb(userId, request, JsonWebTokenConstant.LOGIN_VERSION_TAG);
         try {
@@ -180,27 +179,6 @@ public class JsonWwbTokenUtil {
             imUserBaseMapper.updateWebTokenVersion(imUserBase.getWebTokenVersion(), versionCode, Long.valueOf(userId), LocalDateTime.now());
         }
         return versionCode;
-    }
-
-    /**
-     * 统计登录人数
-     *
-     * @param userId 用户ID
-     */
-    private void countLoginUser(String userId) {
-        try {
-            String prefix;
-            if (userId.length() > StatisticsUtils.USER_ID_LENGTH) {
-                prefix = userId.substring(0, 2);
-            } else {
-                prefix = userId.substring(0, 1);
-            }
-            String redisKey = StatisticsUtils.createRedisKey(StatisticsUtils.StatisticsTypeEnum.LOGIN_USERS.name()) + prefix;
-            redis.setbit(redisKey, Long.valueOf(userId) - Long.valueOf(prefix) * StatisticsUtils.USER_ID_DEFAULT_VALUE, true);
-            redis.expire(redisKey, StatisticsUtils.REDIS_KEY_EXPIRE_TIME);
-        } catch (Exception e) {
-            logger.error("statistics LOGIN_USERS error ,userId:{},e:{}", userId, e);
-        }
     }
 
     /**
@@ -270,7 +248,7 @@ public class JsonWwbTokenUtil {
             return JsonWebTokenVerifyStatus.SUCCESS;
         } catch (BusinessException b) {
             throw b;
-        } catch (JWTVerificationException JWTVerificationException) {
+        } catch (com.auth0.jwt.exceptions.JWTVerificationException JWTVerificationException) {
             //token验证失败，token过期或者是假token
             logger.info(JsonWebTokenVerifyStatus.LOGIN.getMessage());
             return JsonWebTokenVerifyStatus.LOGIN;
