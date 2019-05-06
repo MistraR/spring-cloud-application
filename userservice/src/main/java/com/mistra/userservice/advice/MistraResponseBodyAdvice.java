@@ -1,7 +1,7 @@
-package com.mistra.userservice.base.advice;
+package com.mistra.userservice.advice;
 
 import com.alibaba.fastjson.JSON;
-import com.mistra.userservice.base.annotation.MistraResponseBody;
+import com.mistra.userservice.annotation.MistraResponseBody;
 import com.mistra.userservice.base.result.Result;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

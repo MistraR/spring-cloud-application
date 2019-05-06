@@ -62,7 +62,7 @@
         <jolokia-core.version>1.6.0</jolokia-core.version>
         <com.alibaba.fastjson>1.2.49</com.alibaba.fastjson>
         <mysql-connector-java>5.1.46</mysql-connector-java>
-        <spring-kafka.version>2.2.4.RELEASE</spring-kafka.version>
+        <spring-kafka.version>2.1.7.RELEASE</spring-kafka.version>
         <spring-boot-starter-web>2.0.5.RELEASE</spring-boot-starter-web>
         <spring-boot-starter-mail>2.0.5.RELEASE</spring-boot-starter-mail>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>

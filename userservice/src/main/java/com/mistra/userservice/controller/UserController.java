@@ -1,7 +1,7 @@
 package com.mistra.userservice.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.mistra.userservice.base.annotation.MistraResponseBody;
+import com.mistra.userservice.annotation.MistraResponseBody;
 import com.mistra.userservice.base.model.PageQueryCondition;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 
 /**
  * @ Author: WangRui

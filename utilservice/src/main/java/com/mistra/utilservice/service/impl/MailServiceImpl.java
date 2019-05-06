@@ -1,6 +1,5 @@
 package com.mistra.utilservice.service.impl;
 
-import com.mistra.userservice.base.result.Result;
 import com.mistra.utilservice.config.MailgunConfigProperties;
 import com.mistra.utilservice.dto.MailDTO;
 import com.mistra.utilservice.service.MailService;
@@ -57,12 +56,11 @@ public class MailServiceImpl implements MailService {
     private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 
     @Override
-    public Result sendMail(MailDTO mailDTO) {
+    public void sendMail(MailDTO mailDTO) {
         return sendTwo(mailDTO);
     }
 
-    public Result sendOne(MailDTO mailDTO) {
-        Result result = new Result();
+    public void sendOne(MailDTO mailDTO) {
         if (mailDTO.getSendToAddress().size() == 0 || mailDTO.getParamsMap().size() == 0 || StringUtils.isEmpty(mailDTO.getSubject()) || StringUtils.isEmpty(mailDTO.getTemplate())) {
             result.setSuccess(false);
             result.setMessage("MailDTO参数不正确！");
@@ -72,7 +70,6 @@ public class MailServiceImpl implements MailService {
             if (!Pattern.matches(REGEX_EMAIL, to)) {
                 result.setSuccess(false);
                 result.setMessage("邮箱格式错误!");
-                return result;
             }
         }
         //编译thymeleaf模板 渲染数据

@@ -2,7 +2,7 @@ package com.mistra.userservice.base.result;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.mistra.userservice.base.exception.BusinessErrorCode;
+import com.mistra.userservice.exception.BusinessErrorCode;
 import lombok.Data;
 
 /**

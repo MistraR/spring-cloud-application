@@ -9,7 +9,7 @@ eureka:
 # native  从本地读取配置文件
 spring:
   application:
-    name: shiro-server
+    name: config-server
   cloud:
     config:
       server:

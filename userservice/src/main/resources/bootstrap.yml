@@ -2,19 +2,19 @@
 spring:
   application:
     name: user-service
-#  cloud:
-#    config:
-#      #如果没有读取成功执行快速失败
-#      fail-fast: true
-#      discovery:
-#        #指定读取配置文件服务的serviceId
-#        service-id: shiro-server
-#        enabled: true
-#  profiles:
-#    #需要读取的配置文件版本 dev  pro  test
-#    active: pro
+  cloud:
+    config:
+      #如果没有读取成功执行快速失败
+      fail-fast: true
+      discovery:
+        #指定读取配置文件服务的serviceId
+        service-id: shiro-server
+        enabled: true
   profiles:
-    active: dev
+    #需要读取的配置文件版本 dev  pro  test
+    active: pro
+#  profiles:
+#    active: dev
 
 
 

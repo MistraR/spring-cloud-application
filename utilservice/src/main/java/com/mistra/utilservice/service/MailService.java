@@ -1,6 +1,5 @@
 package com.mistra.utilservice.service;
 
-import com.mistra.userservice.base.result.Result;
 import com.mistra.utilservice.dto.MailDTO;
 
 /**
@@ -16,5 +15,5 @@ public interface MailService {
      *
      * @param mailDTO
      */
-    Result sendMail(MailDTO mailDTO);
+    void sendMail(MailDTO mailDTO);
 }

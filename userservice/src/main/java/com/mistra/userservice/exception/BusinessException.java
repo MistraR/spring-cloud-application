@@ -1,4 +1,4 @@
-package com.mistra.userservice.base.exception;
+package com.mistra.userservice.exception;
 
 import lombok.Data;
 

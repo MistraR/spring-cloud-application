@@ -1,7 +1,6 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.userservice.base.result.RequestResultBuilder;
-import com.mistra.userservice.base.result.Result;
+import com.mistra.userservice.annotation.MistraResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -14,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 /**
- * @Author: WangRui
- * @Date: 2018/12/10
+ * @ Author: WangRui
+ * @ Date: 2018/12/10
  * Time: 21:46
  * Description: 国际化信息验证controller
  */
@@ -34,9 +33,9 @@ public class InternationalizationMessageController {
      * @return
      */
     @GetMapping("/test")
-    public Result test(HttpServletRequest request, HttpServletResponse response) {
+    @MistraResponseBody
+    public String test(HttpServletRequest request, HttpServletResponse response) {
         Locale locale = LocaleContextHolder.getLocale();
-        String result = messageSource.getMessage("100001", null, locale);
-        return RequestResultBuilder.failed(result);
+        return messageSource.getMessage("100001", null, locale);
     }
 }
