@@ -31,7 +31,6 @@ import java.util.Optional;
  * Time: 15:00
  * Description: JWT工具类
  */
-@Data
 public class JsonWebTokenUtils {
 
     private Logger logger = LoggerFactory.getLogger(JsonWebTokenUtils.class);
