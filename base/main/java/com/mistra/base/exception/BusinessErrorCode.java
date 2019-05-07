@@ -55,4 +55,17 @@ public class BusinessErrorCode {
      * 邮箱已存在
      */
     public static final int EMAIL_EXIST = 100352;
+
+    /**
+     * Excel导入
+     */
+    public static final int EXCEL_IMPORT_ERROR = 100401;
+    /**
+     * 上传文件格式不支持！
+     */
+    public static final int FILE_NOT_SUPPORT = 100402;
+    /**
+     * 上传文件解析错误
+     */
+    public static final int FILE_PARSING_ERROR = 100403;
 }

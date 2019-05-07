@@ -1,12 +1,11 @@
 package com.mistra.excelservice.service;
 
-import com.mistra.excelservice.entity.ExcelEntity;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 /**
- * @Author: WangRui
- * @Date: 2018/9/20
+ * @ Author: WangRui
+ * @ Date: 2018/9/20
  * Time: 下午10:44
  * Description:
  */
@@ -17,5 +16,5 @@ public interface ExcelService {
      *
      * @param list
      */
-    void saveBatch(List<ExcelEntity> list);
+    void saveBatch(MultipartFile file);
 }

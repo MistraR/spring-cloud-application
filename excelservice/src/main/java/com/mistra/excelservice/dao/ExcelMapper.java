@@ -1,5 +1,7 @@
 package com.mistra.excelservice.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.mistra.excelservice.entity.ExcelEntity;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * Description:
  */
 @Repository
-public interface ExcelMapper {
+public interface ExcelMapper extends BaseMapper<ExcelEntity> {
 }

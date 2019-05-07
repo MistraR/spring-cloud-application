@@ -1,6 +1,7 @@
 package com.mistra.excelservice.util;
 
-import com.mistra.base.exception.ServiceErrorException;
+import com.mistra.base.exception.BusinessErrorCode;
+import com.mistra.base.exception.BusinessException;
 import com.mistra.excelservice.annotation.ExcelCell;
 import com.mistra.excelservice.annotation.ExcelCellType;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -210,10 +211,10 @@ public class ExcelImport {
             } else if (XLSX.equalsIgnoreCase(suffix)) {
                 wb = new XSSFWorkbook(fileInputStream);
             } else {
-                throw new ServiceErrorException("上传文件格式不支持！");
+                throw new BusinessException(BusinessErrorCode.FILE_NOT_SUPPORT);
             }
         } catch (Exception e) {
-            throw new ServiceErrorException("上传文件解析错误");
+            throw new BusinessException(BusinessErrorCode.FILE_PARSING_ERROR);
         }
         return wb;
     }
