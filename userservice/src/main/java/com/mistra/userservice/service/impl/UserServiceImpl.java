@@ -4,11 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.mistra.userservice.base.JWT.JsonWebTokenUtils;
-import com.mistra.userservice.base.JWT.RequestConstans;
-import com.mistra.userservice.exception.BusinessErrorCode;
-import com.mistra.userservice.exception.BusinessException;
-import com.mistra.userservice.base.model.PageQueryCondition;
+import com.mistra.userservice.core.JWT.JsonWebTokenUtils;
+import com.mistra.userservice.core.web.RequestHeaderConstant;
+import com.mistra.userservice.core.exception.BusinessErrorCode;
+import com.mistra.userservice.core.exception.BusinessException;
+import com.mistra.userservice.core.model.PageQueryCondition;
 import com.mistra.userservice.dao.SystemPermissionMapper;
 import com.mistra.userservice.dao.SystemRoleMapper;
 import com.mistra.userservice.dao.UserMapper;
@@ -90,7 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             subject.login(usernamePasswordToken);
             User user = userMapper.selectOne(new QueryWrapper<User>().eq("name", loginDTO.getUserName()));
             String token = jsonWebTokenUtils.loginGenerateToken(user.getId().toString(), httpServletRequest);
-            Cookie cookie = new Cookie(RequestConstans.HEAD_USER_TOKEN, token);
+            Cookie cookie = new Cookie(RequestHeaderConstant.HEAD_USER_TOKEN, token);
             cookie.setPath("/");
             httpServletResponse.addCookie(cookie);
         } catch (AuthenticationException a) {

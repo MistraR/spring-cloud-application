@@ -1,6 +1,6 @@
 package com.mistra.uaaservice.service.impl;
 
-import com.mistra.userservice.base.result.Result;
+import com.mistra.userservice.core.config.result.Result;
 import com.mistra.uaaservice.config.UserFeignClient;
 import com.mistra.uaaservice.config.UtilFeignClient;
 import com.mistra.uaaservice.dao.EmailTemplateDao;

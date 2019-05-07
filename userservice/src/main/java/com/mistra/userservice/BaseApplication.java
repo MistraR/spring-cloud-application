@@ -1,6 +1,6 @@
 package com.mistra.userservice;
 
-import com.mistra.userservice.web.CustomDispatcherServlet;
+import com.mistra.userservice.core.web.CustomDispatcherServlet;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;

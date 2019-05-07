@@ -12,7 +12,7 @@
     <artifactId>utilservice</artifactId>
 
     <dependencies>
-        <!--base model依赖-->
+        <!--config model依赖-->
         <dependency>
             <groupId>com.mistra</groupId>
             <artifactId>base</artifactId>

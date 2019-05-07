@@ -2,11 +2,12 @@ package com.mistra.userservice.core;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.mistra.userservice.base.JWT.*;
-import com.mistra.userservice.exception.BusinessErrorCode;
-import com.mistra.userservice.exception.BusinessException;
-import com.mistra.userservice.i18n.InternationalizationUtil;
-import com.mistra.userservice.utils.HttpServletHelper;
+import com.mistra.userservice.core.JWT.*;
+import com.mistra.userservice.core.exception.BusinessErrorCode;
+import com.mistra.userservice.core.exception.BusinessException;
+import com.mistra.userservice.core.utils.i18n.InternationalizationUtil;
+import com.mistra.userservice.core.utils.HttpServletHelper;
+import com.mistra.userservice.core.web.RequestHeaderConstant;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +57,7 @@ public class BasedInterceptor extends HandlerInterceptorAdapter {
         String uri = request.getRequestURI().toLowerCase();
         logger.info("IP:{},uri:{}", ip, uri);
 
-        String headerUserId = request.getHeader(RequestConstans.USER_ID);
+        String headerUserId = request.getHeader(RequestHeaderConstant.USER_ID);
         if (StringUtils.isBlank(headerUserId)) {
             this.toOut(response, BusinessErrorCode.TO_LOGIN);
             return false;

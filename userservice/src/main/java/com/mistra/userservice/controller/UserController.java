@@ -1,8 +1,8 @@
 package com.mistra.userservice.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.mistra.userservice.annotation.MistraResponseBody;
-import com.mistra.userservice.base.model.PageQueryCondition;
+import com.mistra.userservice.core.annotation.MistraResponseBody;
+import com.mistra.userservice.core.model.PageQueryCondition;
 import com.mistra.userservice.dto.LoginDTO;
 import com.mistra.userservice.dto.RegisterDTO;
 import com.mistra.userservice.dto.UserDTO;

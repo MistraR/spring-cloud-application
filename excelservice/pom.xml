@@ -17,7 +17,7 @@
     <description>Excel service project for Spring Boot</description>
 
     <dependencies>
-        <!--base model依赖-->
+        <!--config model依赖-->
         <dependency>
             <groupId>com.mistra</groupId>
             <artifactId>base</artifactId>

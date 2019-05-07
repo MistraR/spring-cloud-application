@@ -1,6 +1,6 @@
 package com.mistra.uaaservice.config;
 
-import com.mistra.userservice.base.result.Result;
+import com.mistra.userservice.core.config.result.Result;
 import com.mistra.utilservice.dto.MailDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;

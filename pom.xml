@@ -98,7 +98,7 @@
     整个项目的所有依赖包版本在这里维护，子模块需要用到那个依赖就在pom直接添加上，但是不需要再写version了-->
     <dependencyManagement>
         <dependencies>
-            <!--base model依赖,可能被其他模块引用的模块都应该添加进来-->
+            <!--config model依赖,可能被其他模块引用的模块都应该添加进来-->
             <dependency>
                 <groupId>com.mistra</groupId>
                 <artifactId>base</artifactId>

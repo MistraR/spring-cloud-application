@@ -1,7 +1,7 @@
 package com.mistra.excelservice.controller;
 
-import com.mistra.userservice.base.result.RequestResultBuilder;
-import com.mistra.userservice.base.result.Result;
+import com.mistra.userservice.core.config.result.RequestResultBuilder;
+import com.mistra.userservice.core.config.result.Result;
 import com.mistra.excelservice.entity.ExcelEntity;
 import com.mistra.excelservice.service.ExcelService;
 import com.mistra.excelservice.util.ExcelImport;

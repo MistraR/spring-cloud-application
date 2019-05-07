@@ -1,6 +1,6 @@
 package com.mistra.uaaservice.controller;
 
-import com.mistra.userservice.base.result.Result;
+import com.mistra.userservice.core.config.result.Result;
 import com.mistra.uaaservice.service.FeignService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

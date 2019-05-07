@@ -1,6 +1,6 @@
 package com.mistra.uaaservice.service;
 
-import com.mistra.userservice.base.result.Result;
+import com.mistra.userservice.core.config.result.Result;
 
 /**
  * @Author: WangRui

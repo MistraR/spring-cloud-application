@@ -1,7 +1,7 @@
 package com.mistra.uaaservice.config;
 
-import com.mistra.userservice.base.result.RequestResultBuilder;
-import com.mistra.userservice.base.result.Result;
+import com.mistra.userservice.core.config.result.RequestResultBuilder;
+import com.mistra.userservice.core.config.result.Result;
 import org.springframework.stereotype.Component;
 
 /**

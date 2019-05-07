@@ -1,6 +1,6 @@
 package com.mistra.userservice.controller;
 
-import com.mistra.userservice.annotation.MistraResponseBody;
+import com.mistra.userservice.core.annotation.MistraResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
