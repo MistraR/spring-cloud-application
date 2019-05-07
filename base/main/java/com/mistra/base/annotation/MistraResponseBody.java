@@ -1,4 +1,4 @@
-package com.mistra.userservice.core.annotation;
+package com.mistra.base.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

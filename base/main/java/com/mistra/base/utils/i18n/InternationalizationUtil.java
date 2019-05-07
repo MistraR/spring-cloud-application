@@ -1,4 +1,4 @@
-package com.mistra.userservice.core.utils.i18n;
+package com.mistra.base.utils.i18n;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

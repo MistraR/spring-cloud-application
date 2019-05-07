@@ -1,8 +1,8 @@
-package com.mistra.userservice.core.model;
+package com.mistra.base.model;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.mistra.userservice.core.exception.BusinessErrorCode;
+import com.mistra.base.exception.BusinessErrorCode;
 import lombok.Data;
 
 /**

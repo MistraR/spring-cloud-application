@@ -1,4 +1,4 @@
-package com.mistra.userservice.core.utils;
+package com.mistra.base.utils;
 
 import java.math.BigInteger;
 

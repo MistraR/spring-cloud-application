@@ -1,7 +1,5 @@
 package com.mistra.excelservice.controller;
 
-import com.mistra.userservice.core.config.result.RequestResultBuilder;
-import com.mistra.userservice.core.config.result.Result;
 import com.mistra.excelservice.entity.ExcelEntity;
 import com.mistra.excelservice.service.ExcelService;
 import com.mistra.excelservice.util.ExcelImport;
@@ -40,14 +38,12 @@ public class ExcelController {
     @ApiOperation("Excel导入")
     @ApiImplicitParam(name = "file", dataType = "MultipartFile", value = "Excel文件", required = true)
     @PostMapping(value = "/import")
-    public Result ledgerImport(MultipartFile file) throws ParseException {
+    public void ledgerImport(MultipartFile file) throws ParseException {
         try {
             List<ExcelEntity> list = ExcelImport.excelTransformationEntityList(ExcelEntity.class, file.getInputStream(), file.getOriginalFilename(), 1, 1);
             excelService.saveBatch(list);
-            return RequestResultBuilder.success();
         } catch (IOException e) {
             logger.info(Arrays.toString(e.getStackTrace()));
-            return RequestResultBuilder.failed("Excel解析错误！");
         }
     }
 

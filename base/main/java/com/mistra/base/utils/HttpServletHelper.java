@@ -1,4 +1,4 @@
-package com.mistra.userservice.core.utils;
+package com.mistra.base.utils;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

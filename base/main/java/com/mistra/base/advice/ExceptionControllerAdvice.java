@@ -1,10 +1,10 @@
-package com.mistra.userservice.core.advice;
+package com.mistra.base.advice;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.mistra.userservice.core.model.Result;
-import com.mistra.userservice.core.exception.BusinessErrorCode;
-import com.mistra.userservice.core.exception.BusinessException;
-import com.mistra.userservice.core.utils.i18n.InternationalizationUtil;
+import com.mistra.base.model.Result;
+import com.mistra.base.exception.BusinessErrorCode;
+import com.mistra.base.exception.BusinessException;
+import com.mistra.base.utils.i18n.InternationalizationUtil;
 import org.apache.commons.lang.StringUtils;
 import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;

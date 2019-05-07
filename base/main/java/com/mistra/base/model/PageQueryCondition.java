@@ -1,6 +1,5 @@
-package com.mistra.userservice.core.model;
+package com.mistra.base.model;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
@@ -15,20 +14,16 @@ import javax.validation.constraints.NotNull;
 @Data
 public class PageQueryCondition {
 
-    @ApiModelProperty(value = "页数")
     @NotNull
     @Min(1)
     private int pageNumber = 1;
 
-    @ApiModelProperty(value = "每页数量")
     @NotNull
     @Min(1)
     private int pageSize = 10;
 
-    @ApiModelProperty(value = "排序字段")
     private String order;
 
-    @ApiModelProperty(value = "排序规则 默认降序，升序=ASC")
     private String orderBy = "DESC";
 
 }
