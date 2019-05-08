@@ -1,6 +1,6 @@
 package com.mistra.utilservice.controller;
 
-import com.mistra.userservice.core.config.result.Result;
+import com.mistra.base.annotation.MistraResponseBody;
 import com.mistra.utilservice.dto.MailDTO;
 import com.mistra.utilservice.service.MailService;
 import io.swagger.annotations.Api;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
- * @Author: WangRui
- * @Date: 2018/10/14
+ * @ Author: WangRui
+ * @ Date: 2018/10/14
  * Time: 下午10:34
  * Description:
  */
@@ -33,7 +33,8 @@ public class MailController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "mailDTO", dataType = "MailDTO", required = true)
     })
-    public Result sendMail(@RequestBody @Valid MailDTO mailDTO) {
-        return mailService.sendMail(mailDTO);
+    @MistraResponseBody
+    public void sendMail(@RequestBody @Valid MailDTO mailDTO) {
+        mailService.sendMail(mailDTO);
     }
 }

@@ -68,4 +68,17 @@ public class BusinessErrorCode {
      * 上传文件解析错误
      */
     public static final int FILE_PARSING_ERROR = 100403;
+
+    /**
+     * MailDTO参数不正确
+     */
+    public static final int EMAIL_PARAM_ERROR = 100501;
+    /**
+     * 邮箱格式错误
+     */
+    public static final int EMAIL_FORMAT_ERROR = 100502;
+    /**
+     * 邮件发送失败
+     */
+    public static final int EMAIL_SEND_ERROR = 100503;
 }

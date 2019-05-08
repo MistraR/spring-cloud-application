@@ -1,5 +1,7 @@
 package com.mistra.utilservice.service.impl;
 
+import com.mistra.base.exception.BusinessErrorCode;
+import com.mistra.base.exception.BusinessException;
 import com.mistra.utilservice.config.MailgunConfigProperties;
 import com.mistra.utilservice.dto.MailDTO;
 import com.mistra.utilservice.service.MailService;
@@ -57,19 +59,16 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendMail(MailDTO mailDTO) {
-        return sendTwo(mailDTO);
+        sendTwo(mailDTO);
     }
 
     public void sendOne(MailDTO mailDTO) {
         if (mailDTO.getSendToAddress().size() == 0 || mailDTO.getParamsMap().size() == 0 || StringUtils.isEmpty(mailDTO.getSubject()) || StringUtils.isEmpty(mailDTO.getTemplate())) {
-            result.setSuccess(false);
-            result.setMessage("MailDTO参数不正确！");
-            return result;
+            throw new BusinessException(BusinessErrorCode.EMAIL_PARAM_ERROR);
         }
         for (String to : mailDTO.getSendToAddress()) {
             if (!Pattern.matches(REGEX_EMAIL, to)) {
-                result.setSuccess(false);
-                result.setMessage("邮箱格式错误!");
+                throw new BusinessException(BusinessErrorCode.EMAIL_FORMAT_ERROR);
             }
         }
         //编译thymeleaf模板 渲染数据
@@ -84,17 +83,13 @@ public class MailServiceImpl implements MailService {
         for (String sendTo : mailDTO.getSendToAddress()) {
             mailBuilder.to(sendTo);
         }
-        result.setSuccess(true);
-        result.setMessage("邮件发送成功！");
         threadPoolTaskExecutor.submit(() -> {
             Response response = mailBuilder.build().send();
             logger.info("Send mail complete. Code: {}, Response Type: {}. Message: {}", response.responseCode(), response.responseType(), response.responseMessage());
             if (response.responseCode() != 200) {
-                result.setSuccess(false);
-                result.setMessage("邮件发送失败！" + response.responseMessage());
+                throw new BusinessException(BusinessErrorCode.EMAIL_SEND_ERROR);
             }
         });
-        return result;
     }
 
     /**
@@ -103,8 +98,7 @@ public class MailServiceImpl implements MailService {
      * @param mailDTO
      * @return
      */
-    public Result sendTwo(MailDTO mailDTO) {
-        Result result = new Result();
+    public void sendTwo(MailDTO mailDTO) {
         Client client = Client.create();
         client.addFilter(new HTTPBasicAuthFilter("api", mailgunConfigProperties.getApiKey()));
         WebResource webResource = client.resource(mailgunConfigProperties.getMailgunResource());
@@ -114,8 +108,5 @@ public class MailServiceImpl implements MailService {
         formData.add("subject", mailDTO.getSubject());
         formData.add("text", "纯文本邮件测试！");
         webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, formData);
-        result.setSuccess(true);
-        result.setMessage("邮件发送成功！");
-        return result;
     }
 }
