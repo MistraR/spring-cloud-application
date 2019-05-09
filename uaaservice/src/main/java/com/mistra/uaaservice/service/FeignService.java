@@ -1,6 +1,5 @@
 package com.mistra.uaaservice.service;
 
-import com.mistra.userservice.core.config.result.Result;
 
 /**
  * @Author: WangRui
@@ -14,11 +13,11 @@ public interface FeignService {
      * 测试
      * @return
      */
-    Result test();
+    void test();
 
     /**
      * 发送邮件
      * @return
      */
-    Result sendMail();
+    void sendMail();
 }

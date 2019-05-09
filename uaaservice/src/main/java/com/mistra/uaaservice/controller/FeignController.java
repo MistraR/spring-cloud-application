@@ -1,6 +1,5 @@
 package com.mistra.uaaservice.controller;
 
-import com.mistra.userservice.core.config.result.Result;
 import com.mistra.uaaservice.service.FeignService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,13 +22,13 @@ public class FeignController {
 
     @ApiOperation("测试")
     @GetMapping("/test")
-    public Result test() {
-        return feignService.test();
+    public void test() {
+        feignService.test();
     }
 
     @ApiOperation("发送邮件服务测试")
     @GetMapping("/sendMail")
-    public Result sendMail() {
-        return feignService.sendMail();
+    public void sendMail() {
+        feignService.sendMail();
     }
 }

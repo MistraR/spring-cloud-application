@@ -1,6 +1,5 @@
 package com.mistra.uaaservice.config;
 
-import com.mistra.userservice.core.config.result.Result;
 import com.mistra.utilservice.dto.MailDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -22,5 +21,5 @@ public interface UtilFeignClient {
      * @return
      */
     @GetMapping(value = "/mail/send")
-    Result sendMail(MailDTO mailDTO);
+    void sendMail(MailDTO mailDTO);
 }

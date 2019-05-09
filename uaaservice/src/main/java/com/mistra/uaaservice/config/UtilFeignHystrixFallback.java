@@ -1,7 +1,5 @@
 package com.mistra.uaaservice.config;
 
-import com.mistra.userservice.core.config.result.RequestResultBuilder;
-import com.mistra.userservice.core.config.result.Result;
 import com.mistra.utilservice.dto.MailDTO;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Component;
 public class UtilFeignHystrixFallback implements UtilFeignClient{
 
     @Override
-    public Result sendMail(MailDTO mailDTO) {
-        return RequestResultBuilder.failed("Util服务远程调用出错！");
+    public void sendMail(MailDTO mailDTO) {
     }
 }

@@ -1,7 +1,5 @@
 package com.mistra.uaaservice.config;
 
-import com.mistra.userservice.core.config.result.RequestResultBuilder;
-import com.mistra.userservice.core.config.result.Result;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,10 +9,9 @@ import org.springframework.stereotype.Component;
  * Description: 熔断器逻辑处理类
  */
 @Component
-public class UserFeignHystrixFallback implements UserFeignClient{
+public class UserFeignHystrixFallback implements UserFeignClient {
 
     @Override
-    public Result test() {
-        return RequestResultBuilder.failed("User服务远程调用出错！");
+    public void test() {
     }
 }
