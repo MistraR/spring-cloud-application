@@ -59,7 +59,7 @@ public class DateUtils {
         logger.info("获取明年最后一天日期:{}", DateUtils.getNextYearEnd());
         logger.info("获取本季度第一天:{}", DateUtils.getThisSeasonFirstTime(11));
         logger.info("获取本季度最后一天:{}", DateUtils.getThisSeasonFinallyTime(11));
-        logger.info("获取两个日期之间间隔天数2008-12-1~2008-29:{}", DateUtils.getTwoDay("2008-12-1", "2008-9-29"));
+        logger.info("获取两个日期之间间隔天数2008-12-1~2008-9-29:{}", DateUtils.getTwoDay("2008-12-1", "2008-9-29"));
         logger.info("获取当前月的第几周：{}", DateUtils.getWeekOfMonth());
         logger.info("获取当前年份：{}", DateUtils.getYear());
         logger.info("获取当前月份：{}", DateUtils.getMonth());
@@ -104,6 +104,12 @@ public class DateUtils {
         return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
 
+    private static Calendar getCalendar(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
+
     /**
      * 获得今天在本周的第几天
      *
@@ -111,6 +117,16 @@ public class DateUtils {
      */
     private static int getDayOfWeek() {
         return Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+    }
+
+    private static Date getDayOfWeek(Date date, int add) {
+        Calendar calendar = getCalendar(date);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1;
+        if (dayOfWeek == 0) {
+            dayOfWeek = 7;
+        }
+        calendar.add(Calendar.DATE, -dayOfWeek + add);
+        return calendar.getTime();
     }
 
     /**
@@ -130,6 +146,69 @@ public class DateUtils {
     private static Date getTimeYearNext() {
         Calendar.getInstance().add(Calendar.DAY_OF_YEAR, 183);
         return Calendar.getInstance().getTime();
+    }
+
+    /**
+     * 获取当天0点
+     *
+     * @return Date
+     */
+    public static Date getCurrentDayZeroPoint() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        return cal.getTime();
+    }
+
+    /**
+     * 获取当天23.59.59点
+     *
+     * @return Date
+     */
+    public static Date getCurrentDayTwentyFourPoint() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), 23, 59, 59);
+        return cal.getTime();
+    }
+
+    /***
+     * 获取本周末24点
+     * @return 日期
+     */
+    public static Date getSunDayTwentyFourPoint() {
+        return getDayOfWeek(getCurrentDayTwentyFourPoint(), 7);
+    }
+
+
+    /***
+     * 获取本周一0点
+     * @return 日期
+     */
+    public static Date getMonday() {
+        return getDayOfWeek(getCurrentDayZeroPoint(), 1);
+    }
+
+    /**
+     * 获取下周一 0点
+     *
+     * @return
+     */
+    public static Date getNextWeekMonday() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getMonday());
+        cal.add(Calendar.DATE, 7);
+        return cal.getTime();
+    }
+
+    /**
+     * 获取下周日 24点
+     *
+     * @return
+     */
+    public static Date getNextWeekSunday() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(getSunDayTwentyFourPoint());
+        cal.add(Calendar.DATE, 7);
+        return cal.getTime();
     }
 
     /**
