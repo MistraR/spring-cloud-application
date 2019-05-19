@@ -26,6 +26,7 @@ public class BusinessException extends RuntimeException {
         this.code = messageCode;
     }
     public BusinessException(int messageCode,Object... args) {
+        //args  可以使用占位符替换  在i18n资源文件里{0} {1}依次写占位符就可以替换多个参数
         super(getCodeMessage(messageCode));
         this.code = messageCode;
         this.args = args;
