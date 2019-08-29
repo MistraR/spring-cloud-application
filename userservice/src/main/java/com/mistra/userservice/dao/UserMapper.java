@@ -46,8 +46,8 @@ public interface UserMapper extends BaseMapper<User> {
      */
     User findByUserName(@Param("userName") String userName);
 
-    int updateAppTokenVersion(@Param("oldVersion") Integer oldVersion, @Param("newVersion") Integer newVersion, @Param("uid") Long uid,@Param("refreshTime") LocalDateTime time);
+    int updateAppTokenVersion(@Param("oldVersion") Integer oldVersion, @Param("newVersion") Integer newVersion, @Param("uid") Long uid, @Param("refreshTime") LocalDateTime time);
 
-    int updateWebTokenVersion(@Param("oldVersion") Integer oldVersion, @Param("newVersion") Integer newVersion, @Param("uid") Long uid,@Param("refreshTime") LocalDateTime time);
+    int updateWebTokenVersion(@Param("oldVersion") Integer oldVersion, @Param("newVersion") Integer newVersion, @Param("uid") Long uid, @Param("refreshTime") LocalDateTime time);
 
 }

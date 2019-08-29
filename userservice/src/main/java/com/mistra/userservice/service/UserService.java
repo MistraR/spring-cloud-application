@@ -20,6 +20,7 @@ public interface UserService {
 
     /**
      * 用户登录
+     *
      * @param loginDTO
      * @return
      */
@@ -27,6 +28,7 @@ public interface UserService {
 
     /**
      * 通过用户账号查询用户的角色以及对于的角色权限
+     *
      * @param userName
      * @return
      */
@@ -34,6 +36,7 @@ public interface UserService {
 
     /**
      * 用户注册
+     *
      * @param registerDTO
      * @return
      */
@@ -42,10 +45,15 @@ public interface UserService {
     /**
      * 获取用户列表，带筛选条件
      * 使用mybatis-plus自带的分页插件查询，返回结果转换为自定义带DTO的PaginationResult
+     *
      * @param userDTO
      * @param pageQueryCondition
      * @return
      */
     IPage<UserDTO> getSelectList(UserDTO userDTO, PageQueryCondition pageQueryCondition);
 
+    /**
+     * 分布式事物测试
+     */
+    void distributedTransaction();
 }

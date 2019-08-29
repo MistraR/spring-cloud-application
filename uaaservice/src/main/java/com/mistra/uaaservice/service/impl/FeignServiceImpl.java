@@ -1,5 +1,7 @@
 package com.mistra.uaaservice.service.impl;
 
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.mistra.uaaservice.entity.EmailTemplate;
 import com.mistra.userservice.core.config.result.Result;
 import com.mistra.uaaservice.config.UserFeignClient;
 import com.mistra.uaaservice.config.UtilFeignClient;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,5 +68,16 @@ public class FeignServiceImpl implements FeignService {
         mailDTO.setParamsMap(paramsMap);
         logger.info("开始调用邮件发送服务！");
         return utilFeignClient.sendMail(mailDTO);
+    }
+
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void distributedTransaction() {
+        EmailTemplate emailTemplate = new EmailTemplate();
+        emailTemplate.setContent("调用者数据");
+        emailTemplate.setKey("key");
+        emailTemplateDao.insert(emailTemplate);
+        userFeignClient.distributedTransaction();
     }
 }

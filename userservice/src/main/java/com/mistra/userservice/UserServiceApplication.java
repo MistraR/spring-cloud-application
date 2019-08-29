@@ -2,6 +2,7 @@ package com.mistra.userservice;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import com.mistra.userservice.core.JWT.JsonWebTokenConstant;
 import com.mistra.userservice.core.JWT.JsonWebTokenUtils;
 import org.modelmapper.ModelMapper;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 @EnableEurekaClient
+@EnableDistributedTransaction
 public class UserServiceApplication {
 
     @Value("${json-web-token.secret}")

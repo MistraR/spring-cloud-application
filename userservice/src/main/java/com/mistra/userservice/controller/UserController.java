@@ -55,13 +55,13 @@ public class UserController {
     @ApiOperation("用户登录，登录成功则返回token")
     @MistraResponseBody
     public void shiroLogin(@Valid @RequestBody LoginDTO loginDTO, HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest) {
-        userService.login(loginDTO, httpServletResponse,httpServletRequest);
+        userService.login(loginDTO, httpServletResponse, httpServletRequest);
     }
 
     /**
      * * 使用mybatis-plus自带的分页插件查询，返回结果转换为DTO类
      *
-     * @param userDTO userDTO
+     * @param userDTO            userDTO
      * @param pageQueryCondition PageQueryCondition
      * @return Page<UserDTO>
      */
@@ -93,6 +93,12 @@ public class UserController {
     @MistraResponseBody
     public String delete() {
         return "Delete success!";
+    }
+
+    @GetMapping(value = "/distributedTransaction")
+    @MistraResponseBody
+    public void distributedTransaction() {
+        userService.distributedTransaction();
     }
 
 }
