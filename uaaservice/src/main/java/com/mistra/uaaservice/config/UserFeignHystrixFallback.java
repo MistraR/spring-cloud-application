@@ -14,4 +14,9 @@ public class UserFeignHystrixFallback implements UserFeignClient {
     @Override
     public void test() {
     }
+
+    @Override
+    public void distributedTransaction() {
+
+    }
 }
