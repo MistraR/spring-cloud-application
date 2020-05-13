@@ -1,6 +1,8 @@
 package com.mistra.uaaservice.service.impl;
 
-import com.mistra.userservice.core.config.result.Result;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import com.mistra.base.model.Result;
+import com.mistra.uaaservice.entity.EmailTemplate;
 import com.mistra.uaaservice.config.UserFeignClient;
 import com.mistra.uaaservice.config.UtilFeignClient;
 import com.mistra.uaaservice.dao.EmailTemplateDao;
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,12 +41,12 @@ public class FeignServiceImpl implements FeignService {
     private EmailTemplateDao emailTemplateDao;
 
     @Override
-    public Result test() {
-        return userFeignClient.test();
+    public void test() {
+        userFeignClient.test();
     }
 
     @Override
-    public Result sendMail() {
+    public void sendMail() {
         MailDTO mailDTO = new MailDTO();
         List<String> toList = new ArrayList<>();
         toList.add("842404548@qq.com");
@@ -64,6 +67,17 @@ public class FeignServiceImpl implements FeignService {
         paramsMap.put("exceptionList", emailContentDTOList);
         mailDTO.setParamsMap(paramsMap);
         logger.info("开始调用邮件发送服务！");
-        return utilFeignClient.sendMail(mailDTO);
+        utilFeignClient.sendMail(mailDTO);
+    }
+
+    @LcnTransaction
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void distributedTransaction() {
+        EmailTemplate emailTemplate = new EmailTemplate();
+        emailTemplate.setContent("调用者数据");
+        emailTemplate.setKey("key");
+        emailTemplateDao.insert(emailTemplate);
+        userFeignClient.distributedTransaction();
     }
 }

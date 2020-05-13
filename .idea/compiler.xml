@@ -6,16 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="adminserver" />
         <module name="base" />
+        <module name="userservice" />
+        <module name="uaaservice" />
+        <module name="utilservice" />
+        <module name="monitorserver" />
+        <module name="excelservice" />
+        <module name="adminserver" />
         <module name="configserver" />
         <module name="eurekaserver" />
-        <module name="excelservice" />
-        <module name="monitorserver" />
         <module name="routeservice" />
-        <module name="uaaservice" />
-        <module name="userservice" />
-        <module name="utilservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.mistra.userservice.core.JWT.JsonWebTokenUtils;
 import com.mistra.userservice.core.web.RequestHeaderConstant;
 import com.mistra.base.exception.BusinessErrorCode;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -154,6 +156,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         List<UserDTO> userDTOList = userIPage.getRecords().stream().map(this::convertDTO).collect(Collectors.toList());
         userPage.setRecords(userDTOList);
         return userPage;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @LcnTransaction
+    @Override
+    public void distributedTransaction() {
+        User user = new User();
+        user.setName("被调用者数据");
+        user.setEmail("842404548@qq.com");
+        user.setPassword("123456");
+        user.setUserName("被调用者数据");
+        userMapper.insert(user);
     }
 
     /**
