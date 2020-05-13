@@ -32,7 +32,7 @@
         <mybatisplus-spring-boot-starter.version>3.0.7.1</mybatisplus-spring-boot-starter.version>
         <spring-boot-starter-thymeleaf>2.0.5.RELEASE</spring-boot-starter-thymeleaf>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring-cloud-starter-hystrix>1.4.5.RELEASE</spring-cloud-starter-hystrix>
+        <spring-cloud-starter-hystrix>1.4.7.RELEASE</spring-cloud-starter-hystrix>
         <spring-boot-starter-actuator>2.0.3.RELEASE</spring-boot-starter-actuator>
         <hibernate.validator.version>6.1.0.Alpha4</hibernate.validator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,11 +40,11 @@
         <mybatis.srping.version>1.3.2</mybatis.srping.version>
         <thymeleaf-spring5>3.0.9.RELEASE</thymeleaf-spring5>
         <commons.lang3.version>3.7</commons.lang3.version>
-        <spring-aspects>5.0.7.RELEASE</spring-aspects>
+        <spring-aspects>5.2.6.RELEASE</spring-aspects>
         <nekohtml.version>1.9.22</nekohtml.version>
         <swagger2.version>2.8.0</swagger2.version>
         <druid.version>1.1.10</druid.version>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.5.3</shiro.version>
         <java.version>1.8</java.version>
         <jersey-hk2>2.27</jersey-hk2>
         <java-jwt>3.4.0</java-jwt>
@@ -54,7 +54,7 @@
         <modelmapper>2.2.0</modelmapper>
         <hutool-core>4.1.12</hutool-core>
         <slf4j-api>1.8.0-beta2</slf4j-api>
-        <okhttp.version>3.10.0</okhttp.version>
+        <okhttp.version>3.12.0</okhttp.version>
         <poi-ooxml.version>3.17</poi-ooxml.version>
         <eureka-client>2.0.1.RELEASE</eureka-client>
         <zipkin.version>2.0.0.RELEASE</zipkin.version>
@@ -63,7 +63,7 @@
         <jackson-databind.version>2.9.8</jackson-databind.version>
         <com.alibaba.fastjson>1.2.49</com.alibaba.fastjson>
         <mysql-connector-java>5.1.46</mysql-connector-java>
-        <spring-kafka.version>2.1.7.RELEASE</spring-kafka.version>
+        <spring-kafka.version>2.4.6.RELEASE</spring-kafka.version>
         <spring-boot-starter-web>2.0.5.RELEASE</spring-boot-starter-web>
         <spring-boot-starter-mail>2.0.5.RELEASE</spring-boot-starter-mail>
         <spring-cloud-starter-feign>1.4.4.RELEASE</spring-cloud-starter-feign>
@@ -71,7 +71,7 @@
         <spring-boot-admin-starter-client>2.0.2</spring-boot-admin-starter-client>
         <spring-boot-admin-starter-server>2.0.2</spring-boot-admin-starter-server>
         <spring-boot-starter-security>2.0.5.RELEASE</spring-boot-starter-security>
-        <spring-boot-starter-data-redis>2.1.1.RELEASE</spring-boot-starter-data-redis>
+        <spring-boot-starter-data-redis>2.2.7.RELEASE</spring-boot-starter-data-redis>
         <spring-cloud-starter-hystrix-dashboard>1.4.5.RELEASE</spring-cloud-starter-hystrix-dashboard>
     </properties>
 
@@ -335,7 +335,7 @@
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
-                <version>2.7.3</version>
+                <version>3.3.0</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -356,6 +356,14 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.0.1.RELEASE</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
