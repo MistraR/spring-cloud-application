@@ -5,7 +5,7 @@ import com.mistra.base.model.Result;
 import com.mistra.base.exception.BusinessErrorCode;
 import com.mistra.base.exception.BusinessException;
 import com.mistra.base.utils.i18n.InternationalizationUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.mybatis.spring.MyBatisSystemException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
