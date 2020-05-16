@@ -34,7 +34,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring-cloud-starter-hystrix>1.4.7.RELEASE</spring-cloud-starter-hystrix>
         <spring-boot-starter-actuator>2.2.7.RELEASE</spring-boot-starter-actuator>
-        <hibernate.validator.version>6.1.0.Alpha4</hibernate.validator.version>
+        <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <jackson-databind.version>2.9.8</jackson-databind.version>
