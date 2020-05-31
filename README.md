@@ -7,7 +7,7 @@
 - AdminServer 管理和监控Spring Boot程序
 - 其他的SpringCloud组件：Ribbon、Feign、Hystrix、Hystrix Dashboard、Hystrix Turbine
 
-### 其他的开发中常用的第三方中间件(持续新增中，都在userservice模块中)：
+### 其他的开发中常用的第三方中间件(持续新增中，都在userservice模块中)
 - Redis
 - Mybatis/MybatisPlus
 - JsonWebToken(JWT) 用户身份令牌完整设计方案 JsonWebTokenUtils

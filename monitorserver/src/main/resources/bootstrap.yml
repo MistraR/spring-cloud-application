@@ -1,9 +1,21 @@
+server:
+  port: 8007
 spring:
   application:
     name: monitor-service
   cloud:
     config:
-      uri: http://localhost:9998
+      #如果没有读取成功执行快速失败
       fail-fast: true
-  profiles:
-      active: pro
+      discovery:
+        #指定读取配置文件服务的serviceId
+        service-id: config-server
+        enabled: true
+      profile: pro
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/

@@ -11,6 +11,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 
 /**
  * @ Author: WangRui
@@ -20,7 +22,9 @@ import org.springframework.context.annotation.Bean;
  */
 @SpringBootApplication
 @EnableEurekaClient
-@EnableDistributedTransaction
+//@EnableDistributedTransaction
+@ComponentScan(value = "com.mistra.base")
+@ComponentScan(value = "com.mistra.userservice")
 public class UserServiceApplication {
 
     @Value("${json-web-token.secret}")

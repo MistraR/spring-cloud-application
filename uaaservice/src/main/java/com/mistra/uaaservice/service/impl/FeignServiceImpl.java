@@ -70,7 +70,7 @@ public class FeignServiceImpl implements FeignService {
         utilFeignClient.sendMail(mailDTO);
     }
 
-    @LcnTransaction
+//    @LcnTransaction
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void distributedTransaction() {

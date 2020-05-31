@@ -11,7 +11,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableEurekaClient
 @EnableFeignClients
 @EnableHystrixDashboard//http://localhost:8002/hystrix
-@EnableDistributedTransaction
+//注释掉分布式事物
+//@EnableDistributedTransaction
 public class UaaserviceApplication {
 
     public static void main(String[] args) {

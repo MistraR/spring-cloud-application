@@ -4,6 +4,7 @@ import com.mistra.userservice.core.web.CustomDispatcherServlet;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.unit.DataSize;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 /**
@@ -27,10 +28,10 @@ public class BaseApplication {
         registrationBean.addUrlMappings("/rest/*");
         //指定name，如果不指定默认为dispatcherServlet
         registrationBean.setName("rest");
-
+        DataSize dataSize = DataSize.ofMegabytes(50L);
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize("50MB");
-        factory.setMaxRequestSize("50MB");
+        factory.setMaxFileSize(dataSize);
+        factory.setMaxRequestSize(dataSize);
         registrationBean.setMultipartConfig(factory.createMultipartConfig());
 
         return registrationBean;

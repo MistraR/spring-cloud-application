@@ -3,14 +3,32 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/adminserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/adminserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/adminserver/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/base" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/configserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/configserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/configserver/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eurekaserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eurekaserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eurekaserver/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/excelservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/excelservice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/excelservice/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/monitorserver" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/monitorserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/monitorserver/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/routeservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/routeservice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/routeservice/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/uaaservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/uaaservice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/uaaservice/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/userservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/userservice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/userservice/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/utilservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utilservice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utilservice/src/main/resources" charset="UTF-8" />
   </component>
 </project>

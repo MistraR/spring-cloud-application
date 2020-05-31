@@ -20,6 +20,7 @@
         <module>adminserver</module>
         <module>excelservice</module>
         <module>utilservice</module>
+        <module>adminserver</module>
     </modules>
 
     <parent>
@@ -36,13 +37,13 @@
         <spring-boot-starter-actuator>2.2.7.RELEASE</spring-boot-starter-actuator>
         <hibernate.validator.version>6.1.0.Alpha4</hibernate.validator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jackson-databind.version>2.11.0</jackson-databind.version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
-        <jackson-databind.version>2.9.8</jackson-databind.version>
         <mybatis.srping.version>2.1.2</mybatis.srping.version>
         <thymeleaf-spring5>3.0.11.RELEASE</thymeleaf-spring5>
         <commons.lang3.version>3.10</commons.lang3.version>
-        <spring-aspects>5.2.6.RELEASE</spring-aspects>
         <txlcn-tc.version>5.0.2.RELEASE</txlcn-tc.version>
+        <spring-aspects>5.2.6.RELEASE</spring-aspects>
         <swagger2.version>2.9.2</swagger2.version>
         <druid.version>1.1.22</druid.version>
         <shiro.version>1.5.3</shiro.version>
@@ -90,11 +91,9 @@
 
     <!--
     dependencyManagement的作用其实相当于一个对所依赖jar包进行版本管理的管理器。
-    如果dependencies里的dependency自己没有声明version元素，那么maven就
-    会到dependencyManagement里面去找有没有对该artifactId和groupId进行过版本声明，如果有，就继承它，如果
+    如果dependencies里的dependency自己没有声明version元素，那么maven就会到dependencyManagement里面去找有没有对该artifactId和groupId进行过版本声明，如果有，就继承它，如果
     没有就会报错，告诉你必须为dependency声明一个version
-    如果dependencies中的dependency声明了version，那么无论dependencyManagement中有无对该jar的version声明，
-    都以dependency里的version为准。
+    如果dependencies中的dependency声明了version，那么无论dependencyManagement中有无对该jar的version声明，都以dependency里的version为准。
     整个项目的所有依赖包版本在这里维护，子模块需要用到那个依赖就在pom直接添加上，但是不需要再写version了-->
     <dependencyManagement>
         <dependencies>
@@ -338,7 +337,7 @@
             <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
-                <version>3.3.0</version>
+                <version>2.7.3</version>
             </dependency>
             <dependency>
                 <groupId>javax.servlet</groupId>

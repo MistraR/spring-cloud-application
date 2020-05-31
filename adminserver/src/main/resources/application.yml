@@ -1,3 +1,5 @@
+server:
+  port: 9996
 spring:
   application:
     name: admin-service
@@ -7,10 +9,13 @@ spring:
       fail-fast: true
   profiles:
     active: pro
-
-
-
-
-
-
-
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    registryFetchIntervalSeconds: 5
+    serviceUrl:
+      defaultZone: http://localhost:9999/eureka/
