@@ -1,6 +1,5 @@
-package com.mistra.redisservice.core;
+package com.mistra.redisserver.core;
 
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;

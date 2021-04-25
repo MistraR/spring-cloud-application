@@ -1,4 +1,4 @@
-package com.mistra.redisservice.core;
+package com.mistra.redisserver.core;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
