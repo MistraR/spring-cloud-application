@@ -1,4 +1,4 @@
-package com.mistra.redisservice;
+package com.mistra.redisserver;
 
 import org.junit.After;
 import org.junit.Before;

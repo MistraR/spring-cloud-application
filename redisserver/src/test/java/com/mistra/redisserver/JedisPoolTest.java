@@ -1,9 +1,10 @@
-package com.mistra.redisservice;
+package com.mistra.redisserver;
 
-import com.mistra.redisservice.core.JedisPoolUtil;
+import com.mistra.redisserver.core.JedisPoolUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import redis.clients.jedis.Jedis;
 
 import java.util.Set;
@@ -20,6 +21,7 @@ import java.util.Set;
 public class JedisPoolTest {
 
     Jedis jedis = null;
+
 
     @Before
     public void init() {
