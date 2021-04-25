@@ -1,4 +1,4 @@
-package com.mistra.redisservice;
+package com.mistra.redisservice.core;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.Jedis;

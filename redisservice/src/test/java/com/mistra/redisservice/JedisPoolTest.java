@@ -1,5 +1,6 @@
 package com.mistra.redisservice;
 
+import com.mistra.redisservice.core.JedisPoolUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

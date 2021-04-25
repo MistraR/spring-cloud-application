@@ -1,24 +1,24 @@
-#bootstrap名称的配置文件比application名称的配置文件有更高的优先级执行
-spring:
-  application:
-    name: redis-service
-  cloud:
-    config:
-      #如果没有读取成功执行快速失败
-      fail-fast: true
-      discovery:
-        #指定读取配置文件服务的serviceId
-        service-id: config-server
-        enabled: true
-  profiles:
-    #需要读取的配置文件版本 dev  pro  test
-    active: pro
-
-
-
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    serviceUrl:
-      defaultZone: http://localhost:9999/eureka/
+##bootstrap名称的配置文件比application名称的配置文件有更高的优先级执行
+#spring:
+#  application:
+#    name: redis-service
+#  cloud:
+#    config:
+#      #如果没有读取成功执行快速失败
+#      fail-fast: true
+#      discovery:
+#        #指定读取配置文件服务的serviceId
+#        service-id: config-server
+#        enabled: true
+#  profiles:
+#    #需要读取的配置文件版本 dev  pro  test
+#    active: pro
+#
+#
+#
+#eureka:
+#  client:
+#    fetch-registry: true
+#    register-with-eureka: true
+#    serviceUrl:
+#      defaultZone: http://localhost:9999/eureka/
