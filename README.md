@@ -1,6 +1,5 @@
-# SpringCloudApplication
-## SpringCloud综合测试Demo
-### 包含基础的各类组件应用：
+# Spring Cloud Application
+### 包含各类组件应用：
 - EurekaServer 注册中心
 - Route/Zuul Server  路由
 - ConfigServer 配置中心
