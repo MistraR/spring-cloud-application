@@ -64,7 +64,7 @@
         <netflix-ribbon>2.0.1.RELEASE</netflix-ribbon>
         <jolokia-core.version>1.6.0</jolokia-core.version>
         <com.alibaba.fastjson>1.2.68</com.alibaba.fastjson>
-        <mysql-connector-java>5.1.46</mysql-connector-java>
+        <mysql-connector-java>8.0.16</mysql-connector-java>
         <spring-kafka.version>2.4.6.RELEASE</spring-kafka.version>
         <spring-boot-starter-web>2.5.12</spring-boot-starter-web>
         <spring-boot-starter-mail>2.2.7.RELEASE</spring-boot-starter-mail>
