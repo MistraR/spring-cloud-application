@@ -38,7 +38,7 @@
         <spring-boot-starter-actuator>2.2.7.RELEASE</spring-boot-starter-actuator>
         <hibernate.validator.version>6.1.0.Final</hibernate.validator.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jackson-databind.version>2.11.0</jackson-databind.version>
+        <jackson-databind.version>2.12.6.1</jackson-databind.version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <mybatis.srping.version>2.1.2</mybatis.srping.version>
         <thymeleaf-spring5>3.0.13.RELEASE</thymeleaf-spring5>
