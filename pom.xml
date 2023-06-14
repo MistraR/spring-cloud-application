@@ -56,7 +56,7 @@
         <greenmail>1.5.9</greenmail>
         <junit>4.13.2</junit>
         <modelmapper>2.2.0</modelmapper>
-        <hutool-core>5.3.4</hutool-core>
+        <hutool-core>5.8.19</hutool-core>
         <slf4j-api>1.8.0-beta2</slf4j-api>
         <okhttp.version>4.0.1</okhttp.version>
         <poi-ooxml.version>3.17</poi-ooxml.version>
